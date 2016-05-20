@@ -1,0 +1,1914 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="c:\program files (x86)\microsoft visual studio 12.0\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
+<FxCopReport Version="12.0">
+ <Targets>
+  <Target Name="E:\Programmieren\Libs\accord-framework\Release\net45\Accord.Imaging.dll">
+   <Modules>
+    <Module Name="accord.imaging.dll">
+     <Namespaces>
+      <Namespace Name="Accord.Imaging">
+       <Types>
+        <Type Name="Blob" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#ID" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="MemberAbbreviation" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="Blob.cs" Line="100">Correct the casing of 'ID' in member name 'Blob.ID' by changing it to 'Id'. 'Id' is an abbreviation and therefore is not subject to acronym casing guidelines.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="BlobCounterBase" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'ObjectLabels' and 'objectLabels' so that they differ by more than case.</Issue>
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'ObjectsCount' and 'objectsCount' so that they differ by more than case.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#.ctor(Accord.Imaging.UnmanagedImage)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="BlobCounterBase.cs" Line="92">'BlobCounterBase.BlobCounterBase(UnmanagedImage)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;BlobCounterBase..ctor(UnmanagedImage)&#xD;&#xA;BlobCounterBase.ProcessImage(UnmanagedImage):Void&#xD;&#xA;BlobCounterBase.BuildObjectsMap(UnmanagedImage):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#.ctor(System.Drawing.Bitmap)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="BlobCounterBase.cs" Line="92">'BlobCounterBase.BlobCounterBase(Bitmap)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;BlobCounterBase..ctor(Bitmap)&#xD;&#xA;BlobCounterBase.ProcessImage(Bitmap):Void&#xD;&#xA;BlobCounterBase.ProcessImage(BitmapData):Void&#xD;&#xA;BlobCounterBase.ProcessImage(UnmanagedImage):Void&#xD;&#xA;BlobCounterBase.BuildObjectsMap(UnmanagedImage):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#.ctor(System.Drawing.Imaging.BitmapData)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="BlobCounterBase.cs" Line="92">'BlobCounterBase.BlobCounterBase(BitmapData)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;BlobCounterBase..ctor(BitmapData)&#xD;&#xA;BlobCounterBase.ProcessImage(BitmapData):Void&#xD;&#xA;BlobCounterBase.ProcessImage(UnmanagedImage):Void&#xD;&#xA;BlobCounterBase.BuildObjectsMap(UnmanagedImage):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#imageHeight" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'BlobCounterBase.imageHeight' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#imageWidth" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'BlobCounterBase.imageWidth' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#objectLabels" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'BlobCounterBase.objectLabels' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#objectsCount" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'BlobCounterBase.objectsCount' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="DocumentSkewChecker" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#MaxBeta" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#set_MaxBeta(System.Double)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message Id="value" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="DependsOnFix">
+               <Issue Certainty="95" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="DocumentSkewChecker.cs" Line="146">Parameter 'value' of 'DocumentSkewChecker.MaxBeta.set(double)' is never used. Remove the parameter or use it in the method body.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="#MinBeta" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#set_MinBeta(System.Double)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message Id="value" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="DependsOnFix">
+               <Issue Certainty="95" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="DocumentSkewChecker.cs" Line="132">Parameter 'value' of 'DocumentSkewChecker.MinBeta.set(double)' is never used. Remove the parameter or use it in the method body.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="Drawing" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="System" Certainty="95" Level="Error">The type name 'Drawing' conflicts in whole or in part with the namespace name 'System.Drawing' defined in the .NET Framework. Rename the type to eliminate the conflict.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="HorizontalIntensityStatistics" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Blue" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_Blue()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="HorizontalIntensityStatistics.cs" Line="96">'HorizontalIntensityStatistics.Blue.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="#Gray" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_Gray()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="HorizontalIntensityStatistics.cs" Line="111">'HorizontalIntensityStatistics.Gray.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="#Green" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_Green()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="HorizontalIntensityStatistics.cs" Line="81">'HorizontalIntensityStatistics.Green.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="#Red" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_Red()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="HorizontalIntensityStatistics.cs" Line="65">'HorizontalIntensityStatistics.Red.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="HoughCircle" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="OverrideMethodsOnComparableTypes" Category="Microsoft.Design" CheckId="CA1036" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+           <Issue Name="Equals" Certainty="75" Level="Error">'HoughCircle' should override Equals since it implements IComparable.</Issue>
+           <Issue Name="Operator" Certainty="75" Level="Error">'HoughCircle' should define operator '!=' since it implements IComparable.</Issue>
+           <Issue Name="Operator" Certainty="75" Level="Error">'HoughCircle' should define operator '&lt;' since it implements IComparable.</Issue>
+           <Issue Name="Operator" Certainty="75" Level="Error">'HoughCircle' should define operator '==' since it implements IComparable.</Issue>
+           <Issue Name="Operator" Certainty="75" Level="Error">'HoughCircle' should define operator '&gt;' since it implements IComparable.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#Intensity" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'HoughCircle.Intensity' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Radius" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'HoughCircle.Radius' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#RelativeIntensity" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'HoughCircle.RelativeIntensity' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#X" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'HoughCircle.X' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Y" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'HoughCircle.Y' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="HoughLine" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="OverrideMethodsOnComparableTypes" Category="Microsoft.Design" CheckId="CA1036" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+           <Issue Name="Equals" Certainty="75" Level="Error">'HoughLine' should override Equals since it implements IComparable.</Issue>
+           <Issue Name="Operator" Certainty="75" Level="Error">'HoughLine' should define operator '!=' since it implements IComparable.</Issue>
+           <Issue Name="Operator" Certainty="75" Level="Error">'HoughLine' should define operator '&lt;' since it implements IComparable.</Issue>
+           <Issue Name="Operator" Certainty="75" Level="Error">'HoughLine' should define operator '==' since it implements IComparable.</Issue>
+           <Issue Name="Operator" Certainty="75" Level="Error">'HoughLine' should define operator '&gt;' since it implements IComparable.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#Intensity" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'HoughLine.Intensity' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Radius" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'HoughLine.Radius' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#RelativeIntensity" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'HoughLine.RelativeIntensity' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Theta" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'HoughLine.Theta' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="HSL" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="HSL" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'HSL' in type name 'HSL' by changing it to 'Hsl'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#FromRGB(Accord.Imaging.RGB)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ColorConverter.cs" Line="260">Correct the casing of 'RGB' in member name 'HSL.FromRGB(RGB)' by changing it to 'Rgb'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#FromRGB(Accord.Imaging.RGB,Accord.Imaging.HSL)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ColorConverter.cs" Line="202">Correct the casing of 'RGB' in member name 'HSL.FromRGB(RGB, HSL)' by changing it to 'Rgb'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Hue" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'HSL.Hue' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Luminance" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'HSL.Luminance' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Saturation" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'HSL.Saturation' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ToRGB()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ColorConverter.cs" Line="304">Correct the casing of 'RGB' in member name 'HSL.ToRGB()' by changing it to 'Rgb'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ToRGB(Accord.Imaging.HSL,Accord.Imaging.RGB)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ColorConverter.cs" Line="274">Correct the casing of 'RGB' in member name 'HSL.ToRGB(HSL, RGB)' by changing it to 'Rgb'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="Image" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Convert16bppTo8bpp(System.Drawing.Bitmap)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="bpp" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="Image.cs" Line="354">Correct the casing of 'bpp' in member name 'Image.Convert16bppTo8bpp(Bitmap)' by changing it to 'Bpp'.</Issue>
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="Image.cs" Line="354">Correct the casing of 'bpp' in member name 'Image.Convert16bppTo8bpp(Bitmap)' by changing it to 'Bpp'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Convert8bppTo16bpp(System.Drawing.Bitmap)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="bpp" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="Image.cs" Line="451">Correct the casing of 'bpp' in member name 'Image.Convert8bppTo16bpp(Bitmap)' by changing it to 'Bpp'.</Issue>
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="Image.cs" Line="451">Correct the casing of 'bpp' in member name 'Image.Convert8bppTo16bpp(Bitmap)' by changing it to 'Bpp'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#IsGrayscale(System.Drawing.Bitmap)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="50" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="Image.cs" Line="41">Consider changing the type of parameter 'image' in 'Image.IsGrayscale(Bitmap)' from 'Bitmap' to its base type 'Image'. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#SetGrayscalePalette(System.Drawing.Bitmap)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="50" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="Image.cs" Line="103">Consider changing the type of parameter 'image' in 'Image.SetGrayscalePalette(Bitmap)' from 'Bitmap' to its base type 'Image'. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="ImageStatistics" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Blue" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_Blue()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ImageStatistics.cs" Line="108">'ImageStatistics.Blue.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="#BlueWithoutBlack" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_BlueWithoutBlack()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ImageStatistics.cs" Line="193">'ImageStatistics.BlueWithoutBlack.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="#Gray" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_Gray()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ImageStatistics.cs" Line="127">'ImageStatistics.Gray.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="#GrayWithoutBlack" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_GrayWithoutBlack()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ImageStatistics.cs" Line="215">'ImageStatistics.GrayWithoutBlack.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="#Green" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_Green()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ImageStatistics.cs" Line="89">'ImageStatistics.Green.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="#GreenWithoutBlack" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_GreenWithoutBlack()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ImageStatistics.cs" Line="171">'ImageStatistics.GreenWithoutBlack.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="#Red" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_Red()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ImageStatistics.cs" Line="70">'ImageStatistics.Red.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="#RedWithoutBlack" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_RedWithoutBlack()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ImageStatistics.cs" Line="149">'ImageStatistics.RedWithoutBlack.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="ImageStatisticsHSL" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="HSL" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'HSL' in type name 'ImageStatisticsHSL' by changing it to 'Hsl'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="ImageStatisticsYCbCr" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="Cb" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'Cb' in type name 'ImageStatisticsYCbCr' by changing it to 'CB'.</Issue>
+          </Message>
+          <Message Id="Cr" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'Cr' in type name 'ImageStatisticsYCbCr' by changing it to 'CR'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#Cb" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Cb" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ImageStatisticsYCbCr.cs" Line="72">Correct the casing of 'Cb' in member name 'ImageStatisticsYCbCr.Cb' by changing it to 'CB'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#CbWithoutBlack" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Cb" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ImageStatisticsYCbCr.cs" Line="107">Correct the casing of 'Cb' in member name 'ImageStatisticsYCbCr.CbWithoutBlack' by changing it to 'CB'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Cr" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Cr" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ImageStatisticsYCbCr.cs" Line="81">Correct the casing of 'Cr' in member name 'ImageStatisticsYCbCr.Cr' by changing it to 'CR'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="IntegralImage" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#integralImage" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'IntegralImage.integralImage' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="InvalidImagePropertiesException" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+           <Issue Name="MissingConstructor" Certainty="95" Level="Error">Add the following constructor to 'InvalidImagePropertiesException': protected InvalidImagePropertiesException(SerializationInfo, StreamingContext).</Issue>
+           <Issue Name="MissingConstructor" Certainty="95" Level="Error">Add the following constructor to 'InvalidImagePropertiesException': public InvalidImagePropertiesException(String, Exception).</Issue>
+          </Message>
+          <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+           <Issue Certainty="95" Level="Error">Add [Serializable] to 'InvalidImagePropertiesException' as this type implements ISerializable.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="ITemplateMatching" Kind="Interface" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#ProcessImage(Accord.Imaging.UnmanagedImage,Accord.Imaging.UnmanagedImage,System.Drawing.Rectangle)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="template" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="95" Level="Error">In virtual/interface member 'ITemplateMatching.ProcessImage(UnmanagedImage, UnmanagedImage, Rectangle)', rename parameter 'template' so that it no longer conflicts with the reserved language keyword 'template'. Using a reserved keyword as the name of a parameter on a virtual/interface member makes it harder for consumers in other languages to override/implement the member.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ProcessImage(System.Drawing.Bitmap,System.Drawing.Bitmap,System.Drawing.Rectangle)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="template" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="95" Level="Error">In virtual/interface member 'ITemplateMatching.ProcessImage(Bitmap, Bitmap, Rectangle)', rename parameter 'template' so that it no longer conflicts with the reserved language keyword 'template'. Using a reserved keyword as the name of a parameter on a virtual/interface member makes it harder for consumers in other languages to override/implement the member.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="MemoryManager" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Free(System.IntPtr)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="LanguageIndependentMemberParameter" Certainty="75" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="MemoryManager.cs" Line="255">In member 'MemoryManager.Free(IntPtr)', consider replacing the data type identifier 'pointer' in parameter name 'pointer' with a more generic term, such as 'value'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="QuadrilateralFinder" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#ProcessImage(Accord.Imaging.UnmanagedImage)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="QuadrilateralFinder.cs" Line="135">The 'this' parameter (or 'Me' in Visual Basic) of 'QuadrilateralFinder.ProcessImage(UnmanagedImage)' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="RGB" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'RGB' in type name 'RGB' by changing it to 'Rgb'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#Alpha" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'RGB.Alpha' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Blue" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'RGB.Blue' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Green" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'RGB.Green' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Red" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'RGB.Red' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="UnmanagedImage" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Collect16bppPixelValues(System.Collections.Generic.List`1&lt;Accord.IntPoint&gt;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="bpp" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="UnmanagedImage.cs" Line="1065">Correct the casing of 'bpp' in member name 'UnmanagedImage.Collect16bppPixelValues(List&lt;IntPoint&gt;)' by changing it to 'Bpp'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Collect8bppPixelValues(System.Collections.Generic.List`1&lt;Accord.IntPoint&gt;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="bpp" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="UnmanagedImage.cs" Line="569">Correct the casing of 'bpp' in member name 'UnmanagedImage.Collect8bppPixelValues(List&lt;IntPoint&gt;)' by changing it to 'Bpp'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="UnsupportedImageFormatException" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+           <Issue Name="MissingConstructor" Certainty="95" Level="Error">Add the following constructor to 'UnsupportedImageFormatException': protected UnsupportedImageFormatException(SerializationInfo, StreamingContext).</Issue>
+           <Issue Name="MissingConstructor" Certainty="95" Level="Error">Add the following constructor to 'UnsupportedImageFormatException': public UnsupportedImageFormatException(String, Exception).</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="VerticalIntensityStatistics" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Blue" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_Blue()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="VerticalIntensityStatistics.cs" Line="97">'VerticalIntensityStatistics.Blue.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="#Gray" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_Gray()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="VerticalIntensityStatistics.cs" Line="113">'VerticalIntensityStatistics.Gray.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="#Green" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_Green()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="VerticalIntensityStatistics.cs" Line="81">'VerticalIntensityStatistics.Green.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="#Red" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#get_Red()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="VerticalIntensityStatistics.cs" Line="65">'VerticalIntensityStatistics.Red.get()' creates an exception of type 'InvalidImagePropertiesException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="YCbCr" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="Cb" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'Cb' in type name 'YCbCr' by changing it to 'CB'.</Issue>
+          </Message>
+          <Message Id="Cr" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'Cr' in type name 'YCbCr' by changing it to 'CR'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#Cb" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'YCbCr.Cb' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#CbIndex" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Cb" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the casing of 'Cb' in member name 'YCbCr.CbIndex' by changing it to 'CB'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Cr" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'YCbCr.Cr' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#CrIndex" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Cr" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the casing of 'Cr' in member name 'YCbCr.CrIndex' by changing it to 'CR'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#FromRGB(Accord.Imaging.RGB)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ColorConverter.cs" Line="414">Correct the casing of 'RGB' in member name 'YCbCr.FromRGB(RGB)' by changing it to 'Rgb'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#FromRGB(Accord.Imaging.RGB,Accord.Imaging.YCbCr)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ColorConverter.cs" Line="395">Correct the casing of 'RGB' in member name 'YCbCr.FromRGB(RGB, YCbCr)' by changing it to 'Rgb'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ToRGB()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ColorConverter.cs" Line="447">Correct the casing of 'RGB' in member name 'YCbCr.ToRGB()' by changing it to 'Rgb'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ToRGB(Accord.Imaging.YCbCr,Accord.Imaging.RGB)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge" File="ColorConverter.cs" Line="429">Correct the casing of 'RGB' in member name 'YCbCr.ToRGB(YCbCr, RGB)' by changing it to 'Rgb'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Y" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'YCbCr.Y' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Accord.Imaging.ColorReduction">
+       <Types>
+        <Type Name="ErrorDiffusionColorDithering" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#height" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ErrorDiffusionColorDithering.height' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#pixelSize" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ErrorDiffusionColorDithering.pixelSize' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#stride" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ErrorDiffusionColorDithering.stride' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#width" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ErrorDiffusionColorDithering.width' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#x" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ErrorDiffusionColorDithering.x' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#y" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ErrorDiffusionColorDithering.y' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Accord.Imaging.Filters">
+       <Types>
+        <Type Name="BackwardQuadrilateralTransformation" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#DestinationQuadrilateral" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Transform" File="BackwardQuadrilateralTransformation.cs" Line="146">Change 'BackwardQuadrilateralTransformation.DestinationQuadrilateral' to be read-only by removing the property setter.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="BaseResizeFilter" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'NewWidth' and 'newWidth' so that they differ by more than case.</Issue>
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'newHeight' and 'NewHeight' so that they differ by more than case.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#newHeight" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'BaseResizeFilter.newHeight' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#newWidth" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'BaseResizeFilter.newWidth' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="BaseRotateFilter" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'FillColor' and 'fillColor' so that they differ by more than case.</Issue>
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'angle' and 'Angle' so that they differ by more than case.</Issue>
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'keepSize' and 'KeepSize' so that they differ by more than case.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#angle" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'BaseRotateFilter.angle' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#fillColor" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'BaseRotateFilter.fillColor' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#keepSize" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'BaseRotateFilter.keepSize' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="BayerPattern" Kind="Enum" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#BGGR" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="BGGR" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the casing of 'BGGR' in member name 'BayerPattern.BGGR' by changing it to 'Bggr'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#GRBG" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="GRBG" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the casing of 'GRBG' in member name 'BayerPattern.GRBG' by changing it to 'Grbg'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="BinaryDilatation3x3" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="x" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'x' in type name 'BinaryDilatation3x3' by changing it to 'X'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="BinaryErosion3x3" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="x" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'x' in type name 'BinaryErosion3x3' by changing it to 'X'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="CanvasCrop" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#FillColorRGB" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Other" File="CanvasCrop.cs" Line="80">Correct the casing of 'RGB' in member name 'CanvasCrop.FillColorRGB' by changing it to 'Rgb'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="CanvasFill" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(System.Drawing.Rectangle,System.Drawing.Color)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Other" File="CanvasFill.cs" Line="137">In member 'CanvasFill.CanvasFill(Rectangle, Color)', correct the casing of 'RGB' in parameter name 'fillColorRGB' by changing it to 'Rgb'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#.ctor(System.Drawing.Rectangle,System.Drawing.Color,System.Byte)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Other" File="CanvasFill.cs" Line="168">In member 'CanvasFill.CanvasFill(Rectangle, Color, byte)', correct the casing of 'RGB' in parameter name 'fillColorRGB' by changing it to 'Rgb'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#FillColorRGB" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Other" File="CanvasFill.cs" Line="74">Correct the casing of 'RGB' in member name 'CanvasFill.FillColorRGB' by changing it to 'Rgb'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="CanvasMove" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(Accord.IntPoint,System.Drawing.Color)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Other" File="CanvasMove.cs" Line="141">In member 'CanvasMove.CanvasMove(IntPoint, Color)', correct the casing of 'RGB' in parameter name 'fillColorRGB' by changing it to 'Rgb'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#.ctor(Accord.IntPoint,System.Drawing.Color,System.Byte)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Other" File="CanvasMove.cs" Line="173">In member 'CanvasMove.CanvasMove(IntPoint, Color, byte)', correct the casing of 'RGB' in parameter name 'fillColorRGB' by changing it to 'Rgb'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#FillColorRGB" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Other" File="CanvasMove.cs" Line="76">Correct the casing of 'RGB' in member name 'CanvasMove.FillColorRGB' by changing it to 'Rgb'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="Convolution" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Process24bppImage(System.Byte*,System.Byte*,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="dstStride" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Convolution" File="Convolution.cs" Line="438">Parameter 'dstStride' of 'Convolution.Process24bppImage(byte*, byte*, int, int, int, int, int, int, int, int, int)' is never used. Remove the parameter or use it in the method body.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Process32bppImage(System.Byte*,System.Byte*,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="dstStride" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Convolution" File="Convolution.cs" Line="544">Parameter 'dstStride' of 'Convolution.Process32bppImage(byte*, byte*, int, int, int, int, int, int, int, int)' is never used. Remove the parameter or use it in the method body.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Process8bppImage(System.Byte*,System.Byte*,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="dstStride" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Convolution" File="Convolution.cs" Line="350">Parameter 'dstStride' of 'Convolution.Process8bppImage(byte*, byte*, int, int, int, int, int, int, int, int)' is never used. Remove the parameter or use it in the method body.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="Dilatation3x3" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="x" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'x' in type name 'Dilatation3x3' by changing it to 'X'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="Erosion3x3" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="x" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'x' in type name 'Erosion3x3' by changing it to 'X'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="ErrorDiffusionDithering" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#startX" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ErrorDiffusionDithering.startX' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#startY" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ErrorDiffusionDithering.startY' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#stopX" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ErrorDiffusionDithering.stopX' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#stopY" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ErrorDiffusionDithering.stopY' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#stride" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ErrorDiffusionDithering.stride' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#x" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ErrorDiffusionDithering.x' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#y" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ErrorDiffusionDithering.y' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="ExtractNormalizedRGBChannel" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'RGB' in type name 'ExtractNormalizedRGBChannel' by changing it to 'Rgb'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="FiltersSequence" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="CollectionsShouldImplementGenericInterface" Category="Microsoft.Design" CheckId="CA1010" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+           <Issue Certainty="90" Level="Error">'FiltersSequence' appears to be a non-generic, strongly typed collection. Add an implementation to the instance of IList&lt;T&gt; where T is the underlying element type of 'FiltersSequence'.</Issue>
+          </Message>
+          <Message TypeName="ICollectionImplementationsHaveStronglyTypedMembers" Category="Microsoft.Design" CheckId="CA1035" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Certainty="90" Level="Error">'FiltersSequence' should provide a strongly typed implementation of ICollection.CopyTo.</Issue>
+          </Message>
+          <Message TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Certainty="95" Level="Error">Rename 'FiltersSequence' to end in 'Collection'.</Issue>
+          </Message>
+          <Message TypeName="ListsAreStronglyTyped" Category="Microsoft.Design" CheckId="CA1039" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Certainty="90" Level="Error">'FiltersSequence' should provide a strongly typed implementation of IList.Remove, IList.Insert, IList.IndexOf, IList.Contains.</Issue>
+          </Message>
+          <Message TypeName="TypesShouldNotExtendCertainBaseTypes" Category="Microsoft.Design" CheckId="CA1058" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="System.Collections.CollectionBase" Certainty="75" Level="Error">Change the base type of 'FiltersSequence' from 'CollectionBase' to its generic equivalent 'System.Collections.ObjectModel.Collection'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="Grayscale" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#BlueCoefficient" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'Grayscale.BlueCoefficient' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#GreenCoefficient" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'Grayscale.GreenCoefficient' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#RedCoefficient" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'Grayscale.RedCoefficient' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="Grayscale+CommonAlgorithms" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Certainty="90" Level="Error">Do not nest type 'Grayscale.CommonAlgorithms'. Alternatively, change its accessibility so that it is not externally visible.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#BT709" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareReadOnlyMutableReferenceTypes" Category="Microsoft.Security" CheckId="CA2104" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Certainty="25" Level="Error">Remove the read-only designation from 'Grayscale.CommonAlgorithms.BT709' or change the field to one that is an immutable reference type. If the reference type 'Grayscale' is, in fact, immutable, exclude this message.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#RMY" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareReadOnlyMutableReferenceTypes" Category="Microsoft.Security" CheckId="CA2104" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Certainty="25" Level="Error">Remove the read-only designation from 'Grayscale.CommonAlgorithms.RMY' or change the field to one that is an immutable reference type. If the reference type 'Grayscale' is, in fact, immutable, exclude this message.</Issue>
+            </Message>
+            <Message Id="RMY" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the casing of 'RMY' in member name 'Grayscale.CommonAlgorithms.RMY' by changing it to 'Rmy'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Y" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareReadOnlyMutableReferenceTypes" Category="Microsoft.Security" CheckId="CA2104" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Certainty="25" Level="Error">Remove the read-only designation from 'Grayscale.CommonAlgorithms.Y' or change the field to one that is an immutable reference type. If the reference type 'Grayscale' is, in fact, immutable, exclude this message.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="GrayscaleToRGB" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="RGB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'RGB' in type name 'GrayscaleToRGB' by changing it to 'Rgb'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="HitAndMiss" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(System.Int16[,])" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Name="NoArguments" Certainty="95" Level="CriticalError" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Morphology" File="HitAndMiss.cs" Line="140">Call the 'ArgumentException' constructor that contains a message and/or paramName parameter.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="HitAndMiss+Modes" Kind="Enum" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Certainty="75" Level="Error">If the name 'HitAndMiss.Modes' is plural, change it to its singular form.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="HSLFiltering" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="HSL" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'HSL' in type name 'HSLFiltering' by changing it to 'Hsl'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="HSLLinear" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="HSL" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'HSL' in type name 'HSLLinear' by changing it to 'Hsl'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="LevelsLinear" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Input" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="PropertiesShouldNotBeWriteOnly" Category="Microsoft.Design" CheckId="CA1044" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="DependsOnFix">
+             <Issue Name="AddGetter" Certainty="95" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Color Filters" File="LevelsLinear.cs" Line="138">Because property 'LevelsLinear.Input' is write-only, either add a property getter with an accessibility that is greater than or equal to its setter or convert this property into a method.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Output" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="PropertiesShouldNotBeWriteOnly" Category="Microsoft.Design" CheckId="CA1044" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="DependsOnFix">
+             <Issue Name="AddGetter" Certainty="95" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Color Filters" File="LevelsLinear.cs" Line="207">Because property 'LevelsLinear.Output' is write-only, either add a property getter with an accessibility that is greater than or equal to its setter or convert this property into a method.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="LevelsLinear16bpp" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="bpp" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'bpp' in type name 'LevelsLinear16bpp' by changing it to 'Bpp'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#Input" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="PropertiesShouldNotBeWriteOnly" Category="Microsoft.Design" CheckId="CA1044" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="DependsOnFix">
+             <Issue Name="AddGetter" Certainty="95" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Color Filters" File="LevelsLinear16bpp.cs" Line="132">Because property 'LevelsLinear16bpp.Input' is write-only, either add a property getter with an accessibility that is greater than or equal to its setter or convert this property into a method.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Output" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="PropertiesShouldNotBeWriteOnly" Category="Microsoft.Design" CheckId="CA1044" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="DependsOnFix">
+             <Issue Name="AddGetter" Certainty="95" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Color Filters" File="LevelsLinear16bpp.cs" Line="201">Because property 'LevelsLinear16bpp.Output' is write-only, either add a property getter with an accessibility that is greater than or equal to its setter or convert this property into a method.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="OtsuThreshold" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#CalculateThreshold(Accord.Imaging.UnmanagedImage,System.Drawing.Rectangle)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Adaptive Binarization" File="OtsuThreshold.cs" Line="160">The 'this' parameter (or 'Me' in Visual Basic) of 'OtsuThreshold.CalculateThreshold(UnmanagedImage, Rectangle)' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="Pixellate" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#PixelSize" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="PropertiesShouldNotBeWriteOnly" Category="Microsoft.Design" CheckId="CA1044" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="DependsOnFix">
+             <Issue Name="AddGetter" Certainty="95" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Other" File="Pixellate.cs" Line="97">Because property 'Pixellate.PixelSize' is write-only, either add a property getter with an accessibility that is greater than or equal to its setter or convert this property into a method.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="PointedColorFloodFill" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#LinearFloodFill4RGB(Accord.IntPoint)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="startPoint" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Flood Fillers" File="PointedColorFloodFill.cs" Line="324">Parameter 'startPoint' of 'PointedColorFloodFill.LinearFloodFill4RGB(IntPoint)' is never used. Remove the parameter or use it in the method body.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="QuadrilateralTransformation" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'NewWidth' and 'newWidth' so that they differ by more than case.</Issue>
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'newHeight' and 'NewHeight' so that they differ by more than case.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#newHeight" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'QuadrilateralTransformation.newHeight' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#newWidth" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'QuadrilateralTransformation.newWidth' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#SourceQuadrilateral" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Transform" File="QuadrilateralTransformation.cs" Line="128">Change 'QuadrilateralTransformation.SourceQuadrilateral' to be read-only by removing the property setter.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="SimpleQuadrilateralTransformation" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'NewWidth' and 'newWidth' so that they differ by more than case.</Issue>
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'newHeight' and 'NewHeight' so that they differ by more than case.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#newHeight" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'SimpleQuadrilateralTransformation.newHeight' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#newWidth" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'SimpleQuadrilateralTransformation.newWidth' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#SourceQuadrilateral" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Transform" File="SimpleQuadrilateralTransformation.cs" Line="144">Change 'SimpleQuadrilateralTransformation.SourceQuadrilateral' to be read-only by removing the property setter.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="SISThreshold" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="SIS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'SIS' in type name 'SISThreshold' by changing it to 'Sis'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#CalculateThreshold(System.Drawing.Imaging.BitmapData,System.Drawing.Rectangle)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\Adaptive Binarization" File="SISThreshold.cs" Line="140">The 'this' parameter (or 'Me' in Visual Basic) of 'SISThreshold.CalculateThreshold(BitmapData, Rectangle)' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="Threshold" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#threshold" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'Threshold.threshold' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="YCbCrExtractChannel" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="Cb" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'Cb' in type name 'YCbCrExtractChannel' by changing it to 'CB'.</Issue>
+          </Message>
+          <Message Id="Cr" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'Cr' in type name 'YCbCrExtractChannel' by changing it to 'CR'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="YCbCrFiltering" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="Cb" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'Cb' in type name 'YCbCrFiltering' by changing it to 'CB'.</Issue>
+          </Message>
+          <Message Id="Cr" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'Cr' in type name 'YCbCrFiltering' by changing it to 'CR'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#Cb" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Cb" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\YCbCr Filters" File="YCbCrFiltering.cs" Line="92">Correct the casing of 'Cb' in member name 'YCbCrFiltering.Cb' by changing it to 'CB'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Cr" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Cr" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\YCbCr Filters" File="YCbCrFiltering.cs" Line="102">Correct the casing of 'Cr' in member name 'YCbCrFiltering.Cr' by changing it to 'CR'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#UpdateCb" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Cb" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\YCbCr Filters" File="YCbCrFiltering.cs" Line="160">Correct the casing of 'Cb' in member name 'YCbCrFiltering.UpdateCb' by changing it to 'CB'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#UpdateCr" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Cr" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\YCbCr Filters" File="YCbCrFiltering.cs" Line="175">Correct the casing of 'Cr' in member name 'YCbCrFiltering.UpdateCr' by changing it to 'CR'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="YCbCrLinear" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="Cb" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'Cb' in type name 'YCbCrLinear' by changing it to 'CB'.</Issue>
+          </Message>
+          <Message Id="Cr" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'Cr' in type name 'YCbCrLinear' by changing it to 'CR'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#InCb" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Cb" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\YCbCr Filters" File="YCbCrLinear.cs" Line="81">Correct the casing of 'Cb' in member name 'YCbCrLinear.InCb' by changing it to 'CB'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#InCr" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Cr" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\YCbCr Filters" File="YCbCrLinear.cs" Line="93">Correct the casing of 'Cr' in member name 'YCbCrLinear.InCr' by changing it to 'CR'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#OutCb" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Cb" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\YCbCr Filters" File="YCbCrLinear.cs" Line="117">Correct the casing of 'Cb' in member name 'YCbCrLinear.OutCb' by changing it to 'CB'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#OutCr" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Cr" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Filters\YCbCr Filters" File="YCbCrLinear.cs" Line="129">Correct the casing of 'Cr' in member name 'YCbCrLinear.OutCr' by changing it to 'CR'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="YCbCrReplaceChannel" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="Cb" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'Cb' in type name 'YCbCrReplaceChannel' by changing it to 'CB'.</Issue>
+          </Message>
+          <Message Id="Cr" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'Cr' in type name 'YCbCrReplaceChannel' by changing it to 'CR'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Accord.Imaging.Formats">
+       <Types>
+        <Type Name="FITSCodec" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="FITS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'FITS' in type name 'FITSCodec' by changing it to 'Fits'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#DecodeFrame(System.Int32,Accord.Imaging.Formats.ImageInfo&amp;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Name="IncorrectParameterName" Certainty="95" Level="CriticalError" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Formats" File="FITSCodec.cs" Line="251">Method 'FITSCodec.DecodeFrame(int, out ImageInfo)' passes 'Currently opened stream does not contain frame with specified index.' as the 'paramName' argument to a 'ArgumentOutOfRangeException' constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ReadHeader(System.IO.Stream)" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="contatin" TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Formats" File="FITSCodec.cs" Line="296">Correct the spelling of the unrecognized token 'contatin' in the literal '"The stream does not contatin FITS image."'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="FITSImageInfo" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="FITS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'FITS' in type name 'FITSImageInfo' by changing it to 'Fits'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="ImageDecoder" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="CSharp2_0" Certainty="90" Level="Error">Because type 'ImageDecoder' contains only 'static' members, mark it as 'static' to prevent the compiler from adding a default public constructor.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#.cctor()" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Certainty="90" Level="CriticalWarning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Formats" File="ImageDecoder.cs" Line="48">Initialize all static fields in 'ImageDecoder' when those fields are declared and remove the explicit static constructor.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#DecodeFromFile(System.String,Accord.Imaging.Formats.ImageInfo&amp;)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Formats" File="ImageDecoder.cs" Line="126">Replace the call to 'string.operator !=(string, string)' in 'ImageDecoder.DecodeFromFile(string, out ImageInfo)' with a call to 'String.IsNullOrEmpty'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="ImageInfo" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'BitsPerPixel' and 'bitsPerPixel' so that they differ by more than case.</Issue>
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'FrameIndex' and 'frameIndex' so that they differ by more than case.</Issue>
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'TotalFrames' and 'totalFrames' so that they differ by more than case.</Issue>
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'height' and 'Height' so that they differ by more than case.</Issue>
+           <Issue Name="Member" Certainty="95" Level="Error">Change member names 'width' and 'Width' so that they differ by more than case.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#bitsPerPixel" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ImageInfo.bitsPerPixel' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#frameIndex" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ImageInfo.frameIndex' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#height" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ImageInfo.height' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#totalFrames" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ImageInfo.totalFrames' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#width" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ImageInfo.width' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="PNMCodec" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="PNM" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'PNM' in type name 'PNMCodec' by changing it to 'Pnm'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#DecodeFrame(System.Int32,Accord.Imaging.Formats.ImageInfo&amp;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Name="IncorrectParameterName" Certainty="95" Level="CriticalError" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\AForge\Formats" File="PNMCodec.cs" Line="179">Method 'PNMCodec.DecodeFrame(int, out ImageInfo)' passes 'Currently opened stream does not contain frame with specified index.' as the 'paramName' argument to a 'ArgumentOutOfRangeException' constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="PNMImageInfo" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="PNM" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'PNM' in type name 'PNMImageInfo' by changing it to 'Pnm'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Accord.Imaging.Moments">
+       <Types>
+        <Type Name="MomentsBase" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(Accord.Imaging.UnmanagedImage,System.Drawing.Rectangle,System.Int32)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\Moments" File="MomentsBase.cs" Line="76">'MomentsBase.MomentsBase(UnmanagedImage, Rectangle, int)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;MomentsBase..ctor(UnmanagedImage, Rectangle, Int32)&#xD;&#xA;MomentsBase.Compute(UnmanagedImage, Rectangle):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#.ctor(Accord.Imaging.UnmanagedImage,System.Int32)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.Imaging\Moments" File="MomentsBase.cs" Line="116">'MomentsBase.MomentsBase(UnmanagedImage, int)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;MomentsBase..ctor(UnmanagedImage, Int32)&#xD;&#xA;MomentsBase.Compute(UnmanagedImage, Rectangle):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Accord.Imaging.Textures">
+       <Types>
+        <Type Name="TextureTools" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="StaticHolderTypesShouldBeSealed" Category="Microsoft.Design" CheckId="CA1052" Status="Active" Created="2016-01-15 13:12:10Z" FixCategory="Breaking">
+           <Issue Name="CSharp2_0" Certainty="75" Level="CriticalWarning">Because type 'TextureTools' contains only 'static' members, mark it as 'static' to prevent consumers from inheriting from it.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227">
+   <Name>Collection properties should be read only</Name>
+   <Description>Properties that return collections should be read-only so that users cannot entirely replace the backing store. Users can still modify the contents of the collection by calling relevant methods on the collection. Note that the XmlSerializer class has special support for deserializing read-only collections. See the XmlSerializer overview for more information.</Description>
+   <Resolution Name="Default">Change {0} to be read-only by removing the property setter.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182327.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="usagerules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="CollectionsShouldImplementGenericInterface" Category="Microsoft.Design" CheckId="CA1010">
+   <Name>Collections should implement generic interface</Name>
+   <Description>Non-generic strongly typed collections should implement one of the generic collection interfaces. This will allow better integration of the collection with generic API.</Description>
+   <Resolution Name="Default">{0} appears to be a non-generic, strongly typed collection. Add an implementation to the instance of {1}&lt;T&gt; where T is the underlying element type of {0}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182132.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011">
+   <Name>Consider passing base types as parameters</Name>
+   <Description>Using base types as parameters to methods improves re-use of these methods if you only use methods &amp; properties from the parameter's base class. E.g. use Stream instead of FileStream as a parameter when only calling Stream.Read(), this makes the method work on all kind of streams instead of just File streams.</Description>
+   <Resolution Name="Default">Consider changing the type of parameter {0} in {1} from {2} to its base type {3}. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/3hk32yyz.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="50">Error</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214">
+   <Name>Do not call overridable methods in constructors</Name>
+   <Description>Virtual methods defined on the class should not be called from constructors. If a derived class has overridden the method, the derived class version will be called (before the derived class constructor is called).</Description>
+   <Resolution Name="Default">{0} contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: {1}</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182331.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalWarning</MessageLevel>
+   <File Name="usagerules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotDeclareReadOnlyMutableReferenceTypes" Category="Microsoft.Security" CheckId="CA2104">
+   <Name>Do not declare read only mutable reference types</Name>
+   <Description>A read-only declaration for a mutable reference type does not prevent the field's instance data from being modified. For example, a read-only StringBuilder field declaration does not make sense, since the data encapsulated by the StringBuilder can be modified using the read-only reference.</Description>
+   <Resolution Name="Default">Remove the read-only designation from {0} or change the field to one that is an immutable reference type. If the reference type {1} is, in fact, immutable, exclude this message.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182302.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="25">Error</MessageLevel>
+   <File Name="securityrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051">
+   <Name>Do not declare visible instance fields</Name>
+   <Description>Instance fields that are visible outside of the type that declares them, limit your ability to change the implementation details for those data items. Use properties instead. They do not compromise usability or performance and they do provide flexibility in that they conceal the implementation details of the underlying data.</Description>
+   <Resolution Name="Default">Because field {0} is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182141.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065">
+   <Name>Do not raise exceptions in unexpected locations</Name>
+   <Description>Do not explicitly raise exceptions from unexpected locations. There are some methods, such as Equals and GetHashCode, which users do not expect to raise exceptions. Therefore calls to these methods are not commonly wrapped in try catch blocks.</Description>
+   <Resolution Name="PropertyGetter">{0} creates an exception of type {1}, an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb386039.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error, Warning</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="ICollectionImplementationsHaveStronglyTypedMembers" Category="Microsoft.Design" CheckId="CA1035">
+   <Name>ICollection implementations have strongly typed members</Name>
+   <Description>Types that implement ICollection should also provide a version of CopyTo with the first parameter set to a strong type, namely a type other than an array of objects or System.Array. Implement the interface member explicitly and make the strongly typed version public. It is safe to ignore violations of this rule when you are implementing a new object-based collection, such as a binary tree, where types based on your collection will determine what the strong type is. These types should expose strongly typed members.</Description>
+   <Resolution Name="Default">{0} should provide a strongly typed implementation of ICollection.CopyTo.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/49stb304.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+   <Name>Identifiers should be cased correctly</Name>
+   <Description>Type, namespace, and member identifiers are Pascal-cased. Parameter identifiers are camel-cased. Two letter acronyms within these identifiers should be upper-cased, for example, use System.IO instead of System.Io. Acronyms of three or more letters should be Pascal-cased, for example, use System.Xml instead of System.XML. The pascal-casing convention capitalizes the first letter of each word, as in BackColor. The camel-casing convention formats the first letter of the first word in lowercase and capitalizes the first letter of all subsequent words, as in backgroundColor. Although it may be common practice for some two letter acronyms to not be fully capitalized, violations of this rule should not be excluded for this reason. For example, 'DbConnection', is common but incorrect; use DBConnection. A violation of this rule might be required for compatibility with existing, non-managed symbol schemes. In general, however, these symbols should not be visible outside the assembly that uses them.</Description>
+   <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
+   <Resolution Name="MemberAbbreviation">Correct the casing of '{0}' in member name {1} by changing it to '{2}'. '{2}' is an abbreviation and therefore is not subject to acronym casing guidelines.</Resolution>
+   <Resolution Name="MemberParameter">In member {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'.</Resolution>
+   <Resolution Name="Type">Correct the casing of '{0}' in type name {1} by changing it to '{2}'.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182240.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="85">Error</MessageLevel>
+   <File Name="namingrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708">
+   <Name>Identifiers should differ by more than case</Name>
+   <Description>Do not use names that require case sensitivity for uniqueness. Components must be fully usable from both case-sensitive and case-insensitive languages. Since case-insensitive languages cannot distinguish between two names within the same context that differ only by case, components must avoid this situation.</Description>
+   <Resolution Name="Member">Change member names {0} and '{1}' so that they differ by more than case.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182242.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="namingrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710">
+   <Name>Identifiers should have correct suffix</Name>
+   <Description>Types that extend certain base types have specified name suffixes. Types that extend Attribute, for example, should be suffixed in 'Attribute', as in ObsoleteAttribute. This rules checks types that extend several base types, including Attribute, Exception, EventArgs, IMembershipPermission, Stream, and others.</Description>
+   <Resolution Name="Default">Rename {0} to end in '{1}'.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182244.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="namingrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720">
+   <Name>Identifiers should not contain type names</Name>
+   <Description>Avoid using language-specific types name in parameters and members and data type identifiers in parameters. Types names might not be intuitive for all developers. It is recommended that you select a generic name, such as 'value', instead. If this is not sufficient, be sure to use the type name as it is defined in the .NET Framework Library and avoid language-specific type names completely. Some examples of C#-specific type names are 'float' (use 'Single' if a generic name is not sufficient), and 'ulong' (use 'UInt64' if a generic name is not sufficient).</Description>
+   <Resolution Name="LanguageIndependentMemberParameter">In member {0}, consider replacing the data type identifier '{1}' in parameter name {2} with a more generic term, such as 'value'.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb531486.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Error</MessageLevel>
+   <File Name="namingrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
+   <Name>Identifiers should not match keywords</Name>
+   <Description>Identifiers which conflict with reserved language keywords should be avoided. Using a reserved keyword as an identifier makes it harder for consumers in other languages to use your API.</Description>
+   <Resolution Name="MemberParameter">In virtual/interface member {0}, rename parameter {1} so that it no longer conflicts with the reserved language keyword '{2}'. Using a reserved keyword as the name of a parameter on a virtual/interface member makes it harder for consumers in other languages to override/implement the member.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182248.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="namingrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032">
+   <Name>Implement standard exception constructors</Name>
+   <Description>Multiple constructors are required to correctly implement a custom exception. Missing constructors can make your exception unusable in certain scenarios. For example, the serialization constructor is required for handling exceptions in XML Web services.</Description>
+   <Resolution Name="MissingConstructor">Add the following constructor to {0}: {1}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182151.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810">
+   <Name>Initialize reference type static fields inline</Name>
+   <Description>Static fields should be initialized when declared. Initializing static data in explicit static constructors results in less performant code.</Description>
+   <Resolution Name="Default">Initialize all static fields in {0} when those fields are declared and remove the explicit static constructor.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182275.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">CriticalWarning</MessageLevel>
+   <File Name="performancerules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
+   <Name>Instantiate argument exceptions correctly</Name>
+   <Description>String arguments passed to constructors of ArgumentException and its derived types should be correct. Types derived from ArgumentException have inconsistent constructor overloads with respect to the message and paramName parameters as compared to ArgumentException.</Description>
+   <Resolution Name="IncorrectParameterName">Method {0} passes '{1}' as the {2} argument to a {3} constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Resolution>
+   <Resolution Name="NoArguments">Call the {0} constructor that contains a message and/or paramName parameter.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182347.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="usagerules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="ListsAreStronglyTyped" Category="Microsoft.Design" CheckId="CA1039">
+   <Name>Lists are strongly typed</Name>
+   <Description>IList implementations should also provide versions of the IList members that are strongly typed, namely they should specify types other than Object for method and property parameter and return types. Implement the interface members explicitly and make the strongly typed versions public. It is safe to ignore violations of this rule when you are implementing a new object-based collection, such as a linked list, where types based on your collection will determine what the strong type is. These types should expose strongly typed members.</Description>
+   <Resolution Name="Default">{0} should provide a strongly typed implementation of {1}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182154.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204">
+   <Name>Literals should be spelled correctly</Name>
+   <Description>This rule parses the literal string into words, tokenizing compound words, and checks the spelling of each word/token.</Description>
+   <Resolution Name="Default">Correct the spelling of the unrecognized token '{0}' in the literal '{1}'.</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/bb264488.aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237">
+   <Name>Mark ISerializable types with SerializableAttribute</Name>
+   <Description>The System.Runtime.Serialization.ISerializable interface allows the type to customize its serialization, while the Serializable attribute enables the runtime to recognize the type as being serializable.</Description>
+   <Resolution Name="Default">Add [Serializable] to {0} as this type implements ISerializable.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182350.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="usagerules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+   <Name>Mark members as static</Name>
+   <Description>Methods which do not access instance data or call instance methods can be marked as static (Shared in Visual Basic). After doing so, the compiler will emit non-virtual call sites to these members which will prevent a check at runtime for each call that ensures the current object pointer is non-null. This can result in a measurable performance gain for performance-sensitive code. In some cases, the failure to access the current object instance represents a correctness issue.</Description>
+   <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms245046.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="performancerules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034">
+   <Name>Nested types should not be visible</Name>
+   <Description>Do not use public, protected or protected internal (Protected Friend) nested types as a way of grouping types. Use namespaces for this purpose. There are very limited scenarios where nested types are the best design. Also, nested type member accessibility is not clearly understood by all audiences. Enumerators are exempt from this rule.</Description>
+   <Resolution Name="Default">Do not nest type {0}. Alternatively, change its accessibility so that it is not externally visible.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182162.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717">
+   <Name>Only FlagsAttribute enums should have plural names</Name>
+   <Description>Plural names indicate that the values of the enumeration can be combined. For example, an enumeration named 'Day' indicates a single day, and an enumeration named 'Days' indicates multiple days. Enumeration values should be combined using the bit-wise OR operator only if the Flags attribute is present on the enumeration.</Description>
+   <Resolution Name="Default">If the name {0} is plural, change it to its singular form.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb264487.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Error</MessageLevel>
+   <File Name="namingrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="OverrideMethodsOnComparableTypes" Category="Microsoft.Design" CheckId="CA1036">
+   <Name>Override methods on comparable types</Name>
+   <Description>Types that implement IComparable should redefine Equals and comparison operators to keep the meanings of less than, greater than, and equals consistent throughout the type.</Description>
+   <Resolution Name="Equals">{0} should override Equals since it implements IComparable.</Resolution>
+   <Resolution Name="Operator">{0} should define operator '{1}' since it implements IComparable.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182163.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Error</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="PropertiesShouldNotBeWriteOnly" Category="Microsoft.Design" CheckId="CA1044">
+   <Name>Properties should not be write only</Name>
+   <Description>Write-only properties usually indicate a flawed design.</Description>
+   <Resolution Name="AddGetter">Because property {0} is write-only, either add a property getter with an accessibility that is greater than or equal to its setter or convert this property into a method.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182165.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+   <Name>Review unused parameters</Name>
+   <Description>Review parameters in non-virtual methods that are not used in the method body to ensure no correctness exists around failure to access them. Unused parameters incur maintenance and performance costs. Sometimes a violation of this rule can point to an implementation bug in the method (i.e. the parameter should actually have been used in the method body). Exclude warnings of this rule if the parameter has to exist because of backward compatibility.</Description>
+   <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182268.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="usagerules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="StaticHolderTypesShouldBeSealed" Category="Microsoft.Design" CheckId="CA1052">
+   <Name>Static holder types should be sealed</Name>
+   <Description>Static holder types do not provide functionality that derived instances can extend. Inheriting from such a type indicates a flawed design.</Description>
+   <Resolution Name="CSharp2_0">Because type {0} contains only 'static' members, mark it as 'static' to prevent consumers from inheriting from it.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182168.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">CriticalWarning</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053">
+   <Name>Static holder types should not have constructors</Name>
+   <Description>Instances of types that define only static members do not need to be created. Many compilers will automatically add a public default constructor if no constructor is specified. To prevent this, adding an empty private constructor may be required.</Description>
+   <Resolution Name="CSharp2_0">Because type {0} contains only 'static' members, mark it as 'static' to prevent the compiler from adding a default public constructor.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182169.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820">
+   <Name>Test for empty strings using string length</Name>
+   <Description>To test for empty strings, check if String.Length is equal to zero. Constructs such as "".Equals(someString) and String.Empty.Equals(someString) are less efficient than testing the string length. Replace these with checks for someString.Length == 0.</Description>
+   <Resolution Name="IsNullOrEmpty">Replace the call to {0} in {1} with a call to 'String.IsNullOrEmpty'.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182279.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="performancerules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
+   <Name>Type names should not match namespaces</Name>
+   <Description>Identifiers which conflict in whole or in part with namespace names should be avoided. Names that describe the purpose or contents of a type are preferred.</Description>
+   <Resolution Name="System">The type name {0} conflicts in whole or in part with the namespace name '{1}' defined in the .NET Framework. Rename the type to eliminate the conflict.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182257.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="namingrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="TypesShouldNotExtendCertainBaseTypes" Category="Microsoft.Design" CheckId="CA1058">
+   <Name>Types should not extend certain base types</Name>
+   <Description>It is best not to extend some base types or to prefer extending better alternatives to those base types.</Description>
+   <Resolution Name="System.Collections.CollectionBase">Change the base type of {0} from {1} to its generic equivalent 'System.Collections.ObjectModel.Collection'.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182171.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Error</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">Category</String>
+  <String Key="Certainty">Certainty</String>
+  <String Key="CollapseAll">Collapse All</String>
+  <String Key="CheckId">Check Id</String>
+  <String Key="Error">Error</String>
+  <String Key="Errors">error(s)</String>
+  <String Key="ExpandAll">Expand All</String>
+  <String Key="Help">Help</String>
+  <String Key="Line">Line</String>
+  <String Key="Messages">message(s)</String>
+  <String Key="LocationNotStoredInPdb">[Location not stored in Pdb]</String>
+  <String Key="Project">Project</String>
+  <String Key="Resolution">Resolution</String>
+  <String Key="Rule">Rule</String>
+  <String Key="RuleFile">Rule File</String>
+  <String Key="RuleDescription">Rule Description</String>
+  <String Key="Source">Source</String>
+  <String Key="Status">Status</String>
+  <String Key="Target">Target</String>
+  <String Key="Warning">Warning</String>
+  <String Key="Warnings">warning(s)</String>
+  <String Key="ReportTitle">Code Analysis Report</String>
+ </Localized>
+</FxCopReport>

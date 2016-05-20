@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="c:\program files (x86)\microsoft visual studio 12.0\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
+<FxCopReport Version="12.0">
+ <Targets>
+  <Target Name="E:\Programmieren\Libs\accord-framework\Release\net45\Accord.MachineLearning.dll">
+   <Modules>
+    <Module Name="accord.machinelearning.dll">
+     <Namespaces>
+      <Namespace Name="Accord.MachineLearning">
+       <Types>
+        <Type Name="ClusterCollection`3" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="AvoidExcessiveParametersOnGenericTypes" Category="Microsoft.Design" CheckId="CA1005" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+           <Issue Certainty="85" Level="Error">Consider a design where 'ClusterCollection&lt;TData, TCentroids, TCluster&gt;' has no more than 2 type parameters.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="ClusterCollection`3+Cluster`1" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+           <Issue Certainty="90" Level="Error">Do not nest type 'ClusterCollection&lt;TData, TCentroids, TCluster&gt;.Cluster&lt;TCollection&gt;'. Alternatively, change its accessibility so that it is not externally visible.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="GaussianClusterCollection+GaussianCluster" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+           <Issue Certainty="90" Level="Error">Do not nest type 'GaussianClusterCollection.GaussianCluster'. Alternatively, change its accessibility so that it is not externally visible.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="GaussianMixtureModel" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Compute(System.Double[][])" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.MachineLearning\Clustering\Gaussian" File="GaussianMixtureModel.cs" Line="234">In member 'GaussianMixtureModel.Compute(double[][])', change parameter name 'data' to 'points' in order to match the identifier as it has been declared in 'IClusteringAlgorithm&lt;double[]&gt;.Compute(double[][])'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Compute(System.Double[][],System.Double[])" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.MachineLearning\Clustering\Gaussian" File="GaussianMixtureModel.cs" Line="244">In member 'GaussianMixtureModel.Compute(double[][], double[])', change parameter name 'data' to 'points' in order to match the identifier as it has been declared in 'IClusteringAlgorithm&lt;double[], double&gt;.Compute(double[][], double[])'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Iterations" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#set_Iterations(System.Int32)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+             <Messages>
+              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="NonBreaking">
+               <Issue Certainty="75" Level="Warning">'GaussianMixtureModel.Iterations.set(int)' appears to have no upstream public or protected callers.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="GaussianMixtureModelOptions" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="ProvideObsoleteAttributeMessage" Category="Microsoft.Design" CheckId="CA1041" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="NonBreaking">
+           <Issue Certainty="95" Level="Error">Provide a message for the ObsoleteAttribute that marks 'GaussianMixtureModelOptions'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="KMeans" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Compute(System.Double[][])" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.MachineLearning\Clustering\KMeans" File="KMeans.cs" Line="371">In member 'KMeans.Compute(double[][])', change parameter name 'data' to 'points' in order to match the identifier as it has been declared in 'IClusteringAlgorithm&lt;double[]&gt;.Compute(double[][])'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Compute(System.Double[][],System.Double[])" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.MachineLearning\Clustering\KMeans" File="KMeans.cs" Line="384">In member 'KMeans.Compute(double[][], double[])', change parameter name 'data' to 'points' in order to match the identifier as it has been declared in 'IClusteringAlgorithm&lt;double[], double&gt;.Compute(double[][], double[])'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="KMeans+KMeansBinder" Kind="Class" Accessibility="Assembly" ExternallyVisible="False">
+         <Members>
+          <Member Name="#BindToType(System.String,System.String)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.String.StartsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.MachineLearning\Clustering\KMeans" File="KMeans.cs" Line="637">Because the behavior of 'string.StartsWith(string)' could vary based on the current user's locale settings, replace this call in 'KMeans.KMeansBinder.BindToType(string, string)' with a call to 'string.StartsWith(string, StringComparison)'. If the result of 'string.StartsWith(string, StringComparison)' will be displayed to the user, such as when sorting a list of items for display in a list box, specify 'StringComparison.CurrentCulture' or 'StringComparison.CurrentCultureIgnoreCase' as the 'StringComparison' parameter. If comparing case-insensitive identifiers, such as file paths, environment variables, or registry keys and values, specify 'StringComparison.OrdinalIgnoreCase'. Otherwise, if comparing case-sensitive identifiers, specify 'StringComparison.Ordinal'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="KMeans+KMeansCluster_2_13" Kind="Class" Accessibility="Private" ExternallyVisible="False">
+         <Members>
+          <Member Name="#index" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning">It appears that field 'KMeans.KMeansCluster_2_13.index' is never used or is only ever assigned to. Use this field or remove it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#owner" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning">It appears that field 'KMeans.KMeansCluster_2_13.owner' is never used or is only ever assigned to. Use this field or remove it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="KMeansClusterCollection+KMeansCluster" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+           <Issue Certainty="90" Level="Error">Do not nest type 'KMeansClusterCollection.KMeansCluster'. Alternatively, change its accessibility so that it is not externally visible.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="KModesClusterCollection`1+KModesCluster" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+           <Issue Certainty="90" Level="Error">Do not nest type 'KModesClusterCollection&lt;T&gt;.KModesCluster'. Alternatively, change its accessibility so that it is not externally visible.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="MeanShift" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Accord.MachineLearning.IClusteringAlgorithm`1&lt;System.Double[]&gt;.Clusters" Kind="Property" Static="False" Accessibility="Private" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="#Accord.MachineLearning.IClusteringAlgorithm`1&lt;System.Double[]&gt;.get_Clusters()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="True">
+             <Messages>
+              <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+               <Issue Name="PropertyGetter" Certainty="90" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.MachineLearning\Clustering\MeanShift" File="MeanShift.cs" Line="653">'MeanShift.IClusteringAlgorithm&lt;double[]&gt;.Clusters.get()' creates an exception of type 'NotImplementedException', an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="MeanShiftClusterCollection" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Distortion(System.Double[][],System.Int32[],System.Double[])" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="CriticalError" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.MachineLearning\Clustering\MeanShift" File="MeanShiftCluster.cs" Line="194">'MeanShiftClusterCollection.Distortion(double[][], int[], double[])' locks on a reference of type 'int[]'. Replace this with a lock against an object with strong-identity.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Nearest(System.Double[],System.Double[]&amp;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="1#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.MachineLearning\Clustering\MeanShift" File="MeanShiftCluster.cs" Line="115">In member 'MeanShiftClusterCollection.Nearest(double[], out double[])', change parameter name 'response' to 'responses' in order to match the identifier as it has been declared in 'ClusterCollection&lt;double[], double[], MeanShiftClusterCollection.MeanShiftCluster&gt;.Nearest(double[], out double[])'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Nearest(System.Double[][])" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.MachineLearning\Clustering\MeanShift" File="MeanShiftCluster.cs" Line="145">In member 'MeanShiftClusterCollection.Nearest(double[][])', change parameter name 'point' to 'points' in order to match the identifier as it has been declared in 'ClusterCollection&lt;double[], double[], MeanShiftClusterCollection.MeanShiftCluster&gt;.Nearest(double[][])'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="MeanShiftClusterCollection+MeanShiftCluster" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+           <Issue Certainty="90" Level="Error">Do not nest type 'MeanShiftClusterCollection.MeanShiftCluster'. Alternatively, change its accessibility so that it is not externally visible.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Accord.MachineLearning.VectorMachines">
+       <Types>
+        <Type Name="MulticlassSupportVectorMachine" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#computeParallel(System.Int32,System.Int32,System.Double[],System.Double&amp;,Accord.MachineLearning.VectorMachines.MulticlassSupportVectorMachine+Cache)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+             <Issue Name="TooGeneric" Certainty="95" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.MachineLearning\VectorMachines" File="MulticlassSupportVectorMachine.cs" Line="892">'MulticlassSupportVectorMachine.computeParallel(int, int, double[], out double, MulticlassSupportVectorMachine.Cache)' creates an exception of type 'Exception', an exception type that is not sufficiently specific and should never be raised by user code. If this exception instance might be thrown, use a different exception type.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Accord.MachineLearning.VectorMachines.Learning">
+       <Types>
+        <Type Name="BaseSupportVectorLearning" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#EstimateComplexity(Accord.Statistics.Kernels.IKernel,System.Double[][])" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+             <Issue Certainty="50" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.MachineLearning\VectorMachines\Learning\Base" File="BaseSupportVectorLearning.cs" Line="454">Consider changing the type of parameter 'kernel' in 'BaseSupportVectorLearning.EstimateComplexity(IKernel, double[][])' from 'IKernel' to its base type 'IKernel&lt;double[]&gt;'. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#EstimateComplexity(Accord.Statistics.Kernels.IKernel,System.Double[][],System.Int32[])" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="Breaking">
+             <Issue Certainty="50" Level="Error" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.MachineLearning\VectorMachines\Learning\Base" File="BaseSupportVectorLearning.cs" Line="511">Consider changing the type of parameter 'kernel' in 'BaseSupportVectorLearning.EstimateComplexity(IKernel, double[][], int[])' from 'IKernel' to its base type 'IKernel&lt;double[]&gt;'. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="MulticlassSupportVectorLearning" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Run(System.Boolean,System.Threading.CancellationToken)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.MachineLearning\VectorMachines\Learning" File="MulticlassSupportVectorLearning.cs" Line="427">Modify 'MulticlassSupportVectorLearning.Run(bool, CancellationToken)' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+            </Message>
+            <Message Id="AggregateException" TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.MachineLearning\VectorMachines\Learning" File="MulticlassSupportVectorLearning.cs" Line="442">Correct the spelling of the unrecognized token 'AggregateException' in the literal '"One or more exceptions were thrown when teaching the machines. Please check the ..."'.</Issue>
+            </Message>
+            <Message Id="InnerException" TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204" Status="Active" Created="2016-01-15 13:12:01Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="e:\Programmieren\Libs\accord-framework\Sources\Accord.MachineLearning\VectorMachines\Learning" File="MulticlassSupportVectorLearning.cs" Line="442">Correct the spelling of the unrecognized token 'InnerException' in the literal '"One or more exceptions were thrown when teaching the machines. Please check the ..."'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="AvoidExcessiveParametersOnGenericTypes" Category="Microsoft.Design" CheckId="CA1005">
+   <Name>Avoid excessive parameters on generic types</Name>
+   <Description>Avoid generic types with more than two type parameters as users have difficulties understanding what type parameters represent in types with long type parameter lists.</Description>
+   <Resolution Name="Default">Consider a design where {0} has no more than 2 type parameters.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182129.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="85">Error</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+   <Name>Avoid uncalled private code</Name>
+   <Description>There is uncalled code that is not externally visible and is not a known runtime entry point. If this violation fires in error, please send a problem report to the Visual Studio Code Analysis team.</Description>
+   <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182264.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="performancerules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
+   <Name>Avoid unused private fields</Name>
+   <Description>Private fields were detected that do not appear to be accessed within the assembly. If this violation fires in error, please send a problem report to the Visual Studio Code Analysis team.</Description>
+   <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms245042.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="performancerules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011">
+   <Name>Consider passing base types as parameters</Name>
+   <Description>Using base types as parameters to methods improves re-use of these methods if you only use methods &amp; properties from the parameter's base class. E.g. use Stream instead of FileStream as a parameter when only calling Stream.Read(), this makes the method work on all kind of streams instead of just File streams.</Description>
+   <Resolution Name="Default">Consider changing the type of parameter {0} in {1} from {2} to its base type {3}. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/3hk32yyz.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="50">Error</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+   <Name>Do not catch general exception types</Name>
+   <Description>You should not catch Exception or SystemException. Catching generic exception types can hide run-time problems from the library user, and can complicate debugging. You should catch only those exceptions that you can handle gracefully.</Description>
+   <Resolution Name="Default">Modify {0} to catch a more specific exception than {1} or rethrow the exception.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182137.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002">
+   <Name>Do not lock on objects with weak identity</Name>
+   <Description>Don't take locks on objects that may bleed across AppDomains or that don't have a strong identity.</Description>
+   <Resolution Name="Default">{0} locks on a reference of type {1}. Replace this with a lock against an object with strong-identity.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182290.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">CriticalError</MessageLevel>
+   <File Name="reliabilityrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065">
+   <Name>Do not raise exceptions in unexpected locations</Name>
+   <Description>Do not explicitly raise exceptions from unexpected locations. There are some methods, such as Equals and GetHashCode, which users do not expect to raise exceptions. Therefore calls to these methods are not commonly wrapped in try catch blocks.</Description>
+   <Resolution Name="PropertyGetter">{0} creates an exception of type {1}, an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb386039.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error, Warning</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201">
+   <Name>Do not raise reserved exception types</Name>
+   <Description>User code should not create and raise exceptions of certain types that are reserved by the runtime or which are of a too general exception type. Exception types that are too general include Exception, SystemException, and ApplicationException. Exception types that are reserved by the runtime include ThreadAbortException, OutOfMemoryException, ExecutionEngineException, and IndexOutOfRangeException.</Description>
+   <Resolution Name="TooGeneric">{0} creates an exception of type {1}, an exception type that is not sufficiently specific and should never be raised by user code. If this exception instance might be thrown, use a different exception type.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182338.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="usagerules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204">
+   <Name>Literals should be spelled correctly</Name>
+   <Description>This rule parses the literal string into words, tokenizing compound words, and checks the spelling of each word/token.</Description>
+   <Resolution Name="Default">Correct the spelling of the unrecognized token '{0}' in the literal '{1}'.</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/bb264488.aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034">
+   <Name>Nested types should not be visible</Name>
+   <Description>Do not use public, protected or protected internal (Protected Friend) nested types as a way of grouping types. Use namespaces for this purpose. There are very limited scenarios where nested types are the best design. Also, nested type member accessibility is not clearly understood by all audiences. Enumerators are exempt from this rule.</Description>
+   <Resolution Name="Default">Do not nest type {0}. Alternatively, change its accessibility so that it is not externally visible.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182162.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725">
+   <Name>Parameter names should match base declaration</Name>
+   <Description>For usability reasons, parameter names in overridden methods should match those of the base declaration.</Description>
+   <Resolution Name="Default">In member {0}, change parameter name {1} to {2} in order to match the identifier as it has been declared in {3}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182251.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="namingrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="ProvideObsoleteAttributeMessage" Category="Microsoft.Design" CheckId="CA1041">
+   <Name>Provide ObsoleteAttribute message</Name>
+   <Description>The ObsoleteAttribute.Message property provides the text message displayed when an obsolete type or member is compiled. This message should provide information on the replacement for the obsolete element.</Description>
+   <Resolution Name="Default">Provide a message for the ObsoleteAttribute that marks {0}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182166.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307">
+   <Name>Specify StringComparison</Name>
+   <Description>If an overload exists that takes a StringComparison argument, it should always be called in favor of an overload that does not.</Description>
+   <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, such as when sorting a list of items for display in a list box, specify 'StringComparison.CurrentCulture' or 'StringComparison.CurrentCultureIgnoreCase' as the 'StringComparison' parameter. If comparing case-insensitive identifiers, such as file paths, environment variables, or registry keys and values, specify 'StringComparison.OrdinalIgnoreCase'. Otherwise, if comparing case-sensitive identifiers, specify 'StringComparison.Ordinal'.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb386080.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="globalizationrules.dll" Version="12.0.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">Category</String>
+  <String Key="Certainty">Certainty</String>
+  <String Key="CollapseAll">Collapse All</String>
+  <String Key="CheckId">Check Id</String>
+  <String Key="Error">Error</String>
+  <String Key="Errors">error(s)</String>
+  <String Key="ExpandAll">Expand All</String>
+  <String Key="Help">Help</String>
+  <String Key="Line">Line</String>
+  <String Key="Messages">message(s)</String>
+  <String Key="LocationNotStoredInPdb">[Location not stored in Pdb]</String>
+  <String Key="Project">Project</String>
+  <String Key="Resolution">Resolution</String>
+  <String Key="Rule">Rule</String>
+  <String Key="RuleFile">Rule File</String>
+  <String Key="RuleDescription">Rule Description</String>
+  <String Key="Source">Source</String>
+  <String Key="Status">Status</String>
+  <String Key="Target">Target</String>
+  <String Key="Warning">Warning</String>
+  <String Key="Warnings">warning(s)</String>
+  <String Key="ReportTitle">Code Analysis Report</String>
+ </Localized>
+</FxCopReport>

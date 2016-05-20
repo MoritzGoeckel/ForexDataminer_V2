@@ -1,0 +1,2 @@
+Score;Pair;Time;Strategy;takeprofit;threshold;timeout;stochTimeframe;stoploss;positions;profit;drawdown;long;winning;pips/position;pips/day;positions/day;holdtime/positions;hittimeout;hittp;hitsl;
+2,42630000000007;USDJPY;576;SSIStochStrategy;0,2;0,08;120;60;0,11;237;2,45000000000007;-1,02;0,544303797468354;0,472573839662447;0,0103375527426163;0,102083333333336;9,875;135;155;28;53;

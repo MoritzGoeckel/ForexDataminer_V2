@@ -1,0 +1,2 @@
+Score;Pair;Time;Strategy;takeprofit;threshold;timeout;stochTimeframe;stoploss;positions;profit;drawdown;long;winning;pips/position;pips/day;positions/day;positivedaysratio;holdtime/positions;hittimeout;hittp;hitsl;
+-0,0333000000000031;EURUSD;576;SSIStochStrategy;0,27;0,17;60;60;0,31;335;0,000199999999996869;-0,0228000000000024;0,564179104477612;0,444776119402985;5,97014925363789E-07;8,33333333320289E-06;13,9583333333333;0,555555555555556;92;320;10;5;

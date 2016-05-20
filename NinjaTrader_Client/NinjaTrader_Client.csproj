@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{960BB308-5729-48B1-A947-49DF58A18FA1}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NinjaTrader_Client</RootNamespace>
+    <AssemblyName>NinjaTrader_Client</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accord">
+      <HintPath>..\DLL\Accord-Framework\Accord.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Audio">
+      <HintPath>..\DLL\Accord-Framework\Accord.Audio.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Audio.DirectSound">
+      <HintPath>..\DLL\Accord-Framework\Accord.Audio.DirectSound.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Audition">
+      <HintPath>..\DLL\Accord-Framework\Accord.Audition.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Controls">
+      <HintPath>..\DLL\Accord-Framework\Accord.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Controls.Audio">
+      <HintPath>..\DLL\Accord-Framework\Accord.Controls.Audio.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Controls.Imaging">
+      <HintPath>..\DLL\Accord-Framework\Accord.Controls.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Controls.Vision">
+      <HintPath>..\DLL\Accord-Framework\Accord.Controls.Vision.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Fuzzy">
+      <HintPath>..\DLL\Accord-Framework\Accord.Fuzzy.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Genetic">
+      <HintPath>..\DLL\Accord-Framework\Accord.Genetic.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Imaging">
+      <HintPath>..\DLL\Accord-Framework\Accord.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.IO">
+      <HintPath>..\DLL\Accord-Framework\Accord.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.MachineLearning">
+      <HintPath>..\DLL\Accord-Framework\Accord.MachineLearning.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math">
+      <HintPath>..\DLL\Accord-Framework\Accord.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math.Noncommercial">
+      <HintPath>..\DLL\Accord-Framework\Noncommercial\Accord.Math.Noncommercial.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Neuro">
+      <HintPath>..\DLL\Accord-Framework\Accord.Neuro.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Statistics">
+      <HintPath>..\DLL\Accord-Framework\Accord.Statistics.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Video">
+      <HintPath>..\DLL\Accord-Framework\Accord.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Video.DirectShow">
+      <HintPath>..\DLL\Accord-Framework\Accord.Video.DirectShow.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Video.Kinect">
+      <HintPath>..\DLL\Accord-Framework\Accord.Video.Kinect.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Video.VFW">
+      <HintPath>..\DLL\Accord-Framework\Accord.Video.VFW.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Video.Ximea">
+      <HintPath>..\DLL\Accord-Framework\Accord.Video.Ximea.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Vision">
+      <HintPath>..\DLL\Accord-Framework\Accord.Vision.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\Output\Database\mongo\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\Output\Database\mongo\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.2.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="netchartdir">
+      <HintPath>..\DLL\netchartdir.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="NinjaTrader.Client">
+      <HintPath>C:\Program Files (x86)\NinjaTrader 7\bin\NinjaTrader.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite.Designer">
+      <HintPath>..\DLL\SQLite.Designer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\DLL\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6">
+      <HintPath>..\DLL\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq">
+      <HintPath>..\DLL\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ZedGraph">
+      <HintPath>..\DLL\Accord-Framework\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Trader\Datamining\DataminingExcelGenerator.cs" />
+    <Compile Include="Trader\Datamining\InRamDatamining.cs" />
+    <Compile Include="Trader\Forms\AutopilotTradingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\Forms\AutopilotTradingForm.Designer.cs">
+      <DependentUpon>AutopilotTradingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trader\Forms\AnalyseRawTestDataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\Forms\AnalyseRawTestDataForm.Designer.cs">
+      <DependentUpon>AnalyseRawTestDataForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trader\Forms\CorrelationAnalysisForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\Forms\CorrelationAnalysisForm.Designer.cs">
+      <DependentUpon>CorrelationAnalysisForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trader\Forms\DataDensityForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\Forms\DataDensityForm.Designer.cs">
+      <DependentUpon>DataDensityForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trader\Datamining\DataminingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\Datamining\DataminingForm.Designer.cs">
+      <DependentUpon>DataminingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trader\Forms\TradeHistoryChartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\Forms\TradeHistoryChartForm.Designer.cs">
+      <DependentUpon>TradeHistoryChartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trader\BacktestBase\BacktestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\BacktestBase\BacktestForm.Designer.cs">
+      <DependentUpon>BacktestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trader\Forms\ChartingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\Forms\ChartingForm.Designer.cs">
+      <DependentUpon>ChartingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trader\Forms\ExportImportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\Forms\ExportImportForm.Designer.cs">
+      <DependentUpon>ExportImportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trader\Forms\LiveTradingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\Forms\LiveTradingForm.Designer.cs">
+      <DependentUpon>LiveTradingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trader\Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trader\Forms\DataDensityPerDayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\Forms\DataDensityPerDayForm.Designer.cs">
+      <DependentUpon>DataDensityPerDayForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trader\BacktestBase\Backtester.cs" />
+    <Compile Include="Trader\BacktestBase\BacktestData.cs" />
+    <Compile Include="Trader\BacktestBase\BacktestFormatter.cs" />
+    <Compile Include="Trader\BacktestBase\ProgressReport.cs" />
+    <Compile Include="Trader\BacktestBase\Visualization\BacktestDataVisualizer.cs" />
+    <Compile Include="Trader\BacktestBase\Visualization\BacktestVisualizationData.cs" />
+    <Compile Include="Trader\Backtests\RandomStrategyBacktestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\Backtests\DedicatedStrategyBacktestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\Charting\CustomChart.cs" />
+    <Compile Include="Trader\Charting\SimpleChart_Stepline.cs" />
+    <Compile Include="Trader\Charting\SimpleChart_Scatter.cs" />
+    <Compile Include="Trader\Databases\CachedDatabase.cs" />
+    <Compile Include="Trader\Databases\SQLiteDatabase.cs" />
+    <Compile Include="Trader\Datamining\CorrelationCondition.cs" />
+    <Compile Include="Trader\Datamining\DataminingDatabase.cs" />
+    <Compile Include="Trader\Datamining\DataminingQueue.cs" />
+    <Compile Include="Trader\Datamining\MongoDataminingDB.cs" />
+    <Compile Include="Trader\Indicators\WalkerIndicator.cs" />
+    <Compile Include="Trader\Indicators\MovingAverageIndicator.cs" />
+    <Compile Include="Trader\Indicators\TradingTimeIndicator.cs" />
+    <Compile Include="Trader\Indicators\StochIndicator.cs" />
+    <Compile Include="Trader\Databases\Database.cs" />
+    <Compile Include="Trader\Databases\SQLDatabase.cs" />
+    <Compile Include="Trader\Model\DataminingTickdata.cs" />
+    <Compile Include="Trader\ShowImageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\ShowImageForm.Designer.cs">
+      <DependentUpon>ShowImageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trader\Strategies\StochStrategy_OneSide.cs" />
+    <Compile Include="Trader\Strategies\StochStrategy.cs" />
+    <Compile Include="Trader\Strategies\MomentumStrategy.cs" />
+    <Compile Include="Trader\Strategies\SSIStochStrategy.cs" />
+    <Compile Include="Trader\Strategies\SSIStrategy.cs" />
+    <Compile Include="Trader\StrategyStringGeneratorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\StrategyStringGeneratorForm.Designer.cs">
+      <DependentUpon>StrategyStringGeneratorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trader\TradingAPIs\FakeTradingAPI.cs" />
+    <Compile Include="Trader\Model\TradePosition.cs" />
+    <Compile Include="Trader\StrategyBase\Strategy.cs" />
+    <Compile Include="Trader\Model\Config.cs" />
+    <Compile Include="Trader\Model\TimeValueData.cs" />
+    <Compile Include="Trader\Model\Tickdata.cs" />
+    <Compile Include="Trader\Databases\MongoFacade.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Trader\MainAPIs\NinjaTraderAPI.cs" />
+    <Compile Include="Trader\Databases\MongoDatabase.cs" />
+    <Compile Include="Trader\Datastreams\SSI_Downloader.cs" />
+    <Compile Include="Trader\TradingAPIs\ITradingAPI.cs" />
+    <Compile Include="Trader\TradingAPIs\NTLiveTradingAPI.cs" />
+    <Compile Include="Trader\TradingAPIs\PairData.cs" />
+    <Compile Include="Trader\Utils\HexColorCodes.cs" />
+    <Compile Include="Trader\Utils\ProgressDict.cs" />
+    <Compile Include="Trader\Utils\StringCompressor.cs" />
+    <Compile Include="Trader\Utils\Timestamp.cs" />
+    <EmbeddedResource Include="Trader\Forms\AutopilotTradingForm.resx">
+      <DependentUpon>AutopilotTradingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trader\Forms\AnalyseRawTestDataForm.resx">
+      <DependentUpon>AnalyseRawTestDataForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trader\Forms\CorrelationAnalysisForm.resx">
+      <DependentUpon>CorrelationAnalysisForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trader\Forms\DataDensityForm.resx">
+      <DependentUpon>DataDensityForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trader\Datamining\DataminingForm.resx">
+      <DependentUpon>DataminingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trader\Forms\TradeHistoryChartForm.resx">
+      <DependentUpon>TradeHistoryChartForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trader\BacktestBase\BacktestForm.resx">
+      <DependentUpon>BacktestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trader\Forms\ChartingForm.resx">
+      <DependentUpon>ChartingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trader\Forms\ExportImportForm.resx">
+      <DependentUpon>ExportImportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trader\Forms\LiveTradingForm.resx">
+      <DependentUpon>LiveTradingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trader\Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Trader\Forms\DataDensityPerDayForm.resx">
+      <DependentUpon>DataDensityPerDayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trader\ShowImageForm.resx">
+      <DependentUpon>ShowImageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trader\StrategyStringGeneratorForm.resx">
+      <DependentUpon>StrategyStringGeneratorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Trader\Notes\deadCode.txt" />
+    <Content Include="Trader\Notes\pairs.txt" />
+    <Content Include="Trader\Notes\Todo.txt" />
+    <Content Include="Trader\Notes\readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
