@@ -283,6 +283,7 @@
     <Compile Include="Trader\Datamining\DataminingDatabase.cs" />
     <Compile Include="Trader\Datamining\DataminingQueue.cs" />
     <Compile Include="Trader\Datamining\MongoDataminingDB.cs" />
+    <Compile Include="Trader\Indicators\StandartDeviationIndicator.cs" />
     <Compile Include="Trader\Indicators\RangeIndicator.cs" />
     <Compile Include="Trader\Indicators\WalkerIndicator.cs" />
     <Compile Include="Trader\Indicators\MovingAverageIndicator.cs" />

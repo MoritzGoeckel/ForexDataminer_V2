@@ -735,5 +735,10 @@ namespace NinjaTrader_Client.Trader
                     + "Sucesses" + seperator + "Count" + seperator + "SucessRate" + seperator + "Result" + seperator + "Percent gained" + Environment.NewLine
                     + successes + seperator + count + seperator + successRate + seperator + (successRate * slTpRatio) + seperator + result;
         }
+
+        void DataminingDatabase.getOutcomeIndicatorSampling(DataminingExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, string instument)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -29,9 +29,10 @@ namespace NinjaTrader_Client.Trader.Model
             values.Add("bid", bid);
             values.Add("ask", ask);
             values.Add("last", last);
+            values.Add("mid", getMedianPrice());
         }
 
-        public double getAvgPrice()
+        public double getMedianPrice()
         {
             return (values["bid"] + values["ask"]) / 2;
         }

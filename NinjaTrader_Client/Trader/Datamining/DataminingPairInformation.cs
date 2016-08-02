@@ -12,6 +12,8 @@ namespace NinjaTrader_Client.Trader.Datamining
         public string Pair;
         public Dictionary<string, DataminingDataComponentInfo> Components = new Dictionary<string, DataminingDataComponentInfo>();
 
+        public int Datasets = 0;
+
         public DataminingPairInformation(string name)
         {
             this.Pair = name;
@@ -19,7 +21,9 @@ namespace NinjaTrader_Client.Trader.Datamining
 
         public void checkTickdata(DataminingTickdata tickdata)
         {
-            foreach(KeyValuePair<string, double> v in tickdata.values)
+            Datasets++;
+
+            foreach (KeyValuePair<string, double> v in tickdata.values)
             {
                 if (Components.ContainsKey(v.Key) == false)
                     Components.Add(v.Key, new DataminingDataComponentInfo(v.Key));

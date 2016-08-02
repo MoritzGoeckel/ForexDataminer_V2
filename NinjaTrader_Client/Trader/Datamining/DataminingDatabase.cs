@@ -22,6 +22,7 @@ namespace NinjaTrader_Client.Trader.Datamining
         void deleteAll();
 
         void addIndicator(WalkerIndicator indicator, string instrument, string fieldId);
+        void getOutcomeIndicatorSampling(DataminingExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, string instument = null); //double min, double max, int steps, 
         void getOutcomeIndicatorSampling(DataminingExcelGenerator excel, double min, double max, int steps, string indicatorId, int outcomeTimeframeSeconds, string instument = null);
         string getSuccessRate(int outcomeTimeframeSeconds, string indicator, double min, double max, string instrument, double tpPercent, double slPercent, bool buy);
 
