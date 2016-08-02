@@ -29,6 +29,7 @@ namespace NinjaTrader_Client.Trader.Indicators
                 return new TimeValueData(currentTime, 0.5); //Do not open positions
 
             return new TimeValueData(currentTime, 1); //Happy trading :)
+            // Trading: 0 = No, 0.5 = Dont open, 1 = Yes
         }
 
         public override void setNextData(long timestamp, double value)

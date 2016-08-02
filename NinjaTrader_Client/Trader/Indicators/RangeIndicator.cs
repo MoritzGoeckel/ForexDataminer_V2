@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace NinjaTrader_Client.Trader.Indicators
 {
-    class StochIndicator : WalkerIndicator
+    class RangeIndicator : WalkerIndicator
     {
         private long timeframe;
         private List<TimestampValuePair> history = new List<TimestampValuePair>();
 
-        public StochIndicator(long timeframe)
+        public RangeIndicator(long timeframe)
         {
             this.timeframe = timeframe;
         }
@@ -82,20 +82,16 @@ namespace NinjaTrader_Client.Trader.Indicators
             double output;
 
             if (history.Count == 0 || max == min)
-                output = 0.5;
+                output = -1; //Invalid
             else
-                output = (valueNow - min) / (max - min);
+                output = (max - min) / valueNow;
 
-            if (output > 1 || output < 0)
-                throw new Exception("Stoch is calculating unexpected numbers:" + Environment.NewLine +
-                    "o" + output + " min" + min + " max"+max + " valueNow" + valueNow  + " max-min" + (max - min) + " now-min" + (valueNow - min) + " ratio" + (valueNow - min) / (max - min));
-
-            return new TimeValueData(timestampNow, output); // 0 >> stoch >> 1
+            return new TimeValueData(timestampNow, output);
         }
 
         public override string getName()
         {
-            return "Stoch_" + timeframe;
+            return "Range_" + timeframe;
         }
     }
 }

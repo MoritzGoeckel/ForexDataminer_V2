@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace NinjaTrader_Client.Trader.Indicators
 {
-    class MovingAverageIndicator : WalkerIndicator
+    class StandartDeviationIndicator : WalkerIndicator
     {
         private long timeframe;
         private List<TimestampValuePair> history = new List<TimestampValuePair>();
 
-        public MovingAverageIndicator(long timeframe)
+        public StandartDeviationIndicator(long timeframe)
         {
             this.timeframe = timeframe;
         }
@@ -33,26 +33,32 @@ namespace NinjaTrader_Client.Trader.Indicators
             valueNow = _value;
 
             sum += _value;
+            sumSquared += Math.Pow(_value, 2);
         }
 
         double sum = 0;
+        double sumSquared = 0;
+
         public override TimeValueData getIndicator()
         {
             while (history.Count != 0 && history[0].timestamp < timestampNow - timeframe)
             {
                 sum -= history[0].value;
+                sumSquared -= Math.Pow(history[0].value, 2);
+
                 history.RemoveAt(0);
             }
 
             double count = history.Count;
 
-            return new TimeValueData(timestampNow, (valueNow - (sum / count)) / valueNow); //difference... -0.1 = Preis 1% unter MA && 0.1 = Preis 1% über MA 
-            //-1 >> MA >> 1
+            double standartDeviation = Math.Sqrt((1 / (count - 1)) * (sumSquared - (1 / count * Math.Pow(sum, 2))));
+
+            return new TimeValueData(timestampNow, standartDeviation / valueNow);
         }
 
         public override string getName()
         {
-            return "MA_" + timeframe;
+            return "SD_" + timeframe;
         }
     }
 }
