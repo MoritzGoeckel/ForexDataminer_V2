@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Datamining
 {
-    class DataminingDataComponent
+    public class DataminingDataComponent
     {
         private string name;
         private int timeframe;

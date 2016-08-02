@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Datamining
 {
-    class DataminingPairInformation
+    public class DataminingPairInformation
     {
         public string Pair;
         public Dictionary<string, DataminingDataComponentInfo> Components = new Dictionary<string, DataminingDataComponentInfo>();

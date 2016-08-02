@@ -17,6 +17,7 @@ using Accord.Neuro.Learning;
 
 namespace NinjaTrader_Client.Trader
 {
+    [Obsolete]
     public class MongoDataminingDB : DataminingDatabase
     {
         MongoDatabase database;
@@ -666,11 +667,6 @@ namespace NinjaTrader_Client.Trader
             collection.RemoveAll();
         }
 
-        string DataminingDatabase.getInfo()
-        {
-            throw new NotImplementedException();
-        }
-
         string DataminingDatabase.getSuccessRate(int outcomeTimeframeSeconds, string indicator, double min, double max, string instrument, double tpPercent, double slPercent, bool buy)
         {
             var collection = mongodb.getDB().GetCollection("prices");
@@ -737,6 +733,11 @@ namespace NinjaTrader_Client.Trader
         }
 
         void DataminingDatabase.getOutcomeIndicatorSampling(DataminingExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, string instument)
+        {
+            throw new NotImplementedException();
+        }
+
+        Dictionary<string, DataminingPairInformation> DataminingDatabase.getInfo()
         {
             throw new NotImplementedException();
         }

@@ -166,9 +166,9 @@ namespace NinjaTrader_Client.Trader
             dataInRam.Clear();
         }
 
-        string DataminingDatabase.getInfo()
+        Dictionary<string, DataminingPairInformation> DataminingDatabase.getInfo()
         {
-            throw new NotImplementedException();
+            return infoDict;
         }
 
         public List<string> getLoadedPairs()

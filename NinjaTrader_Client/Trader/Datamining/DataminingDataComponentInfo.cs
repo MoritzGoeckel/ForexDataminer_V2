@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Datamining
 {
-    class DataminingDataComponentInfo : DataminingDataComponent
+    public class DataminingDataComponentInfo : DataminingDataComponent
     {
         public int occurences = 0;
 

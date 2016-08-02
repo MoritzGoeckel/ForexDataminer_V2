@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Model
 {
-    class DataminingTickdata
+    public class DataminingTickdata
     {
         public long timestamp;
 

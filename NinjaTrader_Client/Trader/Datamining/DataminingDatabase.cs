@@ -35,7 +35,7 @@ namespace NinjaTrader_Client.Trader.Datamining
 
         void doMachineLearning(string[] inputFields, string outcomeField, string instrument, string savePath = null);
 
-        string getInfo();
+        Dictionary<string, DataminingPairInformation> getInfo();
         //void trainNeuralNetwork(ActivationNetwork ann, int iterations)
     }
 }
