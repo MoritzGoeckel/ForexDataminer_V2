@@ -50,7 +50,7 @@ namespace NinjaTrader_Client.Trader
                 foreach (XElement node in childList)
                 {
                     string instrument = node.Attribute("Symbol").Value;
-                    Tickdata data = new Tickdata(Timestamp.getNow(), 0, Double.Parse(node.Element("Bid").Value.Replace(".", ",")), Double.Parse(node.Element("Ask").Value.Replace(".", ",")));
+                    Tickdata data = new Tickdata(Timestamp.getNow(), -1, Double.Parse(node.Element("Bid").Value.Replace(".", ",")), Double.Parse(node.Element("Ask").Value.Replace(".", ",")));
 
                     if (saved_values.ContainsKey(instrument) == false)
                     {

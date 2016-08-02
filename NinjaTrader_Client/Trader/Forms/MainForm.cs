@@ -34,6 +34,9 @@ namespace NinjaTrader_Client
 
         private bool recordData = false;
 
+        private Dictionary<string, double> prices = new Dictionary<string, double>();
+        private string lastUpdatedPair = null;
+
         private void Form1_Load(object sender, EventArgs e)
         {
             update_info_timer.Start();
@@ -127,7 +130,7 @@ namespace NinjaTrader_Client
 
         private void density_btn_Click(object sender, EventArgs e)
         {
-            DataDensityForm f = new DataDensityForm(priceHistoryDatabase, 1000 * 60 * 60, "AUDUSD");
+            DataDensityForm f = new DataDensityForm(priceHistoryDatabase, 1000 * 60 * 60, "EURUSD");
             f.Show();
         }
 
@@ -190,6 +193,13 @@ namespace NinjaTrader_Client
                 priceHistoryDatabase.setPrice(data, instrument);
                 insertedSets++;
             }
+
+            if (prices.ContainsKey(instrument) == false)
+                prices.Add(instrument, data.getAvgPrice());
+            else
+                prices[instrument] = data.getAvgPrice();
+
+            lastUpdatedPair = instrument;
         }
 
         private void connect_web_btn_Click(object sender, EventArgs e)
@@ -228,6 +238,21 @@ namespace NinjaTrader_Client
                     (ntApi != null ? "NT CONNECTED!" : "no nt connection") + Environment.NewLine +
                     (recordData ? "RECORDING!" : "not recording") + Environment.NewLine +
                     (ssiApi != null && webApi != null ? "DOWNLOADING!" : "not downloading") + Environment.NewLine;
+
+                if(prices.Count > 0)
+                {
+                    output += Environment.NewLine;
+                    foreach(string pair in majorsInstruments)
+                    {
+                        if(prices.ContainsKey(pair))
+                            output += pair + " " + Math.Round(prices[pair], 5) + Environment.NewLine;
+                    }
+                }
+
+                if(lastUpdatedPair != null)
+                {
+                    output += Environment.NewLine + "Last update: " + lastUpdatedPair + Environment.NewLine;
+                }
 
                 info_label.Text = output;
             }));
