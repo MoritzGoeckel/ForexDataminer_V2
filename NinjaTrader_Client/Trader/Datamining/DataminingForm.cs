@@ -27,11 +27,13 @@ namespace NinjaTrader_Client.Trader.Analysis
             stateMessage = msg;
         }
 
-        public DataminingForm(DataminingDatabase dataminingDb, Database sourceDatabase)
+        public DataminingForm(Database sourceDatabase)
         {
             InitializeComponent();
 
-            this.dataminingDb = dataminingDb;
+            MongoFacade facade = new MongoFacade(Application.StartupPath + "\\MongoDB\\mongod.exe", Application.StartupPath + "\\MongoDB\\data", "traderDataminingDb");
+            dataminingDb = new MongoDataminingDB(facade);
+
             this.sourceDatabase = sourceDatabase;
         }
 

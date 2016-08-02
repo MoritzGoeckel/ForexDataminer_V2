@@ -184,8 +184,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Trader\Datamining\DataminingDataComponent.cs" />
+    <Compile Include="Trader\Datamining\DataminingDataComponentInfo.cs" />
     <Compile Include="Trader\Datamining\DataminingExcelGenerator.cs" />
+    <Compile Include="Trader\Datamining\DataminingPairInformation.cs" />
     <Compile Include="Trader\Datamining\InRamDatamining.cs" />
+    <Compile Include="Trader\APIs\FXCM_Rates_Downloader.cs" />
     <Compile Include="Trader\Forms\AutopilotTradingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -312,9 +316,9 @@
     <Compile Include="Trader\Databases\MongoFacade.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Trader\MainAPIs\NinjaTraderAPI.cs" />
+    <Compile Include="Trader\APIs\NinjaTraderAPI.cs" />
     <Compile Include="Trader\Databases\MongoDatabase.cs" />
-    <Compile Include="Trader\Datastreams\SSI_Downloader.cs" />
+    <Compile Include="Trader\APIs\SSI_Downloader.cs" />
     <Compile Include="Trader\TradingAPIs\ITradingAPI.cs" />
     <Compile Include="Trader\TradingAPIs\NTLiveTradingAPI.cs" />
     <Compile Include="Trader\TradingAPIs\PairData.cs" />

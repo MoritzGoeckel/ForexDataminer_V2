@@ -44,6 +44,8 @@ namespace NinjaTrader_Client.Trader
             if (dataInRam.ContainsKey(pair))
                 dataInRam.Remove(pair);
 
+            DataminingPairInformation info = new DataminingPairInformation(pair);
+            
             dataInRam.Add(pair, new List<DataminingTickdata>());
 
             List<DataminingTickdata> list = dataInRam[pair];
@@ -55,6 +57,8 @@ namespace NinjaTrader_Client.Trader
             foreach (DataminingTickdata tickdata in cursors)
             {
                 list.Add(tickdata);
+                info.checkTickdata(tickdata);
+
                 current++;
 
                 progress.setProgress("Loading " + pair, Convert.ToInt32((max / current) * 100d));
@@ -190,13 +194,9 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
+        //Ungetestet
         void DataminingDatabase.addOutcome(long timeframeSeconds, string instrument)
-        {
-            //Do in walker? Faster? Todo...
-            //{ outcome_max_1800: { $exists: true } }
-
-            throw new Exception("Create the walker!");
-                        
+        {                       
             List<Thread> threads = new List<Thread>();
 
             int start = 0;
@@ -205,21 +205,26 @@ namespace NinjaTrader_Client.Trader
             int indexFrame = (end - start) / threadsCount;
             int threadId = 0;
 
+            //Starte threads mit unterschiedlichen bereichen
             while (threadId < threadsCount)
             {
-                int indexBeginning = start + (indexFrame * threadId);
-                int indexEnd = indexBeginning + indexFrame;
-
-                int outcomeIndex = 0;
-
-                double min = double.MaxValue, max = double.MinValue;
-
                 Thread thread = new Thread(delegate ()
                 {
+                    List<DataminingTickdata> dataInTimeframe = new List<DataminingTickdata>();
+                    double min = double.MaxValue, max = double.MinValue;
+                    
+                    int indexBeginning = start + (indexFrame * threadId);
+                    int indexEnd = indexBeginning + indexFrame;
+
+                    int outcomeIndex = indexBeginning;
+                    
                     string name = "outcome " + timeframeSeconds + " ID_" + indexBeginning + ":" + indexEnd;
                     progress.setProgress(name, 0);
                     int currentId = indexBeginning;
 
+                    List<DataminingTickdata> inBetweenData = new List<DataminingTickdata>();
+
+                    //Durchlaufe IDs in ThreadFrame
                     while (currentId <= indexEnd)
                     {
                         currentId++;
@@ -227,9 +232,38 @@ namespace NinjaTrader_Client.Trader
 
                         DataminingTickdata currentTickdata = dataInRam[instrument][currentId];
 
-                        if (currentTickdata.values.ContainsKey(dataname) == false)
+                        //Wenn Daten noch nicht da sind
+                        if (currentTickdata.values.ContainsKey("outcome_min_" + timeframeSeconds) == false)
                         {
-                            //Walker action ????
+                            bool hasToUpdateMinMax = false;
+                            
+                            //Zu alte entfernen
+                            while (inBetweenData[0].timestamp < currentTickdata.timestamp)
+                            {
+                                if (inBetweenData[0].values["last"] == max || inBetweenData[0].values["last"] == min)
+                                    hasToUpdateMinMax = true;
+
+                                inBetweenData.RemoveAt(0);
+                            }
+
+                            //Wenn min oder max entfernt, neu durchgehen
+                            if(hasToUpdateMinMax)
+                            {
+                                min = double.MaxValue;
+                                max = double.MinValue;
+
+                                foreach (DataminingTickdata data in inBetweenData)
+                                {
+                                    double last = data.values["last"];
+                                    if (last > max)
+                                        max = last;
+
+                                    if (last < min)
+                                        min = last;
+                                }
+                            }
+                        
+                            //Neue hinzufügen
                             while (outcomeIndex < dataInRam[instrument].Count() && (dataInRam[instrument][outcomeIndex].timestamp - currentTickdata.timestamp) * 1000 < timeframeSeconds)
                             {
                                 outcomeIndex++;
@@ -240,15 +274,14 @@ namespace NinjaTrader_Client.Trader
                                 if (last < min)
                                     min = last;
 
-                                agadaagagagagsd
-
-                                //Stimmt nicht... bin betrunken und wir brauchen min und max. geht das überhautp? ???
+                                inBetweenData.Add(dataInRam[instrument][outcomeIndex]);
                             }
 
+                            //Das actual outcome
                             DataminingTickdata outcomeData = dataInRam[instrument][outcomeIndex];
                                 
-                            currentTickdata.values.Add("outcome_min_" + timeframeSeconds, ...);
-                            currentTickdata.values.Add("outcome_max_" + timeframeSeconds, ...);
+                            currentTickdata.values.Add("outcome_min_" + timeframeSeconds, min);
+                            currentTickdata.values.Add("outcome_max_" + timeframeSeconds, max);
                             currentTickdata.values.Add("outcome_actual_" + timeframeSeconds, outcomeData.values["last"]);
                             currentTickdata.changed = true;
                         }
