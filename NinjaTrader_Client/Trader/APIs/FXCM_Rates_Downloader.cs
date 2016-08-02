@@ -64,6 +64,8 @@ namespace NinjaTrader_Client.Trader
                         {
                             if (sourceDataArrived != null)
                                 sourceDataArrived(data, instrument);
+
+                            saved_values[instrument] = data;
                         }
                     }
                 }
