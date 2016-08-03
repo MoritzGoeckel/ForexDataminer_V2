@@ -49,10 +49,15 @@ namespace NinjaTrader_Client.Trader.Datamining
 
         public DataminingDataComponent(string nameAndTimeframe)
         {
-            string[] nameAndTimeframeArray = nameAndTimeframe.Split('_');
+            if (nameAndTimeframe.Contains('_'))
+            {
+                string[] nameAndTimeframeArray = nameAndTimeframe.Split('_');
 
-            this.timeframe = Convert.ToInt32(nameAndTimeframeArray[1]);
-            this.name = nameAndTimeframeArray[0];
+                this.timeframe = Convert.ToInt32(nameAndTimeframeArray[1]);
+                this.name = nameAndTimeframeArray[0];
+            }
+            else
+                this.name = nameAndTimeframe;
         }
     }
 }

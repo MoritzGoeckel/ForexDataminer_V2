@@ -12,6 +12,7 @@ namespace NinjaTrader_Client.Trader.Datamining
         public string Pair;
         public Dictionary<string, DataminingDataComponentInfo> Components = new Dictionary<string, DataminingDataComponentInfo>();
 
+        public int AllDatasets = 0;
         public int Datasets = 0;
 
         public DataminingPairInformation(string name)

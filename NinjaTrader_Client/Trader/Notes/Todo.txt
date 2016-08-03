@@ -1,18 +1,8 @@
 ﻿Visualisierung
-	Farbcoderiung
+	Backtests
+	Datamining
 
-	Analyse der einzelnen Strategien (Seltsame history teilweise)
-
-Decition Components
-Riskmanagement Components
-
-Inverter for components
-
-Big backtests HFU
-
-Indicator: MA
-
-More analysis and data mining
-
-Nice to have:
-	FXCM API
+Component based Strategies
+	Decition Components
+	Riskmanagement Components
+	Inverter for components

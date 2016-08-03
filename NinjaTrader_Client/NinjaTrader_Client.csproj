@@ -294,10 +294,10 @@
     <Compile Include="Trader\Databases\Database.cs" />
     <Compile Include="Trader\Databases\SQLDatabase.cs" />
     <Compile Include="Trader\Model\DataminingTickdata.cs" />
-    <Compile Include="Trader\ShowImageForm.cs">
+    <Compile Include="Trader\Forms\ShowImageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Trader\ShowImageForm.Designer.cs">
+    <Compile Include="Trader\Forms\ShowImageForm.Designer.cs">
       <DependentUpon>ShowImageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Trader\Strategies\StochStrategy_OneSide.cs" />
@@ -305,10 +305,10 @@
     <Compile Include="Trader\Strategies\MomentumStrategy.cs" />
     <Compile Include="Trader\Strategies\SSIStochStrategy.cs" />
     <Compile Include="Trader\Strategies\SSIStrategy.cs" />
-    <Compile Include="Trader\StrategyStringGeneratorForm.cs">
+    <Compile Include="Trader\Forms\StrategyStringGeneratorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Trader\StrategyStringGeneratorForm.Designer.cs">
+    <Compile Include="Trader\Forms\StrategyStringGeneratorForm.Designer.cs">
       <DependentUpon>StrategyStringGeneratorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Trader\TradingAPIs\FakeTradingAPI.cs" />
@@ -375,10 +375,10 @@
     <EmbeddedResource Include="Trader\Forms\DataDensityPerDayForm.resx">
       <DependentUpon>DataDensityPerDayForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Trader\ShowImageForm.resx">
+    <EmbeddedResource Include="Trader\Forms\ShowImageForm.resx">
       <DependentUpon>ShowImageForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Trader\StrategyStringGeneratorForm.resx">
+    <EmbeddedResource Include="Trader\Forms\StrategyStringGeneratorForm.resx">
       <DependentUpon>StrategyStringGeneratorForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -398,7 +398,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Trader\Notes\deadCode.txt" />
+    <Content Include="Trader\Indicators\INDICATOR_RULES.txt" />
     <Content Include="Trader\Notes\pairs.txt" />
     <Content Include="Trader\Notes\Todo.txt" />
     <Content Include="Trader\Notes\readme.txt" />

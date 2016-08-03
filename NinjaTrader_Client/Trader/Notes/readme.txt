@@ -1,1 +1,1 @@
-﻿Tools -> Options -> Confirm order Placement = false
+﻿NT: Tools -> Options -> Confirm order Placement = false

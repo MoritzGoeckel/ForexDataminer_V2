@@ -29,5 +29,10 @@ namespace NinjaTrader_Client.Trader.Model
         {
             return (ask + bid) / 2;
         }
+
+        internal DataminingTickdata ToDataminingTickdata()
+        {
+            return new DataminingTickdata(timestamp, last, bid, ask);
+        }
     }
 }

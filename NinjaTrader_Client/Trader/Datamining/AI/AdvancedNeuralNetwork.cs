@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Accord.Neuro;
+using Accord.Neuro.Learning;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,129 +8,94 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Datamining.AI
 {
-    class AdvancedNeuralNetwork
+    class AdvancedNeuralNetwork : IMachineLearning
     {
-        public AdvancedNeuralNetwork()
+        private double learningRate = 0.1;
+        private double sigmoidAlphaValue = 2;
+        private int iterations = 100;
+
+        private bool useRegularization = false;
+        private bool useNguyenWidrow = false;
+        private bool useSameWeights = false;
+
+        private int inputCount;
+
+        private ActivationNetwork theNetwork;
+        private LevenbergMarquardtLearning teacher;
+
+        public AdvancedNeuralNetwork(int inputCount, int[] neuronsCount, double learningRate, double sigmoidAlphaValue, int iterations, bool useRegularization, bool useNguyenWidrow, bool useSameWeights, JacobianMethod method)
         {
-            /*string name = "ANN";
+            this.learningRate = learningRate;
+            this.sigmoidAlphaValue = sigmoidAlphaValue;
+            this.iterations = iterations;
+            this.useRegularization = useRegularization;
+            this.useNguyenWidrow = useNguyenWidrow;
+            this.useSameWeights = useSameWeights;
 
-            double learningRate = 0.1;
-            double sigmoidAlphaValue = 2;
-            int iterations = 100;
+            this.inputCount = inputCount;
 
-            bool useRegularization = false;
-            bool useNguyenWidrow = false;
-            bool useSameWeights = false;
-
-            progress.setProgress(name, "Creating ANN...");
-            
             // create multi-layer neural network
-            ActivationNetwork ann = new ActivationNetwork(
-                new BipolarSigmoidFunction(sigmoidAlphaValue),
-                inputFields.Length, 20, 2); //How many neuros ???? Standart is 1
+            theNetwork = new ActivationNetwork(
+                new BipolarSigmoidFunction(sigmoidAlphaValue), //Andere Function möglich???
+                inputCount, neuronsCount);
 
             if (useNguyenWidrow)
             {
-                progress.setProgress(name, "Creating NguyenWidrow...");
-                
                 if (useSameWeights)
                     Accord.Math.Random.Generator.Seed = 0;
 
-                NguyenWidrow initializer = new NguyenWidrow(ann);
+                NguyenWidrow initializer = new NguyenWidrow(theNetwork);
                 initializer.Randomize();
             }
-
-            progress.setProgress(name, "Creating LevenbergMarquardtLearning...");
             
             // create teacher
-            LevenbergMarquardtLearning teacher = new LevenbergMarquardtLearning(ann, useRegularization); //, JacobianMethod.ByBackpropagation
+            teacher = new LevenbergMarquardtLearning(theNetwork, useRegularization, method);
 
             // set learning rate and momentum
             teacher.LearningRate = learningRate;
+        }
 
-            IMongoQuery fieldsExistQuery = Query.And(Query.Exists(outcomeField + "_buy"), Query.Exists(outcomeField + "_sell"));
-            foreach (string inputField in inputFields)
-                fieldsExistQuery = Query.And(fieldsExistQuery, Query.Exists(inputField));
+        double IMachineLearning.getPrediction(double[] input)
+        {
+            return theNetwork.Compute(input)[0];
+        }
 
-            progress.setProgress(name, "Importing...");
-                
-            // Load Data
-            long start = database.getFirstTimestamp();
-            long end = database.getLastTimestamp();
+        void IMachineLearning.load(string path)
+        {
+            theNetwork = ActivationNetwork.Load(path) as ActivationNetwork;
+        }
 
-            var collection = mongodb.getDB().GetCollection("prices");
-            var docs = collection.FindAs<BsonDocument>(Query.And(fieldsExistQuery, Query.EQ("instrument", instrument), Query.LT("timestamp", end), Query.GTE("timestamp", start))).SetSortOrder(SortBy.Ascending("timestamp"));
-            docs.SetFlags(QueryFlags.NoCursorTimeout);
-            long resultCount = docs.Count();
+        void IMachineLearning.save(string path)
+        {
+            theNetwork.Save(path);
+        }
 
-            //Press into Array from
-            progress.setProgress(name, "Casting to array...");
-                
-            double[][] inputs = new double[resultCount][]; // [inputFields.Length]
-            double[][] outputs = new double[resultCount][]; // [2]
+        List<double[]> inputs = new List<double[]>();
+        List<double[]> outputs = new List<double[]>();
 
-            int row = 0;
-            foreach (var doc in docs)
-            {
-                outputs[row] = new double[] { doc[outcomeField + "_buy"].AsInt32, doc[outcomeField + "_sell"].AsInt32 };
+        void IMachineLearning.addData(double[] input, double output)
+        {
+            foreach(double d in input)
+                if (double.IsInfinity(d) || double.IsNegativeInfinity(d) || double.IsNaN(d))
+                    throw new Exception("Invalid value!");
 
-                double[] inputRow = new double[inputFields.Length];
+            if (double.IsInfinity(output) || double.IsNegativeInfinity(output) || double.IsNaN(output))
+                throw new Exception("Invalid value!");
 
-                for (int i = 0; i < inputFields.Length; i++)
-                {
-                    double value = doc[inputFields[i]].AsDouble;
-                    if (double.IsInfinity(value) || double.IsNegativeInfinity(value) || double.IsNaN(value))
-                        throw new Exception("Invalid value!");
-                    else
-                        inputRow[i] = value;
-                }
+            inputs.Add(input);
+            outputs.Add(new double[] { output } );
+        }
 
-                inputs[row] = inputRow;
+        double error;
+        void IMachineLearning.train()
+        {
+            error = teacher.RunEpoch(inputs.ToArray(), outputs.ToArray());
+        }
 
-                //Check these! :) ???
-
-                row++;
-            }
-                
-            // Teach the ANN
-            for (int iteration = 0; iteration < iterations; iteration++)
-            {
-                progress.setProgress(name, "Teaching... " + iteration + " of " + iterations);
-                double error = teacher.RunEpoch(inputs, outputs);
-
-                if (savePath != null)
-                    ann.Save(savePath);
-            }
-
-            //Compute Error
-            progress.setProgress(name, "Calculating error...");
-                
-            int successes = 0;
-            int fails = 0;
-            for (int i = 0; i < inputs.Length; i++)
-            {
-                var realOutput = outputs[i];
-
-                //Buys
-                double[] calculated = ann.Compute(inputs[i]);
-                if (calculated[0] == 0 || calculated[0] == realOutput[0])
-                    successes++;
-
-                if (calculated[0] == 1 && realOutput[0] == 0)
-                    fails++;
-
-                //Sells
-                if (calculated[1] == 0 || calculated[1] == realOutput[1])
-                    successes++;
-
-                if (calculated[1] == 1 && realOutput[1] == 0)
-                    fails++;
-            }
-
-            double successRate = (double)successes / (inputs.Length * 2);
-            double failRate = (double)fails / (inputs.Length * 2);
-
-            progress.setProgress(name, "Finished with successRate of " + successRate + " failRate of " + failRate);*/
+        void IMachineLearning.clearData()
+        {
+            inputs.Clear();
+            outputs.Clear();
         }
     }
 }

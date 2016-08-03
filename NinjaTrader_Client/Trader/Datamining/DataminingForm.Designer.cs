@@ -39,12 +39,12 @@
             this.outcome_sampling_button = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.load_btn = new System.Windows.Forms.Button();
             this.save_btn = new System.Windows.Forms.Button();
             this.import_btn = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.indicator_btn = new System.Windows.Forms.Button();
             this.outcomeCode_btn = new System.Windows.Forms.Button();
-            this.differenceIndicator_btn = new System.Windows.Forms.Button();
             this.metaIndicatorSum_btn = new System.Windows.Forms.Button();
             this.addData_btn = new System.Windows.Forms.Button();
             this.outcome_btn = new System.Windows.Forms.Button();
@@ -55,6 +55,7 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.updateInfo_Btn = new System.Windows.Forms.Button();
             this.dataInfo_label = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -153,6 +154,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.load_btn);
             this.groupBox2.Controls.Add(this.save_btn);
             this.groupBox2.Controls.Add(this.import_btn);
             this.groupBox2.Controls.Add(this.delete_btn);
@@ -162,6 +164,17 @@
             this.groupBox2.TabIndex = 18;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Dangerous";
+            // 
+            // load_btn
+            // 
+            this.load_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.load_btn.Location = new System.Drawing.Point(121, 47);
+            this.load_btn.Name = "load_btn";
+            this.load_btn.Size = new System.Drawing.Size(109, 23);
+            this.load_btn.TabIndex = 14;
+            this.load_btn.Text = "Load";
+            this.load_btn.UseVisualStyleBackColor = true;
+            this.load_btn.Click += new System.EventHandler(this.load_btn_Click);
             // 
             // save_btn
             // 
@@ -189,7 +202,6 @@
             // 
             this.groupBox3.Controls.Add(this.indicator_btn);
             this.groupBox3.Controls.Add(this.outcomeCode_btn);
-            this.groupBox3.Controls.Add(this.differenceIndicator_btn);
             this.groupBox3.Controls.Add(this.metaIndicatorSum_btn);
             this.groupBox3.Controls.Add(this.addData_btn);
             this.groupBox3.Controls.Add(this.outcome_btn);
@@ -209,6 +221,7 @@
             this.indicator_btn.TabIndex = 18;
             this.indicator_btn.Text = "Add Indicator";
             this.indicator_btn.UseVisualStyleBackColor = true;
+            this.indicator_btn.Click += new System.EventHandler(this.indicator_btn_Click);
             // 
             // outcomeCode_btn
             // 
@@ -219,16 +232,7 @@
             this.outcomeCode_btn.TabIndex = 17;
             this.outcomeCode_btn.Text = "Add outc. Label";
             this.outcomeCode_btn.UseVisualStyleBackColor = true;
-            // 
-            // differenceIndicator_btn
-            // 
-            this.differenceIndicator_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.differenceIndicator_btn.Location = new System.Drawing.Point(121, 48);
-            this.differenceIndicator_btn.Name = "differenceIndicator_btn";
-            this.differenceIndicator_btn.Size = new System.Drawing.Size(109, 23);
-            this.differenceIndicator_btn.TabIndex = 16;
-            this.differenceIndicator_btn.Text = "Add Difference";
-            this.differenceIndicator_btn.UseVisualStyleBackColor = true;
+            this.outcomeCode_btn.Click += new System.EventHandler(this.outcomeCode_btn_Click);
             // 
             // metaIndicatorSum_btn
             // 
@@ -239,6 +243,7 @@
             this.metaIndicatorSum_btn.TabIndex = 15;
             this.metaIndicatorSum_btn.Text = "Add Sum";
             this.metaIndicatorSum_btn.UseVisualStyleBackColor = true;
+            this.metaIndicatorSum_btn.Click += new System.EventHandler(this.metaIndicatorSum_btn_Click);
             // 
             // addData_btn
             // 
@@ -249,6 +254,7 @@
             this.addData_btn.TabIndex = 14;
             this.addData_btn.Text = "Add Data";
             this.addData_btn.UseVisualStyleBackColor = true;
+            this.addData_btn.Click += new System.EventHandler(this.addData_btn_Click);
             // 
             // outcome_btn
             // 
@@ -259,6 +265,7 @@
             this.outcome_btn.TabIndex = 13;
             this.outcome_btn.Text = "Add Outcome";
             this.outcome_btn.UseVisualStyleBackColor = true;
+            this.outcome_btn.Click += new System.EventHandler(this.outcome_btn_Click);
             // 
             // groupBox4
             // 
@@ -280,6 +287,7 @@
             this.successRate_btn.TabIndex = 17;
             this.successRate_btn.Text = "Success Rate";
             this.successRate_btn.UseVisualStyleBackColor = true;
+            this.successRate_btn.Click += new System.EventHandler(this.successRate_btn_Click);
             // 
             // groupBox5
             // 
@@ -324,6 +332,7 @@
             // 
             // groupBox8
             // 
+            this.groupBox8.Controls.Add(this.updateInfo_Btn);
             this.groupBox8.Controls.Add(this.dataInfo_label);
             this.groupBox8.Location = new System.Drawing.Point(642, 12);
             this.groupBox8.Name = "groupBox8";
@@ -332,11 +341,22 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Data";
             // 
+            // updateInfo_Btn
+            // 
+            this.updateInfo_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.updateInfo_Btn.Location = new System.Drawing.Point(9, 366);
+            this.updateInfo_Btn.Name = "updateInfo_Btn";
+            this.updateInfo_Btn.Size = new System.Drawing.Size(141, 23);
+            this.updateInfo_Btn.TabIndex = 11;
+            this.updateInfo_Btn.Text = "Update info";
+            this.updateInfo_Btn.UseVisualStyleBackColor = true;
+            this.updateInfo_Btn.Click += new System.EventHandler(this.updateInfo_Btn_Click);
+            // 
             // dataInfo_label
             // 
             this.dataInfo_label.Location = new System.Drawing.Point(6, 18);
             this.dataInfo_label.Name = "dataInfo_label";
-            this.dataInfo_label.Size = new System.Drawing.Size(144, 371);
+            this.dataInfo_label.Size = new System.Drawing.Size(144, 345);
             this.dataInfo_label.TabIndex = 0;
             this.dataInfo_label.Text = "no data yet";
             // 
@@ -388,7 +408,6 @@
         private System.Windows.Forms.Button outcome_btn;
         private System.Windows.Forms.Button indicator_btn;
         private System.Windows.Forms.Button outcomeCode_btn;
-        private System.Windows.Forms.Button differenceIndicator_btn;
         private System.Windows.Forms.Button metaIndicatorSum_btn;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button successRate_btn;
@@ -399,5 +418,7 @@
         private System.Windows.Forms.Button save_btn;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Label dataInfo_label;
+        private System.Windows.Forms.Button load_btn;
+        private System.Windows.Forms.Button updateInfo_Btn;
     }
 }

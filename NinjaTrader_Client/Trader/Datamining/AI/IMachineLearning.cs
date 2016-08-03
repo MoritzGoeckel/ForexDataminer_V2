@@ -8,7 +8,9 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
 {
     public interface IMachineLearning
     {
-        void train(double[] input, double output);
+        void clearData();
+        void addData(double[] input, double output);
+        void train();
 
         double getPrediction(double[] input);
 
