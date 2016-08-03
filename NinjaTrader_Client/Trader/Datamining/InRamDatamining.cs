@@ -15,10 +15,11 @@ using Accord.Math;
 using Accord.Neuro;
 using Accord.Neuro.Learning;
 using System.Runtime.CompilerServices;
+using NinjaTrader_Client.Trader.Datamining.AI;
 
 namespace NinjaTrader_Client.Trader
 {
-    public class InRamDatamining : DataminingDatabase
+    public class InRamDatamining
     {
         MongoFacade mongodb;
 
@@ -151,7 +152,7 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
-        void DataminingDatabase.deleteAll()
+        public void deleteAll()
         {
             foreach(string collectionName in mongodb.getDB().GetCollectionNames())
             {
@@ -166,7 +167,7 @@ namespace NinjaTrader_Client.Trader
             dataInRam.Clear();
         }
 
-        Dictionary<string, DataminingPairInformation> DataminingDatabase.getInfo()
+        public Dictionary<string, DataminingPairInformation> getInfo()
         {
             return infoDict;
         }
@@ -180,7 +181,7 @@ namespace NinjaTrader_Client.Trader
             return pairs;
         }
 
-        void DataminingDatabase.importPair(string pair, long start, long end, Database otherDatabase)
+        public void importPair(string pair, long start, long end, Database otherDatabase)
         {
             List<Thread> threads = new List<Thread>();
 
@@ -225,7 +226,7 @@ namespace NinjaTrader_Client.Trader
         }
 
         //Ungetestet
-        void DataminingDatabase.addOutcome(long timeframeSeconds, string instrument)
+        public void addOutcome(long timeframeSeconds, string instrument)
         {                       
             List<Thread> threads = new List<Thread>();
 
@@ -332,7 +333,7 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
-        void DataminingDatabase.addData(string dataname, Database database, string instrument)
+        public void addData(string dataname, Database database, string instrument)
         {
             List<DataminingTickdata> inRamList = dataInRam[instrument];
             
@@ -394,7 +395,7 @@ namespace NinjaTrader_Client.Trader
         };
 
         //Todo: Excel reporting
-        void DataminingDatabase.getOutcomeIndicatorSampling(DataminingExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, string instrument)
+        public void getOutcomeIndicatorSampling(DataminingExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, string instrument)
         {
             //Min und Max wird nicht mehr verwendet... ???
 
@@ -481,12 +482,12 @@ namespace NinjaTrader_Client.Trader
             excel.FinishSheet(sheetName);
         }
 
-        ProgressDict DataminingDatabase.getProgress()
+        public ProgressDict getProgress()
         {
             return progress;
         }
 
-        void DataminingDatabase.addIndicator(WalkerIndicator indicator, string instrument, string fieldId)
+        public void addIndicator(WalkerIndicator indicator, string instrument, string fieldId)
         {
             string name = "Indicator " + indicator.getName() + " " + instrument + " " + fieldId;
             progress.setProgress(name, 0);
@@ -513,7 +514,7 @@ namespace NinjaTrader_Client.Trader
             progress.remove(name);
         }
 
-        void DataminingDatabase.addMetaIndicatorSum(string[] ids, double[] weights, string fieldName, string instrument)
+        public void addMetaIndicatorSum(string[] ids, double[] weights, string fieldName, string instrument)
         {
             List<DataminingTickdata> inRamList = dataInRam[instrument];
 
@@ -569,7 +570,7 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
-        void DataminingDatabase.addMetaIndicatorDifference(string id, string id_subtract, string fieldName, string instrument)
+        public void addMetaIndicatorDifference(string id, string id_subtract, string fieldName, string instrument)
         {
             List<DataminingTickdata> inRamList = dataInRam[instrument];
 
@@ -622,7 +623,7 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
-        void DataminingDatabase.addOutcomeCode(double percentDifference, int outcomeTimeframeSeconds, string instrument)
+        public void addOutcomeCode(double percentDifference, int outcomeTimeframeSeconds, string instrument)
         {
             string outcomeCodeFieldName = "outcome_code_" + outcomeTimeframeSeconds + "_" + percentDifference;
             
@@ -679,7 +680,7 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
-        string DataminingDatabase.getSuccessRate(int outcomeTimeframeSeconds, string indicator, double min, double max, string instrument, double tpPercent, double slPercent, bool buy)
+        public string getSuccessRate(int outcomeTimeframeSeconds, string indicator, double min, double max, string instrument, double tpPercent, double slPercent, bool buy)
         {
             List<DataminingTickdata> inRamList = dataInRam[instrument];
 
@@ -777,144 +778,59 @@ namespace NinjaTrader_Client.Trader
                     + successes + seperator + count + seperator + successRate + seperator + (successRate * slTpRatio) + seperator + result;
         }
 
-        void DataminingDatabase.getCorrelation(string indicatorId, int outcomeTimeframe, CorrelationCondition condition)
+        public void getCorrelation(string indicatorId, int outcomeTimeframe, CorrelationCondition condition)
         {
             throw new NotImplementedException();
         }
 
-        void DataminingDatabase.getCorrelationTable()
+        public void getCorrelationTable()
         {
             throw new NotImplementedException();
         }
 
-        void DataminingDatabase.doMachineLearning(string[] inputFields, string outcomeField, string instrument, string savePath = null)
+        public void trainLearningComponent(string[] inputFields, string outcomeField, string instrument, IMachineLearning learningComponent)
         {
-            throw new Exception("Not implemented");
+            progress.setProgress("Training", 0);
 
-            /*string name = "ANN";
+            double dataCount = dataInRam[instrument].Count();
+            double doneData = 0;
 
-            double learningRate = 0.1;
-            double sigmoidAlphaValue = 2;
-            int iterations = 100;
-
-            bool useRegularization = false;
-            bool useNguyenWidrow = false;
-            bool useSameWeights = false;
-
-            progress.setProgress(name, "Creating ANN...");
-            
-            // create multi-layer neural network
-            ActivationNetwork ann = new ActivationNetwork(
-                new BipolarSigmoidFunction(sigmoidAlphaValue),
-                inputFields.Length, 20, 2); //How many neuros ???? Standart is 1
-
-            if (useNguyenWidrow)
+            foreach (DataminingTickdata data in dataInRam[instrument])
             {
-                progress.setProgress(name, "Creating NguyenWidrow...");
-                
-                if (useSameWeights)
-                    Accord.Math.Random.Generator.Seed = 0;
+                bool validTick = true;
+                double[] input = new double[inputFields.Length];
 
-                NguyenWidrow initializer = new NguyenWidrow(ann);
-                initializer.Randomize();
-            }
+                if (data.values.ContainsKey(outcomeField) == false)
+                    continue;
 
-            progress.setProgress(name, "Creating LevenbergMarquardtLearning...");
-            
-            // create teacher
-            LevenbergMarquardtLearning teacher = new LevenbergMarquardtLearning(ann, useRegularization); //, JacobianMethod.ByBackpropagation
+                double outcome = data.values[outcomeField];
 
-            // set learning rate and momentum
-            teacher.LearningRate = learningRate;
-
-            IMongoQuery fieldsExistQuery = Query.And(Query.Exists(outcomeField + "_buy"), Query.Exists(outcomeField + "_sell"));
-            foreach (string inputField in inputFields)
-                fieldsExistQuery = Query.And(fieldsExistQuery, Query.Exists(inputField));
-
-            progress.setProgress(name, "Importing...");
-                
-            // Load Data
-            long start = database.getFirstTimestamp();
-            long end = database.getLastTimestamp();
-
-            var collection = mongodb.getDB().GetCollection("prices");
-            var docs = collection.FindAs<BsonDocument>(Query.And(fieldsExistQuery, Query.EQ("instrument", instrument), Query.LT("timestamp", end), Query.GTE("timestamp", start))).SetSortOrder(SortBy.Ascending("timestamp"));
-            docs.SetFlags(QueryFlags.NoCursorTimeout);
-            long resultCount = docs.Count();
-
-            //Press into Array from
-            progress.setProgress(name, "Casting to array...");
-                
-            double[][] inputs = new double[resultCount][]; // [inputFields.Length]
-            double[][] outputs = new double[resultCount][]; // [2]
-
-            int row = 0;
-            foreach (var doc in docs)
-            {
-                outputs[row] = new double[] { doc[outcomeField + "_buy"].AsInt32, doc[outcomeField + "_sell"].AsInt32 };
-
-                double[] inputRow = new double[inputFields.Length];
-
-                for (int i = 0; i < inputFields.Length; i++)
+                int i = 0;
+                foreach(string inputField in inputFields)
                 {
-                    double value = doc[inputFields[i]].AsDouble;
-                    if (double.IsInfinity(value) || double.IsNegativeInfinity(value) || double.IsNaN(value))
-                        throw new Exception("Invalid value!");
+                    if (data.values.ContainsKey(inputField))
+                        input[i] = data.values[inputField];
                     else
-                        inputRow[i] = value;
+                    {
+                        validTick = false;
+                        break;
+                    }
+
+                    i++;
                 }
 
-                inputs[row] = inputRow;
+                if (validTick)
+                {
+                    learningComponent.train(input, outcome);
+                    doneWriteOperation();
+                }
 
-                //Check these! :) ???
+                doneData++;
 
-                row++;
-            }
-                
-            // Teach the ANN
-            for (int iteration = 0; iteration < iterations; iteration++)
-            {
-                progress.setProgress(name, "Teaching... " + iteration + " of " + iterations);
-                double error = teacher.RunEpoch(inputs, outputs);
-
-                if (savePath != null)
-                    ann.Save(savePath);
+                progress.setProgress("Training", Convert.ToInt32(doneData / dataCount * 100d));
             }
 
-            //Compute Error
-            progress.setProgress(name, "Calculating error...");
-                
-            int successes = 0;
-            int fails = 0;
-            for (int i = 0; i < inputs.Length; i++)
-            {
-                var realOutput = outputs[i];
-
-                //Buys
-                double[] calculated = ann.Compute(inputs[i]);
-                if (calculated[0] == 0 || calculated[0] == realOutput[0])
-                    successes++;
-
-                if (calculated[0] == 1 && realOutput[0] == 0)
-                    fails++;
-
-                //Sells
-                if (calculated[1] == 0 || calculated[1] == realOutput[1])
-                    successes++;
-
-                if (calculated[1] == 1 && realOutput[1] == 0)
-                    fails++;
-            }
-
-            double successRate = (double)successes / (inputs.Length * 2);
-            double failRate = (double)fails / (inputs.Length * 2);
-
-            progress.setProgress(name, "Finished with successRate of " + successRate + " failRate of " + failRate);*/
-        }
-
-        void DataminingDatabase.getOutcomeIndicatorSampling(DataminingExcelGenerator excel, double min, double max, int steps, string indicatorId, int outcomeTimeframeSeconds, string instument)
-        {
-            throw new NotImplementedException();
+            progress.remove("Training");
         }
     }
 }

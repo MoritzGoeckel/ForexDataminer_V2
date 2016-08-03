@@ -1,23 +1,19 @@
 ﻿using NinjaTrader_Client.Trader.Datamining;
 using NinjaTrader_Client.Trader.Indicators;
 using NinjaTrader_Client.Trader.MainAPIs;
+using NinjaTrader_Client.Trader.Utils;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NinjaTrader_Client.Trader.Analysis
 {
     public partial class DataminingForm : Form
     {
-        DataminingDatabase dataminingDb;
+        InRamDatamining dataminingDb;
         Database sourceDatabase;
 
         string stateMessage = "";
@@ -32,48 +28,62 @@ namespace NinjaTrader_Client.Trader.Analysis
             InitializeComponent();
 
             MongoFacade facade = new MongoFacade(Application.StartupPath + "\\MongoDB\\mongod.exe", Application.StartupPath + "\\MongoDB\\data", "traderDataminingDb");
-            dataminingDb = new MongoDataminingDB(facade);
+            dataminingDb = new InRamDatamining(facade);
 
             this.sourceDatabase = sourceDatabase;
         }
 
         private void DataminingForm_Load(object sender, EventArgs e)
         {
-            timer1.Start();
+            updateUI_timer.Start();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            label1.Text = dataminingDb.getProgress().getString();
-            label2.Text = stateMessage;
-        }
+            //Progress Text
+            progress_label.Text = dataminingDb.getProgress().getString();
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            
-        }
+            //State text
+            state_label.Text = stateMessage + "\t" + Math.Round(dataminingDb.getOperationsPerSecond(), 2);
 
-        private void create_ann_button_click(object sender, EventArgs e)
-        {
-            dataminingDb.doMachineLearning(
-                new string[] {
-                    "MA1-MA3",
-                    "MA3-MA6",
-                    "MA9-MA12",
-                    "Stoch_" + 1000 * 60 * 60 * 3 + "_last",
-                    "Stoch_" + 1000 * 60 * 60 * 6 + "_last",
-                    "Stoch_" + 1000 * 60 * 60 * 12 + "_last",
-                    "ssi-mt4",
-                    "ssi-win-mt"},
-                "outcome_code_" + 60 * 30 + "_" + 0.10,
-                "EURUSD", 
-                Application.StartupPath + "/ann.NeuralNetwork");
+            //Render dataInfo
+            StringBuilder dataInfoB = new StringBuilder("");
+            foreach(KeyValuePair<string, DataminingPairInformation> pair in dataminingDb.getInfo())
+            {
+                dataInfoB.Append(pair.Key + " (" + pair.Value.Datasets + ")" + Environment.NewLine);
+
+                foreach (KeyValuePair<string, DataminingDataComponentInfo> compInf in pair.Value.Components)
+                {
+                    dataInfoB.Append("\t" + compInf.Key + "\t" + compInf.Value.getOccurencesRatio(pair.Value.Datasets) + Environment.NewLine);
+                }
+
+                dataInfoB.Append(Environment.NewLine);
+            }
+
+            dataInfo_label.Text = dataInfoB.ToString();
         }
 
         private void button_deleteAll_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Echt?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageBox.Show("Really delete all data from the datamining database?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 dataminingDb.deleteAll();
+        }
+
+        private void save_btn_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Save data?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                dataminingDb.savePair("EURUSD");
+        }
+
+        private void import_btn_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Import data?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                dataminingDb.importPair("EURUSD", 0, Timestamp.getNow(), sourceDatabase);
+        }
+
+        private void create_ann_button_click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void button_start_q_Click(object sender, EventArgs e)
@@ -150,8 +160,7 @@ namespace NinjaTrader_Client.Trader.Analysis
                 //EURUSD
                 //GPBUSD
                 //USDJPY
-
-                //USDCHF not yet
+                //USDCHF
             });
 
             thread.Start();
@@ -159,7 +168,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         public void doSample(string pair)
         {
-            if (Directory.Exists(Application.StartupPath + @"\Analysis\") == false)
+            /*if (Directory.Exists(Application.StartupPath + @"\Analysis\") == false)
                 Directory.CreateDirectory(Application.StartupPath + @"\Analysis\");
 
             DataminingExcelGenerator excel = new DataminingExcelGenerator(Application.StartupPath + @"\Analysis\" + DateTime.Now.ToString("yyyy_dd_mm") + "_" + pair + ".xls");
@@ -168,103 +177,10 @@ namespace NinjaTrader_Client.Trader.Analysis
             dataminingDb.getOutcomeIndicatorSampling(excel, -1, 1, 20, "ssi-mt4", 60 * 60, pair);
             dataminingDb.getOutcomeIndicatorSampling(excel, -1, 1, 20, "ssi-win-mt", 60 * 60, pair);
 
-            setState("SSI 2");
-            dataminingDb.getOutcomeIndicatorSampling(excel, -1, 1, 20, "ssi-mt4", 60 * 30, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, -1, 1, 20, "ssi-win-mt", 60 * 30, pair);
-
-            setState("SSI 3");
-            dataminingDb.getOutcomeIndicatorSampling(excel, -1, 1, 20, "ssi-mt4", 60 * 10, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, -1, 1, 20, "ssi-win-mt", 60 * 10, pair);
-
-            setState("SSI 4");
-            dataminingDb.getOutcomeIndicatorSampling(excel, -1, 1, 20, "ssi-mt4", 60 * 60 * 2, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, -1, 1, 20, "ssi-win-mt", 60 * 60 * 2, pair);
-
-            setState("SSI-Stoch 1");
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 20 + "_" + "ssi-mt4", 60 * 10, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 1 + "_" + "ssi-mt4", 60 * 10, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 3 + "_" + "ssi-mt4", 60 * 10, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 6 + "_" + "ssi-mt4", 60 * 10, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 12 + "_" + "ssi-mt4", 60 * 10, pair);
-
-            setState("SSI-Stoch 2");
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 20 + "_" + "ssi-mt4", 60 * 30, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 1 + "_" + "ssi-mt4", 60 * 30, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 3 + "_" + "ssi-mt4", 60 * 30, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 6 + "_" + "ssi-mt4", 60 * 30, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 12 + "_" + "ssi-mt4", 60 * 30, pair);
-
-            setState("SSI-Stoch 3");
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 20 + "_" + "ssi-mt4", 60 * 60, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 1 + "_" + "ssi-mt4", 60 * 60, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 3 + "_" + "ssi-mt4", 60 * 60, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 6 + "_" + "ssi-mt4", 60 * 60, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 12 + "_" + "ssi-mt4", 60 * 60, pair);
-
-            setState("SSI-Stoch 4");
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 20 + "_" + "ssi-mt4", 60 * 60 * 2, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 1 + "_" + "ssi-mt4", 60 * 60 * 2, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 3 + "_" + "ssi-mt4", 60 * 60 * 2, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 6 + "_" + "ssi-mt4", 60 * 60 * 2, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 12 + "_" + "ssi-mt4", 60 * 60 * 2, pair);
-
-            setState("MA-MA 1");
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.4, 0.4, 20, "MA1-MA3", 60 * 10, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.4, 0.4, 20, "MA3-MA6", 60 * 10, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.4, 0.4, 20, "MA6-MA9", 60 * 10, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.4, 0.4, 20, "MA9-MA12", 60 * 10, pair);
-
-            setState("MA-MA 2");
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.4, 0.4, 20, "MA1-MA3", 60 * 30, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.4, 0.4, 20, "MA3-MA6", 60 * 30, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.4, 0.4, 20, "MA6-MA9", 60 * 30, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.4, 0.4, 20, "MA9-MA12", 60 * 30, pair);
-
-            setState("MA-MA 3");
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.4, 0.4, 20, "MA1-MA3", 60 * 60, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.4, 0.4, 20, "MA3-MA6", 60 * 60, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.4, 0.4, 20, "MA6-MA9", 60 * 60, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.4, 0.4, 20, "MA9-MA12", 60 * 60, pair);
-
-            setState("MA-MA 4");
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.6, 0.6, 20, "MA1-MA3", 60 * 60 * 2, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.6, 0.6, 20, "MA3-MA6", 60 * 60 * 2, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.6, 0.6, 20, "MA6-MA9", 60 * 60 * 2, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, -0.6, 0.6, 20, "MA9-MA12", 60 * 60 * 2, pair);
-
-
-            setState("Stoch 1");
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 30 + "_last", 60 * 10, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 1 + "_last", 60 * 10, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 3 + "_last", 60 * 10, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 6 + "_last", 60 * 10, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 12 + "_last", 60 * 10, pair);
-
-            setState("Stoch 2");
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 30 + "_last", 60 * 30, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 1 + "_last", 60 * 30, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 3 + "_last", 60 * 30, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 6 + "_last", 60 * 30, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 12 + "_last", 60 * 30, pair);
-
-            setState("Stoch 3");
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 30 + "_last", 60 * 60, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 1 + "_last", 60 * 60, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 3 + "_last", 60 * 60, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 6 + "_last", 60 * 60, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 12 + "_last", 60 * 60, pair);
-
-            setState("Stoch 4");
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 30 + "_last", 60 * 60 * 2, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 1 + "_last", 60 * 60 * 2, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 3 + "_last", 60 * 60 * 2, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 6 + "_last", 60 * 60 * 2, pair);
-            dataminingDb.getOutcomeIndicatorSampling(excel, 0, 100, 20, "Stoch_" + 1000 * 60 * 60 * 12 + "_last", 60 * 60 * 2, pair);
-
             setState("Done! :)");
 
             excel.FinishDoc();
-            excel.ShowDocument();
+            excel.ShowDocument();*/
         }
     }
 }

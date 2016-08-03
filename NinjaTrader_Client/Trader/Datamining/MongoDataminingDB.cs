@@ -18,7 +18,7 @@ using Accord.Neuro.Learning;
 namespace NinjaTrader_Client.Trader
 {
     [Obsolete]
-    public class MongoDataminingDB : DataminingDatabase
+    public class MongoDataminingDB : IDataminingDatabase
     {
         MongoDatabase database;
         MongoFacade mongodb;
@@ -41,7 +41,7 @@ namespace NinjaTrader_Client.Trader
                 thread.Join();
         }
 
-        void DataminingDatabase.importPair(string pair, long start, long end, Database otherDatabase)
+        void IDataminingDatabase.importPair(string pair, long start, long end, Database otherDatabase)
         {
             List<Thread> threads = new List<Thread>();
 
@@ -81,7 +81,7 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
-        void DataminingDatabase.addOutcome(long timeframeSeconds, string instrument)
+        void IDataminingDatabase.addOutcome(long timeframeSeconds, string instrument)
         {
             //Do in walker? Faster? Todo...
             //{ outcome_max_1800: { $exists: true } }
@@ -163,7 +163,7 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
-        void DataminingDatabase.addData(string dataname, Database database, string instrument)
+        void IDataminingDatabase.addData(string dataname, Database database, string instrument)
         {
             List<Thread> threads = new List<Thread>();
             
@@ -227,7 +227,7 @@ namespace NinjaTrader_Client.Trader
         }
 
         //Todo: Excel reporting
-        void DataminingDatabase.getOutcomeIndicatorSampling(DataminingExcelGenerator excel, double min, double max, int steps, string indicatorId, int outcomeTimeframeSeconds, string instument)
+        void IDataminingDatabase.getOutcomeIndicatorSampling(DataminingExcelGenerator excel, double min, double max, int steps, string indicatorId, int outcomeTimeframeSeconds, string instument)
         {
             List<Thread> threads = new List<Thread>();
 
@@ -300,12 +300,12 @@ namespace NinjaTrader_Client.Trader
             excel.FinishSheet(sheetName);
         }
 
-        ProgressDict DataminingDatabase.getProgress()
+        ProgressDict IDataminingDatabase.getProgress()
         {
             return progress;
         }
 
-        void DataminingDatabase.addIndicator(WalkerIndicator indicator, string instrument, string fieldId)
+        void IDataminingDatabase.addIndicator(WalkerIndicator indicator, string instrument, string fieldId)
         {
             var collection = mongodb.getDB().GetCollection("prices");
 
@@ -338,7 +338,7 @@ namespace NinjaTrader_Client.Trader
             progress.remove(name);
         }
 
-        void DataminingDatabase.addMetaIndicatorSum(string[] ids, double[] weights, string fieldName, string instrument)
+        void IDataminingDatabase.addMetaIndicatorSum(string[] ids, double[] weights, string fieldName, string instrument)
         {
             List<Thread> threads = new List<Thread>();
 
@@ -399,7 +399,7 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
-        void DataminingDatabase.addMetaIndicatorDifference(string id, string id_subtract, string fieldName, string instrument)
+        void IDataminingDatabase.addMetaIndicatorDifference(string id, string id_subtract, string fieldName, string instrument)
         {
             List<Thread> threads = new List<Thread>();
 
@@ -458,19 +458,19 @@ namespace NinjaTrader_Client.Trader
 
         // Not implemented
 
-        void DataminingDatabase.getCorrelation(string indicatorId, int outcomeTimeframe, CorrelationCondition condition)
+        void IDataminingDatabase.getCorrelation(string indicatorId, int outcomeTimeframe, CorrelationCondition condition)
         {
             throw new NotImplementedException();
         }
 
-        void DataminingDatabase.getCorrelationTable()
+        void IDataminingDatabase.getCorrelationTable()
         {
             throw new NotImplementedException();
         }
 
         //Machine Learning
 
-        void DataminingDatabase.doMachineLearning(string[] inputFields, string outcomeField, string instrument, string savePath = null)
+        void IDataminingDatabase.doMachineLearning(string[] inputFields, string outcomeField, string instrument, string savePath = null)
         {
             string name = "ANN";
 
@@ -593,7 +593,7 @@ namespace NinjaTrader_Client.Trader
             progress.setProgress(name, "Finished with successRate of " + successRate + " failRate of " + failRate);
         }
 
-        void DataminingDatabase.addOutcomeCode(double percentDifference, int outcomeTimeframeSeconds, string instrument)
+        void IDataminingDatabase.addOutcomeCode(double percentDifference, int outcomeTimeframeSeconds, string instrument)
         {
             List<Thread> threads = new List<Thread>();
 
@@ -661,13 +661,13 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
-        void DataminingDatabase.deleteAll()
+        void IDataminingDatabase.deleteAll()
         {
             var collection = mongodb.getDB().GetCollection("prices");
             collection.RemoveAll();
         }
 
-        string DataminingDatabase.getSuccessRate(int outcomeTimeframeSeconds, string indicator, double min, double max, string instrument, double tpPercent, double slPercent, bool buy)
+        string IDataminingDatabase.getSuccessRate(int outcomeTimeframeSeconds, string indicator, double min, double max, string instrument, double tpPercent, double slPercent, bool buy)
         {
             var collection = mongodb.getDB().GetCollection("prices");
             var docs = collection.FindAs<BsonDocument>(
@@ -732,12 +732,12 @@ namespace NinjaTrader_Client.Trader
                     + successes + seperator + count + seperator + successRate + seperator + (successRate * slTpRatio) + seperator + result;
         }
 
-        void DataminingDatabase.getOutcomeIndicatorSampling(DataminingExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, string instument)
+        void IDataminingDatabase.getOutcomeIndicatorSampling(DataminingExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, string instument)
         {
             throw new NotImplementedException();
         }
 
-        Dictionary<string, DataminingPairInformation> DataminingDatabase.getInfo()
+        Dictionary<string, DataminingPairInformation> IDataminingDatabase.getInfo()
         {
             throw new NotImplementedException();
         }

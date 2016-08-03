@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Datamining
 {
-    public interface DataminingDatabase
+    public interface IDataminingDatabase
     {
         void importPair(string pair, long start, long end, Database database);
         void addOutcome(long timeframeSeconds, string instrument);

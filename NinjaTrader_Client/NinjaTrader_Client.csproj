@@ -184,6 +184,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Trader\Datamining\AI\AdvancedNeuralNetwork.cs" />
+    <Compile Include="Trader\Datamining\AI\IMachineLearning.cs" />
     <Compile Include="Trader\Datamining\DataminingDataComponent.cs" />
     <Compile Include="Trader\Datamining\DataminingDataComponentInfo.cs" />
     <Compile Include="Trader\Datamining\DataminingExcelGenerator.cs" />
@@ -280,7 +282,7 @@
     <Compile Include="Trader\Databases\CachedDatabase.cs" />
     <Compile Include="Trader\Databases\SQLiteDatabase.cs" />
     <Compile Include="Trader\Datamining\CorrelationCondition.cs" />
-    <Compile Include="Trader\Datamining\DataminingDatabase.cs" />
+    <Compile Include="Trader\Datamining\IDataminingDatabase.cs" />
     <Compile Include="Trader\Datamining\DataminingQueue.cs" />
     <Compile Include="Trader\Datamining\MongoDataminingDB.cs" />
     <Compile Include="Trader\Indicators\StandartDeviationIndicator.cs" />
