@@ -150,8 +150,12 @@ namespace NinjaTrader_Client.Trader.MainAPIs
             command.CommandTimeout = timeout;
 
             SQLiteDataReader Reader = command.ExecuteReader();
-            Reader.Read();
-            TimeValueData output =  new TimeValueData((long)(decimal)Reader["timestamp"], (double)Reader["value"]);
+
+            TimeValueData output = null;
+
+            if (Reader.Read())
+                output =  new TimeValueData((long)(decimal)Reader["timestamp"], (double)Reader["value"]);
+
             Reader.Close();
             connection.Close();
 

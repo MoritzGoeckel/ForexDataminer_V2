@@ -49,7 +49,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
             //State text
             double ops = Math.Round(dataminingDb.getOperationsPerSecond(), 2);
-            state_label.Text = "Op/s" + (ops != 0.0 ? ops.ToString() : "Idle") + " " + stateMessage;
+            state_label.Text = "Op/s " + (ops != 0.0 ? ops.ToString() : "Idle") + " " + stateMessage;
 
             //Render dataInfo
             StringBuilder dataInfoB = new StringBuilder("");
@@ -121,7 +121,7 @@ namespace NinjaTrader_Client.Trader.Analysis
             DataminingExcelGenerator excel = new DataminingExcelGenerator(Application.StartupPath + @"\Analysis\" + DateTime.Now.ToString("yyyy_dd_mm") + "_" + "EURUSD" + ".xls");
 
             setState("SSI 1");
-            dataminingDb.getOutcomeIndicatorSampling(excel, new DataminingDataComponent("Stoch", 1000 * 60 * 60).getID(), 60 * 60 * 1000, "EURUSD");
+            dataminingDb.getOutcomeIndicatorSampling(excel, "mid-" + new DataminingDataComponent("Stoch", 1000 * 60 * 60).getID(), 15 * 60 * 1000, 0.05, "EURUSD");
 
             excel.FinishDoc();
             excel.ShowDocument();

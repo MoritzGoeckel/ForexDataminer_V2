@@ -16,6 +16,7 @@ using Accord.Neuro;
 using Accord.Neuro.Learning;
 using System.Runtime.CompilerServices;
 using NinjaTrader_Client.Trader.Datamining.AI;
+using System.Collections.Concurrent;
 
 namespace NinjaTrader_Client.Trader
 {
@@ -153,7 +154,6 @@ namespace NinjaTrader_Client.Trader
 
                     while (currentId <= indexEnd)
                     {
-                        currentId++;
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
 
                         DataminingTickdata currentTickdata = inRamList[currentId];
@@ -165,6 +165,7 @@ namespace NinjaTrader_Client.Trader
                         }
 
                         doneWriteOperation();
+                        currentId++;
                     }
 
                     progress.remove(name);
@@ -254,7 +255,6 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
-        //Ungetestet
         public void addOutcome(long timeframe, string instrument)
         {                       
             List<Thread> threads = new List<Thread>();
@@ -395,10 +395,14 @@ namespace NinjaTrader_Client.Trader
                         if (currentTickdata.values.ContainsKey(dataname) == false)
                         {
                             TimeValueData data = database.getData(currentTickdata.timestamp, dataname, instrument);
-                            currentTickdata.values.Add(dataname, data.value);
-                            currentTickdata.changed = true;
 
-                            doneWriteOperation();
+                            if (data != null)
+                            {
+                                currentTickdata.values.Add(dataname, data.value);
+                                currentTickdata.changed = true;
+
+                                doneWriteOperation();
+                            }
                         }
                     }
 
@@ -424,11 +428,9 @@ namespace NinjaTrader_Client.Trader
         };
 
         //Todo: Excel reporting
-        public void getOutcomeIndicatorSampling(DataminingExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, string instrument)
+        public void getOutcomeIndicatorSampling(DataminingExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, double stepSize, string instrument)
         {
-            //Min und Max wird nicht mehr verwendet... ???
-
-            Dictionary<double, OutcomeCountPair> valueCounts = new Dictionary<double, OutcomeCountPair>();
+            ConcurrentDictionary<double, OutcomeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCountPair>();
 
             List<DataminingTickdata> inRamList = dataInRam[instrument];
 
@@ -453,25 +455,39 @@ namespace NinjaTrader_Client.Trader
 
                     while (currentId <= indexEnd)
                     {
-                        currentId++;
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
 
                         DataminingTickdata currentTickdata = inRamList[currentId];
-
-                        double value = currentTickdata.values[indicatorId];
-
-                        if (valueCounts.ContainsKey(value) == false)
-                            valueCounts.Add(value, new OutcomeCountPair { Count = 1, MinSum = currentTickdata.values["outcomeMin_" + outcomeTimeframeSeconds], MaxSum = currentTickdata.values["outcomeMax_" + outcomeTimeframeSeconds], ActualSum = currentTickdata.values["outcomeActual_" + outcomeTimeframeSeconds] });
-                        else
+                        if (currentTickdata.values.ContainsKey(indicatorId) 
+                            && currentTickdata.values.ContainsKey("outcomeMin_" + outcomeTimeframeSeconds)
+                            && currentTickdata.values.ContainsKey("outcomeMax_" + outcomeTimeframeSeconds)
+                            && currentTickdata.values.ContainsKey("outcomeActual_" + outcomeTimeframeSeconds))
                         {
-                            valueCounts[value].Count++;
+                            double indicatorKey = Math.Floor(currentTickdata.values[indicatorId] / stepSize) * stepSize;
 
-                            valueCounts[value].MinSum += currentTickdata.values["outcomeMin_" + outcomeTimeframeSeconds];
-                            valueCounts[value].MaxSum += currentTickdata.values["outcomeMax_" + outcomeTimeframeSeconds];
-                            valueCounts[value].ActualSum += currentTickdata.values["outcomeActual_" + outcomeTimeframeSeconds];
+                            if (valueCounts.ContainsKey(indicatorKey) == false)
+                            {
+                                OutcomeCountPair pair = new OutcomeCountPair();
+                                pair.MaxSum = currentTickdata.values["outcomeMax_" + outcomeTimeframeSeconds];
+                                pair.MinSum = currentTickdata.values["outcomeMin_" + outcomeTimeframeSeconds];
+                                pair.ActualSum = currentTickdata.values["outcomeActual_" + outcomeTimeframeSeconds];
+                                pair.Count = 1;
 
-                            doneWriteOperation();
+                                valueCounts.TryAdd(indicatorKey, pair);
+                            }
+                            else
+                            {
+                                valueCounts[indicatorKey].Count++;
+
+                                valueCounts[indicatorKey].MinSum += currentTickdata.values["outcomeMin_" + outcomeTimeframeSeconds];
+                                valueCounts[indicatorKey].MaxSum += currentTickdata.values["outcomeMax_" + outcomeTimeframeSeconds];
+                                valueCounts[indicatorKey].ActualSum += currentTickdata.values["outcomeActual_" + outcomeTimeframeSeconds];
+
+                                doneWriteOperation();
+                            }
                         }
+
+                        currentId++;
                     }
 
                     progress.remove(name);
@@ -503,7 +519,7 @@ namespace NinjaTrader_Client.Trader
 
                 double minVsMax = pair.Value.MinSum + pair.Value.MaxSum / pair.Value.Count;
 
-                excel.addRow(sheetName, pair.Key, pair.Key, Convert.ToInt32(pair.Value.Count), maxAvg, minAvg, minVsMax, actualAvg, (maxAvg + minAvg));
+                excel.addRow(sheetName, pair.Key, pair.Key + stepSize, Convert.ToInt32(pair.Value.Count), maxAvg, minAvg, minVsMax, actualAvg, (maxAvg + minAvg));
 
                 doneWriteOperation();
             }
@@ -522,7 +538,7 @@ namespace NinjaTrader_Client.Trader
             progress.setProgress(name, 0);
             int done = 0;
 
-            string indicatorID = indicator.getName() + "_" + fieldId;
+            string indicatorID = fieldId + "-" + indicator.getName();
 
             foreach (DataminingTickdata currentTickdata in dataInRam[instrument])
             {
@@ -568,7 +584,6 @@ namespace NinjaTrader_Client.Trader
 
                     while (currentId <= indexEnd)
                     {
-                        currentId++;
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
 
                         DataminingTickdata currentTickdata = inRamList[currentId];
@@ -584,6 +599,8 @@ namespace NinjaTrader_Client.Trader
 
                             doneWriteOperation();
                         }
+
+                        currentId++;
                     }
 
                     progress.remove(name);
@@ -626,7 +643,6 @@ namespace NinjaTrader_Client.Trader
 
                     while (currentId <= indexEnd)
                     {
-                        currentId++;
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
 
                         DataminingTickdata currentTickdata = inRamList[currentId];
@@ -644,6 +660,8 @@ namespace NinjaTrader_Client.Trader
 
                             doneWriteOperation();
                         }
+
+                        currentId++;
                     }
 
                     progress.remove(name);
@@ -658,6 +676,7 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
+        //Not tested ???
         public string getSuccessRate(int outcomeTimeframeSeconds, string indicator, double min, double max, string instrument, double tpPercent, double slPercent, bool buy)
         {
             List<DataminingTickdata> inRamList = dataInRam[instrument];
@@ -686,7 +705,6 @@ namespace NinjaTrader_Client.Trader
 
                     while (currentId <= indexEnd)
                     {
-                        currentId++;
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
                         doneWriteOperation();
 
@@ -730,6 +748,8 @@ namespace NinjaTrader_Client.Trader
                             }
                         }
                         catch { }
+
+                        currentId++;
                     }
 
                     progress.remove(name);

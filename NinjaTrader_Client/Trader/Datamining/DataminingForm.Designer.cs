@@ -76,7 +76,7 @@
             // 
             this.progress_label.Location = new System.Drawing.Point(8, 47);
             this.progress_label.Name = "progress_label";
-            this.progress_label.Size = new System.Drawing.Size(361, 342);
+            this.progress_label.Size = new System.Drawing.Size(289, 342);
             this.progress_label.TabIndex = 2;
             this.progress_label.Text = "no info yet";
             // 
@@ -126,7 +126,7 @@
             this.state_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.state_label.Location = new System.Drawing.Point(6, 16);
             this.state_label.Name = "state_label";
-            this.state_label.Size = new System.Drawing.Size(363, 25);
+            this.state_label.Size = new System.Drawing.Size(291, 25);
             this.state_label.TabIndex = 15;
             this.state_label.Text = "Idle";
             // 
@@ -147,7 +147,7 @@
             this.groupBox1.Controls.Add(this.progress_label);
             this.groupBox1.Location = new System.Drawing.Point(261, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(375, 395);
+            this.groupBox1.Size = new System.Drawing.Size(303, 395);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Info";
@@ -334,9 +334,9 @@
             // 
             this.groupBox8.Controls.Add(this.updateInfo_Btn);
             this.groupBox8.Controls.Add(this.dataInfo_label);
-            this.groupBox8.Location = new System.Drawing.Point(642, 12);
+            this.groupBox8.Location = new System.Drawing.Point(570, 12);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(156, 395);
+            this.groupBox8.Size = new System.Drawing.Size(228, 395);
             this.groupBox8.TabIndex = 24;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Data";
@@ -346,7 +346,7 @@
             this.updateInfo_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.updateInfo_Btn.Location = new System.Drawing.Point(9, 366);
             this.updateInfo_Btn.Name = "updateInfo_Btn";
-            this.updateInfo_Btn.Size = new System.Drawing.Size(141, 23);
+            this.updateInfo_Btn.Size = new System.Drawing.Size(213, 23);
             this.updateInfo_Btn.TabIndex = 11;
             this.updateInfo_Btn.Text = "Update info";
             this.updateInfo_Btn.UseVisualStyleBackColor = true;
@@ -356,7 +356,7 @@
             // 
             this.dataInfo_label.Location = new System.Drawing.Point(6, 18);
             this.dataInfo_label.Name = "dataInfo_label";
-            this.dataInfo_label.Size = new System.Drawing.Size(144, 345);
+            this.dataInfo_label.Size = new System.Drawing.Size(216, 345);
             this.dataInfo_label.TabIndex = 0;
             this.dataInfo_label.Text = "no data yet";
             // 

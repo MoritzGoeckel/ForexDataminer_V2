@@ -14,24 +14,32 @@ namespace NinjaTrader_Client.Trader.Utils
 
         public void setProgress(string name, int percent)
         {
-            if (progress == null)
-                return;
+            try
+            {
+                if (progress == null)
+                    return;
 
-            if (progress.ContainsKey(name) == false)
-                progress.Add(name, percent);
-            else
-                progress[name] = percent;
+                if (progress.ContainsKey(name) == false)
+                    progress.Add(name, percent);
+                else
+                    progress[name] = percent;
+            }
+            catch { }
         }
 
         public void setProgress(string name, string state)
         {
-            if (progress == null)
-                return;
+            try
+            {
+                if (progress == null)
+                    return;
 
-            if (progressString.ContainsKey(name) == false)
-                progressString.Add(name, state);
-            else
-                progressString[name] = state;
+                if (progressString.ContainsKey(name) == false)
+                    progressString.Add(name, state);
+                else
+                    progressString[name] = state;
+            }
+            catch { }
         }
 
         string oldOutput = "";
