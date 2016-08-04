@@ -101,7 +101,7 @@ namespace NinjaTrader_Client.Trader
             progress.remove("Loading " + pair);
         }
 
-        public void updateInfo(string pair, int maxDatasets = 10 * 1000)
+        public void updateInfo(string pair, int maxDatasets = 50 * 1000)
         {
             DataminingPairInformation info = new DataminingPairInformation(pair);
             List<DataminingTickdata> list = dataInRam[pair];

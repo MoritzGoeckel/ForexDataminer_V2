@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DataminingForm));
             this.updateUI_timer = new System.Windows.Forms.Timer(this.components);
             this.progress_label = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -49,14 +50,14 @@
             this.addData_btn = new System.Windows.Forms.Button();
             this.outcome_btn = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.successRate_btn = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.updateInfo_Btn = new System.Windows.Forms.Button();
-            this.dataInfo_label = new System.Windows.Forms.Label();
+            this.data_textbox = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -69,23 +70,25 @@
             // 
             // updateUI_timer
             // 
-            this.updateUI_timer.Interval = 1000;
+            this.updateUI_timer.Interval = 3000;
             this.updateUI_timer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // progress_label
             // 
+            this.progress_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.progress_label.Location = new System.Drawing.Point(8, 47);
             this.progress_label.Name = "progress_label";
-            this.progress_label.Size = new System.Drawing.Size(289, 342);
+            this.progress_label.Size = new System.Drawing.Size(289, 570);
             this.progress_label.TabIndex = 2;
             this.progress_label.Text = "no info yet";
             // 
             // textBox1
             // 
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.Location = new System.Drawing.Point(6, 15);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(405, 374);
+            this.textBox1.Size = new System.Drawing.Size(405, 599);
             this.textBox1.TabIndex = 6;
             // 
             // create_ann_button
@@ -147,7 +150,7 @@
             this.groupBox1.Controls.Add(this.progress_label);
             this.groupBox1.Location = new System.Drawing.Point(261, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(303, 395);
+            this.groupBox1.Size = new System.Drawing.Size(303, 620);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Info";
@@ -269,7 +272,6 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.successRate_btn);
             this.groupBox4.Controls.Add(this.outcome_sampling_button);
             this.groupBox4.Location = new System.Drawing.Point(12, 217);
             this.groupBox4.Name = "groupBox4";
@@ -277,17 +279,6 @@
             this.groupBox4.TabIndex = 20;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Analysis";
-            // 
-            // successRate_btn
-            // 
-            this.successRate_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.successRate_btn.Location = new System.Drawing.Point(121, 19);
-            this.successRate_btn.Name = "successRate_btn";
-            this.successRate_btn.Size = new System.Drawing.Size(109, 23);
-            this.successRate_btn.TabIndex = 17;
-            this.successRate_btn.Text = "Success Rate";
-            this.successRate_btn.UseVisualStyleBackColor = true;
-            this.successRate_btn.Click += new System.EventHandler(this.successRate_btn_Click);
             // 
             // groupBox5
             // 
@@ -325,18 +316,18 @@
             this.groupBox7.Controls.Add(this.textBox1);
             this.groupBox7.Location = new System.Drawing.Point(804, 12);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(417, 395);
+            this.groupBox7.Size = new System.Drawing.Size(417, 620);
             this.groupBox7.TabIndex = 23;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Output";
             // 
             // groupBox8
             // 
+            this.groupBox8.Controls.Add(this.data_textbox);
             this.groupBox8.Controls.Add(this.updateInfo_Btn);
-            this.groupBox8.Controls.Add(this.dataInfo_label);
             this.groupBox8.Location = new System.Drawing.Point(570, 12);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(228, 395);
+            this.groupBox8.Size = new System.Drawing.Size(228, 620);
             this.groupBox8.TabIndex = 24;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Data";
@@ -344,7 +335,7 @@
             // updateInfo_Btn
             // 
             this.updateInfo_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.updateInfo_Btn.Location = new System.Drawing.Point(9, 366);
+            this.updateInfo_Btn.Location = new System.Drawing.Point(9, 591);
             this.updateInfo_Btn.Name = "updateInfo_Btn";
             this.updateInfo_Btn.Size = new System.Drawing.Size(213, 23);
             this.updateInfo_Btn.TabIndex = 11;
@@ -352,20 +343,34 @@
             this.updateInfo_Btn.UseVisualStyleBackColor = true;
             this.updateInfo_Btn.Click += new System.EventHandler(this.updateInfo_Btn_Click);
             // 
-            // dataInfo_label
+            // data_textbox
             // 
-            this.dataInfo_label.Location = new System.Drawing.Point(6, 18);
-            this.dataInfo_label.Name = "dataInfo_label";
-            this.dataInfo_label.Size = new System.Drawing.Size(216, 345);
-            this.dataInfo_label.TabIndex = 0;
-            this.dataInfo_label.Text = "no data yet";
+            this.data_textbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.data_textbox.Location = new System.Drawing.Point(9, 15);
+            this.data_textbox.Multiline = true;
+            this.data_textbox.Name = "data_textbox";
+            this.data_textbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.data_textbox.Size = new System.Drawing.Size(213, 570);
+            this.data_textbox.TabIndex = 12;
+            this.data_textbox.Text = "no data yet";
+            // 
+            // panel1
+            // 
+            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Location = new System.Drawing.Point(12, 413);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(243, 219);
+            this.panel1.TabIndex = 25;
             // 
             // DataminingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1232, 415);
+            this.ClientSize = new System.Drawing.Size(1232, 644);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
@@ -387,6 +392,7 @@
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -410,15 +416,15 @@
         private System.Windows.Forms.Button outcomeCode_btn;
         private System.Windows.Forms.Button metaIndicatorSum_btn;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button successRate_btn;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Button save_btn;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.Label dataInfo_label;
         private System.Windows.Forms.Button load_btn;
         private System.Windows.Forms.Button updateInfo_Btn;
+        private System.Windows.Forms.TextBox data_textbox;
+        private System.Windows.Forms.Panel panel1;
     }
 }
