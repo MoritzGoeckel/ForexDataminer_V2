@@ -16,5 +16,7 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
 
         void save(string path);
         void load(string path);
+
+        double getError();
     }
 }

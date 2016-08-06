@@ -101,6 +101,47 @@ namespace NinjaTrader_Client.Trader
             progress.remove("Loading " + pair);
         }
 
+        public long loadPair(string pair, long fromTimestamp, int count)
+        {
+            if (dataInRam.ContainsKey(pair))
+                dataInRam.Remove(pair);
+
+            DataminingPairInformation info = new DataminingPairInformation(pair);
+
+            dataInRam.Add(pair, new List<DataminingTickdata>());
+
+            List<DataminingTickdata> list = dataInRam[pair];
+
+            //To avoid a to small buffer on the db
+            mongodb.getDB().GetCollection("pair_" + pair).CreateIndex("timestamp");
+
+            var cursors = mongodb.getDB().GetCollection("pair_" + pair).FindAs<DataminingTickdata>(Query.GTE("timestamp", fromTimestamp)).SetSortOrder(SortBy.Ascending("timestamp")).SetLimit(count);
+            long max = cursors.Count();
+            double current = 0;
+
+            foreach (DataminingTickdata tickdata in cursors)
+            {
+                list.Add(tickdata);
+
+                info.checkTickdata(tickdata);
+
+                current++;
+                doneWriteOperation();
+
+                progress.setProgress("Loading " + pair, Convert.ToInt32((current / Convert.ToDouble(max)) * 100d));
+            }
+
+            if (infoDict.ContainsKey(pair))
+                infoDict.Remove(pair);
+
+            info.AllDatasets = list.Count();
+            infoDict.Add(pair, info);
+
+            progress.remove("Loading " + pair);
+
+            return max;
+        }
+
         public void updateInfo(string pair, int maxDatasets = 50 * 1000)
         {
             DataminingPairInformation info = new DataminingPairInformation(pair);
@@ -126,7 +167,8 @@ namespace NinjaTrader_Client.Trader
 
         public void unloadPair(string pair)
         {
-            dataInRam.Remove(pair);
+            if(dataInRam.ContainsKey(pair))
+                dataInRam.Remove(pair);
         }
 
         public void savePair(string instrument)
@@ -819,8 +861,11 @@ namespace NinjaTrader_Client.Trader
 
                 if (validTick)
                 {
-                    learningComponent.addData(input, outcome);
-                    doneWriteOperation();
+                    try {
+                        learningComponent.addData(input, outcome);
+                        doneWriteOperation();
+                    }
+                    catch { }
                 }
 
                 doneData++;
@@ -829,6 +874,11 @@ namespace NinjaTrader_Client.Trader
             }
 
             progress.remove("Training");
+        }
+
+        public long getLastTimestamp(string pair)
+        {
+            return dataInRam[pair][dataInRam[pair].Count - 1].timestamp;
         }
     }
 }

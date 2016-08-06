@@ -44,12 +44,14 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            double ops = Math.Round(dataminingDb.getOperationsPerSecond(), 2);
+            
             //Progress Text
-            progress_label.Text = dataminingDb.getProgress().getString();
+            progress_label.Text = "Op/s " + (ops != 0.0 ? ops.ToString() : "Idle") + Environment.NewLine +
+                dataminingDb.getProgress().getString();
 
             //State text
-            double ops = Math.Round(dataminingDb.getOperationsPerSecond(), 2);
-            state_label.Text = "Op/s " + (ops != 0.0 ? ops.ToString() : "Idle") + " " + stateMessage;
+            state_label.Text = stateMessage;
 
             //Render dataInfo
             StringBuilder dataInfoB = new StringBuilder("");
@@ -65,8 +67,11 @@ namespace NinjaTrader_Client.Trader.Analysis
                 dataInfoB.Append(Environment.NewLine);
             }
 
-            if(data_textbox.Text != dataInfoB.ToString())
+            if (data_textbox.Text != dataInfoB.ToString())
+            {
+                File.WriteAllText(Application.StartupPath + "//dataInfo.txt", dataInfoB.ToString());
                 data_textbox.Text = dataInfoB.ToString();
+            }
         }
 
         private void button_deleteAll_Click(object sender, EventArgs e)
@@ -99,34 +104,78 @@ namespace NinjaTrader_Client.Trader.Analysis
             if (MessageBox.Show("Load data?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)          
                 new Thread(delegate () {
                     dataminingDb.loadPair("EURUSD");
+
+                    dataminingDb.updateInfo("EURUSD");
                 }).Start();
         }
 
         private void create_ann_button_click(object sender, EventArgs e)
         {
-            /*int epochs = 8;
+            //Todo:
+            //- Random search with smaller datasets to find the right parameters for the network (meassured by error)
+            //- Using a saved network
+            //- Choosing the right input fields
+
+            //- implementing the SVM and other Learning algos
+
+            //- creating or modifing the old backtest framework
+            //- creating or modifing the old strategy framework
+
+            //- creating a possibility to execute the strategy and analysis (indicators) on the fly
+            //- trading with that
+
+            //- creating input dialogs for a fast datamining workflow
+
             new Thread(delegate () {
-                setState("Gathering data");
-
-                IMachineLearning network = new AdvancedNeuralNetwork(,);
-                dataminingDb.addDataToLearningComponent(new string[] { "ssi-win-mt4", "ssi-mt4", "Stoch_3600000_mid", "spread" }, "buy-outcomeCode-0,005_900000", "EURUSD", network);
-
-                for (int i = 0; i < epochs; i++)
-                {
-                    setState("Training Epoch " + i + "/" + epochs);
-                    network.train();
-                }
-
-                setState("Saving NN");
 
                 string path = Application.StartupPath + "/AI/";
-                if (Directory.Exists(path) == false)
-                    Directory.CreateDirectory(path);
 
-                network.save(path + DateTime.Now.ToString("yyyy_dd_mm") + "_" + "EURUSD"+ ".network");
+                int epochs = int.MaxValue;
+                string[] fields = new string[] { "ssi-mt4", "spread", "mid-TradingTime", "mid-Stoch_600000", "mid-Stoch_1800000", "mid-Stoch_3600000", "mid-Stoch_7200000", "mid-Stoch_14400000", "mid-Stoch_21600000", "mid-MA_600000", "mid-MA_1800000", "mid-MA_3600000", "mid-MA_7200000", "mid-MA_14400000", "mid-MA_21600000", "mid-Range_1800000", "mid-Range_3600000", "mid-Range_7200000" };
+                int[] neuronsCount = new int[] { fields.Length, 18, 12, 1};
+                string outputField = "buy-outcomeCode-0,001_600000";
 
-                setState("");
-            }).Start();*/
+                IMachineLearning network = new AdvancedNeuralNetwork(fields.Length, neuronsCount, 0.1, 2, false, false, false, Accord.Neuro.Learning.JacobianMethod.ByBackpropagation);
+                long nextTimestamp = 0;
+
+                int samplesAtATime = int.MaxValue;
+                int doneSamples = 0;
+
+                while (true)
+                {
+                    network.clearData();
+                    dataminingDb.unloadPair("EURUSD");
+
+                    if (dataminingDb.loadPair("EURUSD", nextTimestamp, samplesAtATime) == 0)
+                        break;
+
+                    nextTimestamp = dataminingDb.getLastTimestamp("EURUSD");
+
+                    dataminingDb.addDataToLearningComponent(fields, outputField, "EURUSD", network);
+                    dataminingDb.unloadPair("EURUSD");
+
+                    for (int i = 0; i < epochs; i++)
+                    {
+                        setState("E" + i + " S" + doneSamples + " e" + Math.Round(network.getError(), 4).ToString());
+                        network.train();
+                        network.save(path + "E" + i + "_" + "e" + Math.Round(network.getError(), 4).ToString().Replace(',','-').Replace('.', '-') + "_" + "EURUSD" + ".network"); //DateTime.Now.ToString("yyyy_dd_mm")
+                    }
+
+                    doneSamples += samplesAtATime;
+
+                    if (Directory.Exists(path) == false)
+                        Directory.CreateDirectory(path);
+
+                    network.save(path + DateTime.Now.ToString("yyyy_dd_mm") + "_" + "EURUSD" + ".network");
+
+                    setState("Trained: " + doneSamples + " - e" + network.getError());
+
+                    if (samplesAtATime == int.MaxValue)
+                        break;
+                }
+
+                setState("Done learning");
+            }).Start();
         }
 
         private void outcome_sampling_button_Click(object sender, EventArgs e)
@@ -156,6 +205,8 @@ namespace NinjaTrader_Client.Trader.Analysis
         {
             new Thread(delegate () {
                 dataminingDb.addIndicator(new StochIndicator(60 * 60 * 1000), "EURUSD", "mid");
+
+                dataminingDb.updateInfo("EURUSD");
             }).Start();
         }
 
@@ -164,6 +215,8 @@ namespace NinjaTrader_Client.Trader.Analysis
             new Thread(delegate () {
                 dataminingDb.addData("ssi-win-mt4", sourceDatabase, "EURUSD");
                 dataminingDb.addData("ssi-mt4", sourceDatabase, "EURUSD");
+
+                dataminingDb.updateInfo("EURUSD");
             }).Start();
         }
 
@@ -171,6 +224,8 @@ namespace NinjaTrader_Client.Trader.Analysis
         {
             new Thread(delegate () {
                 dataminingDb.addMetaIndicatorSum(new string[] { "bid", "ask" }, new double[] { -1, 1 }, "spread", "EURUSD");
+
+                dataminingDb.updateInfo("EURUSD");
             }).Start();
         }
 
@@ -178,6 +233,8 @@ namespace NinjaTrader_Client.Trader.Analysis
         {
             new Thread(delegate () {
                 dataminingDb.addOutcome(1000 * 60 * 30, "EURUSD");
+
+                dataminingDb.updateInfo("EURUSD");
             }).Start();
         }
 
@@ -185,6 +242,8 @@ namespace NinjaTrader_Client.Trader.Analysis
         {
             new Thread(delegate () {
                 dataminingDb.addOutcomeCode(0.005, 1000 * 60 * 30, "EURUSD");
+
+                dataminingDb.updateInfo("EURUSD");
             }).Start();
         }
 
@@ -272,7 +331,14 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                 setState("Save");
                 dataminingDb.savePair("EURUSD");
+
+                dataminingDb.updateInfo("EURUSD");
             }).Start();
+        }
+
+        private void unload_btn_Click(object sender, EventArgs e)
+        {
+            dataminingDb.unloadPair("EURUSD");
         }
     }
 }

@@ -55,9 +55,10 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.updateInfo_Btn = new System.Windows.Forms.Button();
             this.data_textbox = new System.Windows.Forms.TextBox();
+            this.updateInfo_Btn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.unload_btn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -116,7 +117,7 @@
             // button_start_q
             // 
             this.button_start_q.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_start_q.Location = new System.Drawing.Point(65, 27);
+            this.button_start_q.Location = new System.Drawing.Point(5, 19);
             this.button_start_q.Name = "button_start_q";
             this.button_start_q.Size = new System.Drawing.Size(109, 23);
             this.button_start_q.TabIndex = 14;
@@ -157,13 +158,14 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.unload_btn);
             this.groupBox2.Controls.Add(this.load_btn);
             this.groupBox2.Controls.Add(this.save_btn);
             this.groupBox2.Controls.Add(this.import_btn);
             this.groupBox2.Controls.Add(this.delete_btn);
             this.groupBox2.Location = new System.Drawing.Point(12, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(243, 79);
+            this.groupBox2.Size = new System.Drawing.Size(243, 109);
             this.groupBox2.TabIndex = 18;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Dangerous";
@@ -208,7 +210,7 @@
             this.groupBox3.Controls.Add(this.metaIndicatorSum_btn);
             this.groupBox3.Controls.Add(this.addData_btn);
             this.groupBox3.Controls.Add(this.outcome_btn);
-            this.groupBox3.Location = new System.Drawing.Point(12, 97);
+            this.groupBox3.Location = new System.Drawing.Point(12, 127);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(243, 114);
             this.groupBox3.TabIndex = 19;
@@ -273,7 +275,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.outcome_sampling_button);
-            this.groupBox4.Location = new System.Drawing.Point(12, 217);
+            this.groupBox4.Location = new System.Drawing.Point(12, 247);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(243, 52);
             this.groupBox4.TabIndex = 20;
@@ -284,7 +286,7 @@
             // 
             this.groupBox5.Controls.Add(this.button1);
             this.groupBox5.Controls.Add(this.create_ann_button);
-            this.groupBox5.Location = new System.Drawing.Point(13, 276);
+            this.groupBox5.Location = new System.Drawing.Point(13, 306);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(242, 52);
             this.groupBox5.TabIndex = 21;
@@ -304,9 +306,9 @@
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.button_start_q);
-            this.groupBox6.Location = new System.Drawing.Point(13, 335);
+            this.groupBox6.Location = new System.Drawing.Point(13, 357);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(242, 72);
+            this.groupBox6.Size = new System.Drawing.Size(242, 50);
             this.groupBox6.TabIndex = 22;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Misc";
@@ -332,17 +334,6 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Data";
             // 
-            // updateInfo_Btn
-            // 
-            this.updateInfo_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.updateInfo_Btn.Location = new System.Drawing.Point(9, 591);
-            this.updateInfo_Btn.Name = "updateInfo_Btn";
-            this.updateInfo_Btn.Size = new System.Drawing.Size(213, 23);
-            this.updateInfo_Btn.TabIndex = 11;
-            this.updateInfo_Btn.Text = "Update info";
-            this.updateInfo_Btn.UseVisualStyleBackColor = true;
-            this.updateInfo_Btn.Click += new System.EventHandler(this.updateInfo_Btn_Click);
-            // 
             // data_textbox
             // 
             this.data_textbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -354,6 +345,17 @@
             this.data_textbox.TabIndex = 12;
             this.data_textbox.Text = "no data yet";
             // 
+            // updateInfo_Btn
+            // 
+            this.updateInfo_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.updateInfo_Btn.Location = new System.Drawing.Point(9, 591);
+            this.updateInfo_Btn.Name = "updateInfo_Btn";
+            this.updateInfo_Btn.Size = new System.Drawing.Size(213, 23);
+            this.updateInfo_Btn.TabIndex = 11;
+            this.updateInfo_Btn.Text = "Update info";
+            this.updateInfo_Btn.UseVisualStyleBackColor = true;
+            this.updateInfo_Btn.Click += new System.EventHandler(this.updateInfo_Btn_Click);
+            // 
             // panel1
             // 
             this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
@@ -363,6 +365,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(243, 219);
             this.panel1.TabIndex = 25;
+            // 
+            // unload_btn
+            // 
+            this.unload_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.unload_btn.Location = new System.Drawing.Point(6, 77);
+            this.unload_btn.Name = "unload_btn";
+            this.unload_btn.Size = new System.Drawing.Size(109, 23);
+            this.unload_btn.TabIndex = 15;
+            this.unload_btn.Text = "Unload";
+            this.unload_btn.UseVisualStyleBackColor = true;
+            this.unload_btn.Click += new System.EventHandler(this.unload_btn_Click);
             // 
             // DataminingForm
             // 
@@ -426,5 +439,6 @@
         private System.Windows.Forms.Button updateInfo_Btn;
         private System.Windows.Forms.TextBox data_textbox;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button unload_btn;
     }
 }

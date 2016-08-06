@@ -10,28 +10,13 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
 {
     class AdvancedNeuralNetwork : IMachineLearning
     {
-        private double learningRate = 0.1;
-        private double sigmoidAlphaValue = 2;
-        private int iterations = 100;
-
-        private bool useRegularization = false;
-        private bool useNguyenWidrow = false;
-        private bool useSameWeights = false;
-
         private int inputCount;
 
         private ActivationNetwork theNetwork;
         private LevenbergMarquardtLearning teacher;
 
-        public AdvancedNeuralNetwork(int inputCount, int[] neuronsCount, double learningRate, double sigmoidAlphaValue, int iterations, bool useRegularization, bool useNguyenWidrow, bool useSameWeights, JacobianMethod method)
+        public AdvancedNeuralNetwork(int inputCount, int[] neuronsCount, double learningRate = 0.1, double sigmoidAlphaValue = 2, bool useRegularization = false, bool useNguyenWidrow = false, bool useSameWeights = false, JacobianMethod method = JacobianMethod.ByBackpropagation)
         {
-            this.learningRate = learningRate;
-            this.sigmoidAlphaValue = sigmoidAlphaValue;
-            this.iterations = iterations;
-            this.useRegularization = useRegularization;
-            this.useNguyenWidrow = useNguyenWidrow;
-            this.useSameWeights = useSameWeights;
-
             this.inputCount = inputCount;
 
             // create multi-layer neural network
@@ -75,7 +60,10 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
 
         void IMachineLearning.addData(double[] input, double output)
         {
-            foreach(double d in input)
+            if(input.Length != inputCount)
+                throw new Exception("Wrong input count! Length: " + input.Length + " should be " + inputCount);
+
+            foreach (double d in input)
                 if (double.IsInfinity(d) || double.IsNegativeInfinity(d) || double.IsNaN(d))
                     throw new Exception("Invalid value!");
 
@@ -86,16 +74,22 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
             outputs.Add(new double[] { output } );
         }
 
-        double error;
+        private double error = -1;
         void IMachineLearning.train()
         {
-            error = teacher.RunEpoch(inputs.ToArray(), outputs.ToArray());
+            if(inputs.Count != 0)
+                error = teacher.RunEpoch(inputs.ToArray(), outputs.ToArray());
         }
 
         void IMachineLearning.clearData()
         {
             inputs.Clear();
             outputs.Clear();
+        }
+
+        double IMachineLearning.getError()
+        {
+            return error;
         }
     }
 }
