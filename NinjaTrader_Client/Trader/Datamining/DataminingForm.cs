@@ -115,6 +115,7 @@ namespace NinjaTrader_Client.Trader.Analysis
             //- Random search with smaller datasets to find the right parameters for the network (meassured by error)
             //- Using a saved network
             //- Choosing the right input fields
+            //- dividing the data in training- and validation- data (80% / 20%)
 
             //- implementing the SVM and other Learning algos
 
