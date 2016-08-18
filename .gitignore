@@ -2,3 +2,6 @@
 /NinjaTrader_Client/bin/*
 NinjaTrader_Client/obj/x64/Debug/
 NinjaTrader_Client/obj/Debug/
+DLL/
+SQLite/
+SQLiteAdmin/
