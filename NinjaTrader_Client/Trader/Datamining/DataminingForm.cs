@@ -112,9 +112,7 @@ namespace NinjaTrader_Client.Trader.Analysis
         private void create_ann_button_click(object sender, EventArgs e)
         {
             //Todo:
-            //- Random search with smaller datasets to find the right parameters for the network (meassured by error)
             //- Using a saved network
-            //- Choosing the right input fields
             //- dividing the data in training- and validation- data (80% / 20%)
 
             //- implementing the SVM and other Learning algos
@@ -185,7 +183,7 @@ namespace NinjaTrader_Client.Trader.Analysis
                 if (Directory.Exists(Application.StartupPath + @"\Analysis\") == false)
                     Directory.CreateDirectory(Application.StartupPath + @"\Analysis\");
 
-                DataminingExcelGenerator excel = new DataminingExcelGenerator(Application.StartupPath + @"\Analysis\" + DateTime.Now.ToString("yyyy_dd_mm") + "_" + "EURUSD" + ".xls");
+                SampleOutcomeExcelGenerator excel = new SampleOutcomeExcelGenerator(Application.StartupPath + @"\Analysis\" + DateTime.Now.ToString("yyyy_dd_mm") + "_" + "EURUSD" + ".xls");
 
                 setState("SSI 1");
                 dataminingDb.getOutcomeIndicatorSampling(excel, "mid-" + new DataminingDataComponent("Stoch", 1000 * 60 * 60).getID(), 15 * 60 * 1000, 0.05, "EURUSD");
@@ -340,6 +338,51 @@ namespace NinjaTrader_Client.Trader.Analysis
         private void unload_btn_Click(object sender, EventArgs e)
         {
             dataminingDb.unloadPair("EURUSD");
+        }
+
+        private void optimizeParametersNN_btn_Click(object sender, EventArgs e)
+        {
+            new Thread(delegate () {
+
+                string path = Application.StartupPath + "/AI/";
+                GeneralExcelGenerator excel = new GeneralExcelGenerator(path + "excel.xlsx");
+                string sheetName = "OptimizeNN-E10";
+                excel.CreateSheet(sheetName, AdvancedNeuralNetwork.getExcelHeader());
+
+                dataminingDb.reduceData("EURUSD", 100 * 1000);
+
+                int epochs = 10;
+                string[] fields = new string[] { "ssi-mt4", "spread", "mid-TradingTime", "mid-Stoch_600000", "mid-Stoch_1800000", "mid-Stoch_3600000", "mid-Stoch_7200000", "mid-Stoch_14400000", "mid-Stoch_21600000", "mid-MA_600000", "mid-MA_1800000", "mid-MA_3600000", "mid-MA_7200000", "mid-MA_14400000", "mid-MA_21600000", "mid-Range_1800000", "mid-Range_3600000", "mid-Range_7200000" };
+                string outputField = "buy-outcomeCode-0,001_600000";
+
+                while (true)
+                {
+                    IMachineLearning network = AdvancedNeuralNetwork.getRandom(fields, outputField, false);
+                    dataminingDb.addDataToLearningComponent(fields, outputField, "EURUSD", network);
+
+                    for (int i = 0; i < epochs; i++)
+                    {
+                        setState("E" + i + " e" + Math.Round(network.getError(), 4).ToString());
+                        network.train();
+                    }
+
+                    network.addRowToExcel(fields, outputField, excel, sheetName);
+
+                    //Todo: Test network error on other data :)
+                    //Todo: Testdata
+
+                    //Todo: Finish sheet and save
+                    //excel.FinishSheet(sheetName);
+                    //excel.FinishDoc();
+                    //excel.ShowDocument();
+
+                    /*if (Directory.Exists(path) == false)
+                        Directory.CreateDirectory(path);
+
+                    string name = Math.Round(network.getError(), 4).ToString().Replace(',', '-').Replace('.', '-') + "_" + "EURUSD";
+                    File.WriteAllText(path + name + ".txt", network.getInfoString(fields, outputField));*/
+                }
+            }).Start();
         }
     }
 }

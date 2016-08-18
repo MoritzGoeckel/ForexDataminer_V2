@@ -18,5 +18,8 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
         void load(string path);
 
         double getError();
+        string getInfoString(string[] inputFieldName, string outputFieldName);
+        GeneralExcelGenerator addRowToExcel(string[] inputFieldName, string outputFieldName, GeneralExcelGenerator excel, string sheet);
+
     }
 }

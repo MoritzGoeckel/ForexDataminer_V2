@@ -8,7 +8,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace NinjaTrader_Client.Trader.Datamining
 {
-    public class DataminingExcelGenerator
+    public class SampleOutcomeExcelGenerator
     {
         Excel.Application xlApp;
         Excel.Workbook xlWorkBook;
@@ -17,7 +17,7 @@ namespace NinjaTrader_Client.Trader.Datamining
         Dictionary<string, int> sheetRows = new Dictionary<string, int>();
 
         string path;
-        public DataminingExcelGenerator(string path)
+        public SampleOutcomeExcelGenerator(string path)
         {
             this.path = path;
 

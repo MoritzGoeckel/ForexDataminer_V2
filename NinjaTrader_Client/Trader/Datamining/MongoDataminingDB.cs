@@ -227,7 +227,7 @@ namespace NinjaTrader_Client.Trader
         }
 
         //Todo: Excel reporting
-        void IDataminingDatabase.getOutcomeIndicatorSampling(DataminingExcelGenerator excel, double min, double max, int steps, string indicatorId, int outcomeTimeframeSeconds, string instument)
+        void IDataminingDatabase.getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, double min, double max, int steps, string indicatorId, int outcomeTimeframeSeconds, string instument)
         {
             List<Thread> threads = new List<Thread>();
 
@@ -732,7 +732,7 @@ namespace NinjaTrader_Client.Trader
                     + successes + seperator + count + seperator + successRate + seperator + (successRate * slTpRatio) + seperator + result;
         }
 
-        void IDataminingDatabase.getOutcomeIndicatorSampling(DataminingExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, string instument)
+        void IDataminingDatabase.getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, string instument)
         {
             throw new NotImplementedException();
         }

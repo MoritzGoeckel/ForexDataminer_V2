@@ -188,7 +188,8 @@
     <Compile Include="Trader\Datamining\AI\IMachineLearning.cs" />
     <Compile Include="Trader\Datamining\DataminingDataComponent.cs" />
     <Compile Include="Trader\Datamining\DataminingDataComponentInfo.cs" />
-    <Compile Include="Trader\Datamining\DataminingExcelGenerator.cs" />
+    <Compile Include="Trader\Datamining\GeneralExcelGenerator.cs" />
+    <Compile Include="Trader\Datamining\SampleOutcomeExcelGenerator.cs" />
     <Compile Include="Trader\Datamining\DataminingPairInformation.cs" />
     <Compile Include="Trader\Datamining\InRamDatamining.cs" />
     <Compile Include="Trader\APIs\FXCM_Rates_Downloader.cs" />

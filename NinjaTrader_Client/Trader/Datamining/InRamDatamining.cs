@@ -142,6 +142,23 @@ namespace NinjaTrader_Client.Trader
             return max;
         }
 
+        public void reduceData(string pair, int count)
+        {
+            List<DataminingTickdata> list = dataInRam[pair];
+            double stepSize = Convert.ToDouble(list.Count()) / Convert.ToDouble(count);
+
+            List<DataminingTickdata> selectedSamples = new List<DataminingTickdata>();
+
+            int i = 0;
+            while (i < count)
+            {
+                selectedSamples.Add(list[Convert.ToInt32(i * stepSize)]);
+                i++;
+            }
+
+            dataInRam[pair] = selectedSamples;
+        }
+
         public void updateInfo(string pair, int maxDatasets = 50 * 1000)
         {
             DataminingPairInformation info = new DataminingPairInformation(pair);
@@ -470,7 +487,7 @@ namespace NinjaTrader_Client.Trader
         };
 
         //Todo: Excel reporting
-        public void getOutcomeIndicatorSampling(DataminingExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, double stepSize, string instrument)
+        public void getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, double stepSize, string instrument)
         {
             ConcurrentDictionary<double, OutcomeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCountPair>();
 
