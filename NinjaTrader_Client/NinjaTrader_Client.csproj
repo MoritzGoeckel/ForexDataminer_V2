@@ -184,184 +184,145 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Trader\Datamining\AI\AdvancedNeuralNetwork.cs" />
-    <Compile Include="Trader\Datamining\AI\IMachineLearning.cs" />
-    <Compile Include="Trader\Datamining\DataminingDataComponent.cs" />
-    <Compile Include="Trader\Datamining\DataminingDataComponentInfo.cs" />
-    <Compile Include="Trader\Datamining\GeneralExcelGenerator.cs" />
-    <Compile Include="Trader\Datamining\SampleOutcomeExcelGenerator.cs" />
-    <Compile Include="Trader\Datamining\DataminingPairInformation.cs" />
-    <Compile Include="Trader\Datamining\InRamDatamining.cs" />
-    <Compile Include="Trader\APIs\FXCM_Rates_Downloader.cs" />
-    <Compile Include="Trader\Forms\AutopilotTradingForm.cs">
+    <Compile Include="Trader\Analysis\Datamining\AI\AdvancedNeuralNetwork.cs" />
+    <Compile Include="Trader\Analysis\Datamining\AI\IMachineLearning.cs" />
+    <Compile Include="Trader\Analysis\Datamining\DataminingDataComponent.cs" />
+    <Compile Include="Trader\Analysis\Datamining\DataminingDataComponentInfo.cs" />
+    <Compile Include="Trader\Utils\GeneralExcelGenerator.cs" />
+    <Compile Include="Trader\Analysis\Datamining\SampleOutcomeExcelGenerator.cs" />
+    <Compile Include="Trader\Analysis\Datamining\DataminingPairInformation.cs" />
+    <Compile Include="Trader\Analysis\Datamining\InRamDatamining.cs" />
+    <Compile Include="Trader\Analysis\IndicatorCollections\FirstIndicatorCollection.cs" />
+    <Compile Include="Trader\Analysis\IndicatorCollections\IndicatorCollection.cs" />
+    <Compile Include="Trader\Streaming\APIs\FXCM_Rates_Downloader.cs" />
+    <Compile Include="Trader\Streaming\Strategies\Strategy.cs" />
+    <Compile Include="Trader\UIs\Forms\AutopilotTradingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Trader\Forms\AutopilotTradingForm.Designer.cs">
+    <Compile Include="Trader\UIs\Forms\AutopilotTradingForm.Designer.cs">
       <DependentUpon>AutopilotTradingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Trader\Forms\AnalyseRawTestDataForm.cs">
+    <Compile Include="Trader\UIs\Forms\CorrelationAnalysisForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Trader\Forms\AnalyseRawTestDataForm.Designer.cs">
-      <DependentUpon>AnalyseRawTestDataForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Trader\Forms\CorrelationAnalysisForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Trader\Forms\CorrelationAnalysisForm.Designer.cs">
+    <Compile Include="Trader\UIs\Forms\CorrelationAnalysisForm.Designer.cs">
       <DependentUpon>CorrelationAnalysisForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Trader\Forms\DataDensityForm.cs">
+    <Compile Include="Trader\UIs\Forms\DataDensityForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Trader\Forms\DataDensityForm.Designer.cs">
+    <Compile Include="Trader\UIs\Forms\DataDensityForm.Designer.cs">
       <DependentUpon>DataDensityForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Trader\Datamining\DataminingForm.cs">
+    <Compile Include="Trader\Analysis\Datamining\DataminingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Trader\Datamining\DataminingForm.Designer.cs">
+    <Compile Include="Trader\Analysis\Datamining\DataminingForm.Designer.cs">
       <DependentUpon>DataminingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Trader\Forms\TradeHistoryChartForm.cs">
+    <Compile Include="Trader\UIs\Forms\TradeHistoryChartForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Trader\Forms\TradeHistoryChartForm.Designer.cs">
+    <Compile Include="Trader\UIs\Forms\TradeHistoryChartForm.Designer.cs">
       <DependentUpon>TradeHistoryChartForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Trader\BacktestBase\BacktestForm.cs">
+    <Compile Include="Trader\Streaming\TradingDataStreamProcessor.cs" />
+    <Compile Include="Trader\UIs\Forms\ChartingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Trader\BacktestBase\BacktestForm.Designer.cs">
-      <DependentUpon>BacktestForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Trader\Forms\ChartingForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Trader\Forms\ChartingForm.Designer.cs">
+    <Compile Include="Trader\UIs\Forms\ChartingForm.Designer.cs">
       <DependentUpon>ChartingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Trader\Forms\ExportImportForm.cs">
+    <Compile Include="Trader\UIs\Forms\ExportImportForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Trader\Forms\ExportImportForm.Designer.cs">
+    <Compile Include="Trader\UIs\Forms\ExportImportForm.Designer.cs">
       <DependentUpon>ExportImportForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Trader\Forms\LiveTradingForm.cs">
+    <Compile Include="Trader\UIs\Forms\LiveTradingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Trader\Forms\LiveTradingForm.Designer.cs">
+    <Compile Include="Trader\UIs\Forms\LiveTradingForm.Designer.cs">
       <DependentUpon>LiveTradingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Trader\Forms\MainForm.cs">
+    <Compile Include="Trader\UIs\Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Trader\Forms\MainForm.Designer.cs">
+    <Compile Include="Trader\UIs\Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Trader\Forms\DataDensityPerDayForm.cs">
+    <Compile Include="Trader\UIs\Forms\DataDensityPerDayForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Trader\Forms\DataDensityPerDayForm.Designer.cs">
+    <Compile Include="Trader\UIs\Forms\DataDensityPerDayForm.Designer.cs">
       <DependentUpon>DataDensityPerDayForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Trader\BacktestBase\Backtester.cs" />
-    <Compile Include="Trader\BacktestBase\BacktestData.cs" />
-    <Compile Include="Trader\BacktestBase\BacktestFormatter.cs" />
-    <Compile Include="Trader\BacktestBase\ProgressReport.cs" />
-    <Compile Include="Trader\BacktestBase\Visualization\BacktestDataVisualizer.cs" />
-    <Compile Include="Trader\BacktestBase\Visualization\BacktestVisualizationData.cs" />
-    <Compile Include="Trader\Backtests\RandomStrategyBacktestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Trader\Backtests\DedicatedStrategyBacktestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Trader\Charting\CustomChart.cs" />
-    <Compile Include="Trader\Charting\SimpleChart_Stepline.cs" />
-    <Compile Include="Trader\Charting\SimpleChart_Scatter.cs" />
-    <Compile Include="Trader\Databases\CachedDatabase.cs" />
-    <Compile Include="Trader\Databases\SQLiteDatabase.cs" />
-    <Compile Include="Trader\Datamining\CorrelationCondition.cs" />
-    <Compile Include="Trader\Datamining\IDataminingDatabase.cs" />
-    <Compile Include="Trader\Datamining\DataminingQueue.cs" />
-    <Compile Include="Trader\Datamining\MongoDataminingDB.cs" />
-    <Compile Include="Trader\Indicators\StandartDeviationIndicator.cs" />
-    <Compile Include="Trader\Indicators\RangeIndicator.cs" />
-    <Compile Include="Trader\Indicators\WalkerIndicator.cs" />
-    <Compile Include="Trader\Indicators\MovingAverageIndicator.cs" />
-    <Compile Include="Trader\Indicators\TradingTimeIndicator.cs" />
-    <Compile Include="Trader\Indicators\StochIndicator.cs" />
-    <Compile Include="Trader\Databases\Database.cs" />
-    <Compile Include="Trader\Databases\SQLDatabase.cs" />
+    <Compile Include="Trader\Analysis\Datamining\BacktestData.cs" />
+    <Compile Include="Trader\UIs\Visualization\BacktestDataVisualizer.cs" />
+    <Compile Include="Trader\UIs\Visualization\BacktestVisualizationData.cs" />
+    <Compile Include="Trader\UIs\Charting\CustomChart.cs" />
+    <Compile Include="Trader\UIs\Charting\SimpleChart_Stepline.cs" />
+    <Compile Include="Trader\UIs\Charting\SimpleChart_Scatter.cs" />
+    <Compile Include="Trader\Analysis\Databases\SQLiteDatabase.cs" />
+    <Compile Include="Trader\Analysis\Databases\IDataminingDatabase.cs" />
+    <Compile Include="Trader\Utils\ResourceMonitor.cs" />
+    <Compile Include="Trader\Analysis\Datamining\MongoDataminingDB.cs" />
+    <Compile Include="Trader\Analysis\Indicators\StandartDeviationIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\RangeIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\WalkerIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\MovingAverageIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\TradingTimeIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\StochIndicator.cs" />
     <Compile Include="Trader\Model\DataminingTickdata.cs" />
-    <Compile Include="Trader\Forms\ShowImageForm.cs">
+    <Compile Include="Trader\UIs\Forms\ShowImageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Trader\Forms\ShowImageForm.Designer.cs">
+    <Compile Include="Trader\UIs\Forms\ShowImageForm.Designer.cs">
       <DependentUpon>ShowImageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Trader\Strategies\StochStrategy_OneSide.cs" />
-    <Compile Include="Trader\Strategies\StochStrategy.cs" />
-    <Compile Include="Trader\Strategies\MomentumStrategy.cs" />
-    <Compile Include="Trader\Strategies\SSIStochStrategy.cs" />
-    <Compile Include="Trader\Strategies\SSIStrategy.cs" />
-    <Compile Include="Trader\Forms\StrategyStringGeneratorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Trader\Forms\StrategyStringGeneratorForm.Designer.cs">
-      <DependentUpon>StrategyStringGeneratorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Trader\TradingAPIs\FakeTradingAPI.cs" />
+    <Compile Include="Trader\Streaming\APIs\TradingAPIs\FakeTradingAPI.cs" />
     <Compile Include="Trader\Model\TradePosition.cs" />
-    <Compile Include="Trader\StrategyBase\Strategy.cs" />
     <Compile Include="Trader\Model\Config.cs" />
     <Compile Include="Trader\Model\TimeValueData.cs" />
     <Compile Include="Trader\Model\Tickdata.cs" />
-    <Compile Include="Trader\Databases\MongoFacade.cs" />
+    <Compile Include="Trader\Analysis\Databases\MongoFacade.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Trader\APIs\NinjaTraderAPI.cs" />
-    <Compile Include="Trader\Databases\MongoDatabase.cs" />
-    <Compile Include="Trader\APIs\SSI_Downloader.cs" />
-    <Compile Include="Trader\TradingAPIs\ITradingAPI.cs" />
-    <Compile Include="Trader\TradingAPIs\NTLiveTradingAPI.cs" />
-    <Compile Include="Trader\TradingAPIs\PairData.cs" />
+    <Compile Include="Trader\Streaming\APIs\NinjaTraderAPI.cs" />
+    <Compile Include="Trader\Analysis\Databases\MongoDatabase.cs" />
+    <Compile Include="Trader\Streaming\APIs\SSI_Downloader.cs" />
+    <Compile Include="Trader\Streaming\APIs\TradingAPIs\ITradingAPI.cs" />
+    <Compile Include="Trader\Streaming\APIs\TradingAPIs\NTLiveTradingAPI.cs" />
+    <Compile Include="Trader\Streaming\APIs\TradingAPIs\PairData.cs" />
     <Compile Include="Trader\Utils\HexColorCodes.cs" />
     <Compile Include="Trader\Utils\ProgressDict.cs" />
     <Compile Include="Trader\Utils\StringCompressor.cs" />
     <Compile Include="Trader\Utils\Timestamp.cs" />
-    <EmbeddedResource Include="Trader\Forms\AutopilotTradingForm.resx">
+    <EmbeddedResource Include="Trader\UIs\Forms\AutopilotTradingForm.resx">
       <DependentUpon>AutopilotTradingForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Trader\Forms\AnalyseRawTestDataForm.resx">
-      <DependentUpon>AnalyseRawTestDataForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Trader\Forms\CorrelationAnalysisForm.resx">
+    <EmbeddedResource Include="Trader\UIs\Forms\CorrelationAnalysisForm.resx">
       <DependentUpon>CorrelationAnalysisForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Trader\Forms\DataDensityForm.resx">
+    <EmbeddedResource Include="Trader\UIs\Forms\DataDensityForm.resx">
       <DependentUpon>DataDensityForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Trader\Datamining\DataminingForm.resx">
+    <EmbeddedResource Include="Trader\Analysis\Datamining\DataminingForm.resx">
       <DependentUpon>DataminingForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Trader\Forms\TradeHistoryChartForm.resx">
+    <EmbeddedResource Include="Trader\UIs\Forms\TradeHistoryChartForm.resx">
       <DependentUpon>TradeHistoryChartForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Trader\BacktestBase\BacktestForm.resx">
-      <DependentUpon>BacktestForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Trader\Forms\ChartingForm.resx">
+    <EmbeddedResource Include="Trader\UIs\Forms\ChartingForm.resx">
       <DependentUpon>ChartingForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Trader\Forms\ExportImportForm.resx">
+    <EmbeddedResource Include="Trader\UIs\Forms\ExportImportForm.resx">
       <DependentUpon>ExportImportForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Trader\Forms\LiveTradingForm.resx">
+    <EmbeddedResource Include="Trader\UIs\Forms\LiveTradingForm.resx">
       <DependentUpon>LiveTradingForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Trader\Forms\MainForm.resx">
+    <EmbeddedResource Include="Trader\UIs\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -373,14 +334,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Trader\Forms\DataDensityPerDayForm.resx">
+    <EmbeddedResource Include="Trader\UIs\Forms\DataDensityPerDayForm.resx">
       <DependentUpon>DataDensityPerDayForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Trader\Forms\ShowImageForm.resx">
+    <EmbeddedResource Include="Trader\UIs\Forms\ShowImageForm.resx">
       <DependentUpon>ShowImageForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Trader\Forms\StrategyStringGeneratorForm.resx">
-      <DependentUpon>StrategyStringGeneratorForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -399,7 +357,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Trader\Indicators\INDICATOR_RULES.txt" />
+    <Content Include="Trader\Analysis\Indicators\INDICATOR_RULES.txt" />
     <Content Include="Trader\Notes\pairs.txt" />
     <Content Include="Trader\Notes\Todo.txt" />
     <Content Include="Trader\Notes\readme.txt" />

@@ -36,5 +36,10 @@ namespace NinjaTrader_Client.Trader.Model
         {
             return (values["bid"] + values["ask"]) / 2;
         }
+
+        public Tickdata ToTickdata()
+        {
+            return new Tickdata(timestamp, values["last"], values["bid"], values["ask"]);
+        }
     }
 }
