@@ -85,15 +85,24 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
         }
 
         private double error = -1;
+        private double lastError = -1;
         void IMachineLearning.train(double[][] input, double[] output, int epochs = 1)
         {
             double[][] usedInput = new double[][] { }, usedOutput = new double[][] { };
             convertData(input, output, ref usedInput, ref usedOutput);
 
             for (int i = 0; i < epochs; i++)
+            {
                 error = teacher.RunEpoch(usedInput.ToArray(), usedOutput.ToArray());
+
+                if (lastError == error)
+                    break;
+                else
+                    lastError = error;
+            }
         }
 
+        //Do we really need to convert it again??? todo!
         private void convertData(double[][] input, double[] output, ref double[][] properInput, ref double[][] properOutput)
         {
             if (input.Length != inputFieldNames.Length)

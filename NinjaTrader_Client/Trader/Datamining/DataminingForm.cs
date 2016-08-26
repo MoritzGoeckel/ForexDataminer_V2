@@ -139,7 +139,6 @@ namespace NinjaTrader_Client.Trader.Analysis
                 
                 double[][] inputs = new double[][] { };
                 double[] outputs = new double[] { };
-
                 dataminingDb.getInputOutputArrays(inputFields, outputField, "EURUSD", ref inputs, ref outputs);
                 dataminingDb.unloadPair("EURUSD");
 
@@ -332,6 +331,8 @@ namespace NinjaTrader_Client.Trader.Analysis
         private void optimizeParametersNN_btn_Click(object sender, EventArgs e)
         {
             new Thread(delegate () {
+
+                //Todo: Drop fields random
 
                 string[] inputFields = new string[] { "ssi-mt4", "spread", "mid-TradingTime", "mid-Stoch_600000", "mid-Stoch_1800000", "mid-Stoch_3600000", "mid-Stoch_7200000", "mid-Stoch_14400000", "mid-Stoch_21600000", "mid-MA_600000", "mid-MA_1800000", "mid-MA_3600000", "mid-MA_7200000", "mid-MA_14400000", "mid-MA_21600000", "mid-Range_1800000", "mid-Range_3600000", "mid-Range_7200000" };
                 string outputField = "buy-outcomeCode-0,001_600000";
