@@ -20,6 +20,7 @@ using System.Collections.Concurrent;
 
 namespace NinjaTrader_Client.Trader
 {
+    //Todo: way too big!
     public class InRamDatamining
     {
         MongoFacade mongodb;
@@ -144,6 +145,11 @@ namespace NinjaTrader_Client.Trader
 
         public void reduceData(string pair, int count)
         {
+            dataInRam[pair] = getSomeSamplesFromData(pair, count, 0);
+        }
+
+        public List<DataminingTickdata> getSomeSamplesFromData(string pair, int count, int offset)
+        {
             List<DataminingTickdata> list = dataInRam[pair];
             double stepSize = Convert.ToDouble(list.Count()) / Convert.ToDouble(count);
 
@@ -152,11 +158,15 @@ namespace NinjaTrader_Client.Trader
             int i = 0;
             while (i < count)
             {
-                selectedSamples.Add(list[Convert.ToInt32(i * stepSize)]);
+                int id = Convert.ToInt32(i * stepSize) + offset;
+
+                if (id < list.Count && id >= 0)
+                    selectedSamples.Add(list[id]);
+
                 i++;
             }
 
-            dataInRam[pair] = selectedSamples;
+            return selectedSamples;
         }
 
         public void updateInfo(string pair, int maxDatasets = 50 * 1000)
@@ -485,8 +495,7 @@ namespace NinjaTrader_Client.Trader
             public double ActualSum;
             public double Count;
         };
-
-        //Todo: Excel reporting
+        
         public void getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, double stepSize, string instrument)
         {
             ConcurrentDictionary<double, OutcomeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCountPair>();
@@ -845,14 +854,24 @@ namespace NinjaTrader_Client.Trader
             throw new NotImplementedException();
         }
 
-        public void addDataToLearningComponent(string[] inputFields, string outcomeField, string instrument, IMachineLearning learningComponent)
+        public void getInputOutputArrays(string[] inputFields, string outcomeField, string instrument, ref double[][] inputs, ref double[] outputs, int dataCountReduction = 0, int offsetReduction = 0)
         {
-            progress.setProgress("Training", 0);
+            progress.setProgress("Creating input/output array", 0);
 
-            double dataCount = dataInRam[instrument].Count();
+            List<DataminingTickdata> dataCollection;
+
+            if (dataCountReduction == 0)
+                dataCollection = dataInRam[instrument];
+            else
+                dataCollection = getSomeSamplesFromData(instrument, dataCountReduction, offsetReduction);
+
+            double dataCount = dataCollection.Count();
             double doneData = 0;
 
-            foreach (DataminingTickdata data in dataInRam[instrument])
+            List<double[]> inputsList = new List<double[]>();
+            List<double> outputsList = new List<double>();
+
+            foreach (DataminingTickdata data in dataCollection)
             {
                 bool validTick = true;
                 double[] input = new double[inputFields.Length];
@@ -879,7 +898,9 @@ namespace NinjaTrader_Client.Trader
                 if (validTick)
                 {
                     try {
-                        learningComponent.addData(input, outcome);
+                        inputsList.Add(input);
+                        outputsList.Add(outcome);
+
                         doneWriteOperation();
                     }
                     catch { }
@@ -887,10 +908,16 @@ namespace NinjaTrader_Client.Trader
 
                 doneData++;
 
-                progress.setProgress("Training", Convert.ToInt32(doneData / dataCount * 100d));
+                progress.setProgress("Creating input/output array", Convert.ToInt32(doneData / dataCount * 100d));
             }
 
-            progress.remove("Training");
+            inputs = inputsList.ToArray();
+            inputsList.Clear();
+
+            outputs = outputsList.ToArray();
+            outputsList.Clear();
+
+            progress.remove("Creating input/output array");
         }
 
         public long getLastTimestamp(string pair)

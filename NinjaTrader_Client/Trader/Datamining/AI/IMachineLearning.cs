@@ -8,18 +8,15 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
 {
     public interface IMachineLearning
     {
-        void clearData();
-        void addData(double[] input, double output);
-        void train();
-
+        void train(double[][] input, double[] output, int epochs = 1);
         double getPrediction(double[] input);
 
         void save(string path);
         void load(string path);
 
         double getError();
-        string getInfoString(string[] inputFieldName, string outputFieldName);
-        GeneralExcelGenerator addRowToExcel(string[] inputFieldName, string outputFieldName, GeneralExcelGenerator excel, string sheet);
-
+        string getInfoString();
+        string[] getInfo(string[] inputFieldName, string outputFieldName);
+        double validateOnData(double[][] input, double[] output);
     }
 }

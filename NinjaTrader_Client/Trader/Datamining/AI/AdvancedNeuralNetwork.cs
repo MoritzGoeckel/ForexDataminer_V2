@@ -10,48 +10,33 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
 {
     class AdvancedNeuralNetwork : IMachineLearning
     {
-        private int inputCount;
         private int[] neuronsCount, dropedFields;
         private double learningRate, sigmoidAlphaValue;
         private bool useRegularization, useNguyenWidrow, useSameWeights;
         private JacobianMethod method;
 
+        private string[] inputFieldNames;
+        private string outputFieldName;
+
         private ActivationNetwork theNetwork;
         private LevenbergMarquardtLearning teacher;
-
-        //Todo: testen
+        
         private static Random rand = new Random();
-        public static AdvancedNeuralNetwork getRandom(string[] inputFieldNames, string outputFieldName, bool dropFields)
+        public static AdvancedNeuralNetwork getRandom(string[] inputFieldNames, string outputFieldName)
         {
             int[] randomArchitecture = new int[3 + rand.Next(0, 10)];
-
+            
             for (int i = 0; i < randomArchitecture.Length; i++)
                 randomArchitecture[i] = rand.Next(2, inputFieldNames.Length * 2);
 
             randomArchitecture[0] = inputFieldNames.Length;
             randomArchitecture[randomArchitecture.Length] = 1;
-
-            int[] droppedFields = new int[rand.Next(0, inputFieldNames.Length - 1)];
-            if(dropFields)
-            {
-                List<int> availableDrops = new List<int>();
-                for (int i = 0; i < inputFieldNames.Length; i++)
-                    availableDrops.Add(i);
-
-                for (int i = 0; i < droppedFields.Length; i++)
-                {
-                    int choosenAvailableDropId = rand.Next(0, availableDrops.Count);
-                    droppedFields[i] = availableDrops[choosenAvailableDropId];
-                    availableDrops.RemoveAt(choosenAvailableDropId);
-                }
-            }
-
-            return new AdvancedNeuralNetwork(inputFieldNames.Length - droppedFields.Length, randomArchitecture, rand.Next(1, 50) * 0.02, rand.Next(1, 10), rand.Next(0, 1) == 1, rand.Next(0, 1) == 1, rand.Next(0, 1) == 1, (rand.Next(0, 1) == 1 ? JacobianMethod.ByBackpropagation : JacobianMethod.ByFiniteDifferences));
+            
+            return new AdvancedNeuralNetwork(inputFieldNames, outputFieldName, randomArchitecture, rand.Next(1, 50) * 0.02, rand.Next(1, 10), rand.Next(0, 1) == 1, rand.Next(0, 1) == 1, rand.Next(0, 1) == 1, (rand.Next(0, 1) == 1 ? JacobianMethod.ByBackpropagation : JacobianMethod.ByFiniteDifferences));
         }
 
-        public AdvancedNeuralNetwork(int inputCount, int[] neuronsCount, double learningRate = 0.1, double sigmoidAlphaValue = 2, bool useRegularization = false, bool useNguyenWidrow = false, bool useSameWeights = false, JacobianMethod method = JacobianMethod.ByBackpropagation, int[] dropedFields = null)
+        public AdvancedNeuralNetwork(string[] inputFieldNames, string outputFieldName, int[] neuronsCount, double learningRate = 0.1, double sigmoidAlphaValue = 2, bool useRegularization = false, bool useNguyenWidrow = false, bool useSameWeights = false, JacobianMethod method = JacobianMethod.ByBackpropagation, int[] dropedFields = null)
         {
-            this.inputCount = inputCount;
             this.neuronsCount = neuronsCount;
             this.learningRate = learningRate;
             this.useRegularization = useRegularization;
@@ -60,10 +45,13 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
             this.method = method;
             this.dropedFields = dropedFields;
 
+            this.inputFieldNames = inputFieldNames;
+            this.outputFieldName = outputFieldName;
+
             // create multi-layer neural network
             theNetwork = new ActivationNetwork(
                 new BipolarSigmoidFunction(sigmoidAlphaValue), //Andere Function möglich???
-                inputCount, neuronsCount);
+                inputFieldNames.Length, neuronsCount);
 
             if (useNguyenWidrow)
             {
@@ -96,50 +84,54 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
             theNetwork.Save(path);
         }
 
-        List<double[]> inputs = new List<double[]>();
-        List<double[]> outputs = new List<double[]>();
-
-        void IMachineLearning.addData(double[] input, double output)
+        private double error = -1;
+        void IMachineLearning.train(double[][] input, double[] output, int epochs = 1)
         {
-            if(input.Length != inputCount)
-                throw new Exception("Wrong input count! Length: " + input.Length + " should be " + inputCount);
+            double[][] usedInput = new double[][] { }, usedOutput = new double[][] { };
+            convertData(input, output, ref usedInput, ref usedOutput);
 
-            foreach (double d in input)
+            for (int i = 0; i < epochs; i++)
+                error = teacher.RunEpoch(usedInput.ToArray(), usedOutput.ToArray());
+        }
+
+        private void convertData(double[][] input, double[] output, ref double[][] properInput, ref double[][] properOutput)
+        {
+            if (input.Length != inputFieldNames.Length)
+                throw new Exception("Wrong input count! Length: " + input.Length + " should be " + inputFieldNames.Length);
+
+            properInput = new double[input.Length][];
+            properOutput = new double[input.Length][];
+
+            for (int row = 0; row < input.Length; row++)
+            {
+                for (int column = 0; column < input[row].Length; column++)
+                {
+                    double inputValue = input[row][column];
+                    if (double.IsInfinity(inputValue) || double.IsNegativeInfinity(inputValue) || double.IsNaN(inputValue))
+                        throw new Exception("Invalid value!");
+
+                    double[] tmpInput = input[row];
+                    if (dropedFields != null)
+                    {
+                        tmpInput = new double[input.Length - dropedFields.Length];
+                        for (int i = 0, b = 0; i < input.Length; i++) //Iterates thorugh input (i)
+                            if (dropedFields.Contains<int>(i) == false) //Checks weather currentInput is dropped
+                            {
+                                tmpInput[b] = input[row][i]; //If not, add it to next inputVectorUsed
+                                b++;
+                            }
+                    }
+
+                    //Check dropped field
+                    properInput[row] = tmpInput;
+                }
+
+                double d = output[row];
                 if (double.IsInfinity(d) || double.IsNegativeInfinity(d) || double.IsNaN(d))
                     throw new Exception("Invalid value!");
 
-            if (double.IsInfinity(output) || double.IsNegativeInfinity(output) || double.IsNaN(output))
-                throw new Exception("Invalid value!");
-
-            double[] inputUsed = input;
-
-            //Todo: Test
-            if (dropedFields != null)
-            {
-                inputUsed = new double[input.Length - dropedFields.Length];
-                for (int i = 0, b = 0; i < input.Length; i++) //Iterates thorugh input (i)
-                    if (dropedFields.Contains<int>(i) == false) //Checks weather currentInput is dropped
-                    {
-                        inputUsed[b] = input[i]; //If not, add it to next inputVectorUsed
-                        b++;
-                    }
+                properOutput[row] = new double[] { d };
             }
-
-            inputs.Add(inputUsed);
-            outputs.Add(new double[] { output } );
-        }
-
-        private double error = -1;
-        void IMachineLearning.train()
-        {
-            if(inputs.Count != 0)
-                error = teacher.RunEpoch(inputs.ToArray(), outputs.ToArray());
-        }
-
-        void IMachineLearning.clearData()
-        {
-            inputs.Clear();
-            outputs.Clear();
         }
 
         double IMachineLearning.getError()
@@ -147,7 +139,7 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
             return error;
         }
 
-        public string getInfoString(string[] inputFieldName, string outputFieldName)
+        public string getInfoString()
         {
             string nl = Environment.NewLine;
 
@@ -156,7 +148,7 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
                 neuronsCountString += i + "|";
 
             string fieldsString = "";
-            foreach (string f in inputFieldName)
+            foreach (string f in inputFieldNames)
                 fieldsString += f + "|";
 
             string droppedString = "";
@@ -164,7 +156,7 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
                 droppedString += i + "|";
 
             string outputStr = "";
-            outputStr += "InputCount: " + inputCount + nl;
+            outputStr += "InputCount: " + inputFieldNames.Length + nl;
             outputStr += "NeuronsCount: " + neuronsCountString + nl;
             outputStr += "LearningRate: " + learningRate + nl;
             outputStr += "Regularization: " + useRegularization.ToString() + nl;
@@ -186,7 +178,7 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
                 "Method", "Inputs", "Output", "Error" };
         }
 
-        public GeneralExcelGenerator addRowToExcel(string[] inputFieldName, string outputFieldName, GeneralExcelGenerator excel, string sheet)
+        public string[] getInfo(string[] inputFieldName, string outputFieldName)
         {
             string nl = Environment.NewLine;
 
@@ -202,11 +194,17 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
             foreach (int i in dropedFields)
                 droppedString += i + "|";
 
-            string[] values = new string[] { inputCount.ToString(), neuronsCountString, learningRate.ToString(), useRegularization.ToString(),
+            string[] values = new string[] { inputFieldNames.Length.ToString(), neuronsCountString, learningRate.ToString(), useRegularization.ToString(),
                 useNguyenWidrow.ToString(), useSameWeights.ToString(), method.ToString(), droppedString, fieldsString, outputFieldName, this.error.ToString() };
 
-            excel.addRow(sheet, values);
-            return excel;
+            return values;
+        }
+
+        public double validateOnData(double[][] input, double[] output)
+        {
+            double[][] usedInput = new double[][] { }, usedOutput = new double[][] { };
+            convertData(input, output, ref usedInput, ref usedOutput);
+            return teacher.ComputeError(usedInput.ToArray(), usedOutput.ToArray());
         }
     }
 }

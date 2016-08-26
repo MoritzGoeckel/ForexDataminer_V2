@@ -2,6 +2,7 @@
 using NinjaTrader_Client.Trader.Datamining.AI;
 using NinjaTrader_Client.Trader.Indicators;
 using NinjaTrader_Client.Trader.MainAPIs;
+using NinjaTrader_Client.Trader.Model;
 using NinjaTrader_Client.Trader.Utils;
 using System;
 using System.Collections.Generic;
@@ -129,48 +130,36 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                 string path = Application.StartupPath + "/AI/";
 
-                int epochs = int.MaxValue;
-                string[] fields = new string[] { "ssi-mt4", "spread", "mid-TradingTime", "mid-Stoch_600000", "mid-Stoch_1800000", "mid-Stoch_3600000", "mid-Stoch_7200000", "mid-Stoch_14400000", "mid-Stoch_21600000", "mid-MA_600000", "mid-MA_1800000", "mid-MA_3600000", "mid-MA_7200000", "mid-MA_14400000", "mid-MA_21600000", "mid-Range_1800000", "mid-Range_3600000", "mid-Range_7200000" };
-                int[] neuronsCount = new int[] { fields.Length, 18, 12, 1};
+                int maxEpochs = int.MaxValue;
+                string[] inputFields = new string[] { "ssi-mt4", "spread", "mid-TradingTime", "mid-Stoch_600000", "mid-Stoch_1800000", "mid-Stoch_3600000", "mid-Stoch_7200000", "mid-Stoch_14400000", "mid-Stoch_21600000", "mid-MA_600000", "mid-MA_1800000", "mid-MA_3600000", "mid-MA_7200000", "mid-MA_14400000", "mid-MA_21600000", "mid-Range_1800000", "mid-Range_3600000", "mid-Range_7200000" };
+                int[] neuronsCount = new int[] { inputFields.Length, 18, 12, 1};
                 string outputField = "buy-outcomeCode-0,001_600000";
 
-                IMachineLearning network = new AdvancedNeuralNetwork(fields.Length, neuronsCount, 0.1, 2, false, false, false, Accord.Neuro.Learning.JacobianMethod.ByBackpropagation);
-                long nextTimestamp = 0;
+                IMachineLearning network = new AdvancedNeuralNetwork(inputFields, outputField, neuronsCount, 0.1, 2, false, false, false, Accord.Neuro.Learning.JacobianMethod.ByBackpropagation);
+                
+                double[][] inputs = new double[][] { };
+                double[] outputs = new double[] { };
 
-                int samplesAtATime = int.MaxValue;
-                int doneSamples = 0;
+                dataminingDb.getInputOutputArrays(inputFields, outputField, "EURUSD", ref inputs, ref outputs);
+                dataminingDb.unloadPair("EURUSD");
 
-                while (true)
-                {
-                    network.clearData();
-                    dataminingDb.unloadPair("EURUSD");
+                int epochsDone = 0;
+                double lastError = -1;
+                while (epochsDone < maxEpochs)
+                { 
+                    setState("e" + Math.Round(network.getError(), 4).ToString());
+                    network.train(inputs, outputs, 1);
 
-                    if (dataminingDb.loadPair("EURUSD", nextTimestamp, samplesAtATime) == 0)
+                    if (lastError == network.getError())
                         break;
-
-                    nextTimestamp = dataminingDb.getLastTimestamp("EURUSD");
-
-                    dataminingDb.addDataToLearningComponent(fields, outputField, "EURUSD", network);
-                    dataminingDb.unloadPair("EURUSD");
-
-                    for (int i = 0; i < epochs; i++)
-                    {
-                        setState("E" + i + " S" + doneSamples + " e" + Math.Round(network.getError(), 4).ToString());
-                        network.train();
-                        network.save(path + "E" + i + "_" + "e" + Math.Round(network.getError(), 4).ToString().Replace(',','-').Replace('.', '-') + "_" + "EURUSD" + ".network"); //DateTime.Now.ToString("yyyy_dd_mm")
-                    }
-
-                    doneSamples += samplesAtATime;
-
+                    else
+                        lastError = network.getError();
+                    
                     if (Directory.Exists(path) == false)
                         Directory.CreateDirectory(path);
 
-                    network.save(path + DateTime.Now.ToString("yyyy_dd_mm") + "_" + "EURUSD" + ".network");
-
-                    setState("Trained: " + doneSamples + " - e" + network.getError());
-
-                    if (samplesAtATime == int.MaxValue)
-                        break;
+                    network.save(path + "E" + epochsDone + "_" + "e" + Math.Round(network.getError(), 4).ToString().Replace(',', '-').Replace('.', '-') + "_" + "EURUSD" + ".network"); //DateTime.Now.ToString("yyyy_dd_mm")
+                    epochsDone++;
                 }
 
                 setState("Done learning");
@@ -344,44 +333,57 @@ namespace NinjaTrader_Client.Trader.Analysis
         {
             new Thread(delegate () {
 
+                string[] inputFields = new string[] { "ssi-mt4", "spread", "mid-TradingTime", "mid-Stoch_600000", "mid-Stoch_1800000", "mid-Stoch_3600000", "mid-Stoch_7200000", "mid-Stoch_14400000", "mid-Stoch_21600000", "mid-MA_600000", "mid-MA_1800000", "mid-MA_3600000", "mid-MA_7200000", "mid-MA_14400000", "mid-MA_21600000", "mid-Range_1800000", "mid-Range_3600000", "mid-Range_7200000" };
+                string outputField = "buy-outcomeCode-0,001_600000";
+                int epochs = 10;
+                int networksCount = 500;
+
                 string path = Application.StartupPath + "/AI/";
                 GeneralExcelGenerator excel = new GeneralExcelGenerator(path + "excel.xlsx");
                 string sheetName = "OptimizeNN-E10";
-                excel.CreateSheet(sheetName, AdvancedNeuralNetwork.getExcelHeader());
 
-                dataminingDb.reduceData("EURUSD", 100 * 1000);
+                string[] header = new string[2 + AdvancedNeuralNetwork.getExcelHeader().Length];
+                AdvancedNeuralNetwork.getExcelHeader().CopyTo(header, 2);
+                header[0] = "ValidationE";
+                header[1] = "TrainingE";
 
-                int epochs = 10;
-                string[] fields = new string[] { "ssi-mt4", "spread", "mid-TradingTime", "mid-Stoch_600000", "mid-Stoch_1800000", "mid-Stoch_3600000", "mid-Stoch_7200000", "mid-Stoch_14400000", "mid-Stoch_21600000", "mid-MA_600000", "mid-MA_1800000", "mid-MA_3600000", "mid-MA_7200000", "mid-MA_14400000", "mid-MA_21600000", "mid-Range_1800000", "mid-Range_3600000", "mid-Range_7200000" };
-                string outputField = "buy-outcomeCode-0,001_600000";
+                excel.CreateSheet(sheetName, header);
+                
+                double[][] inputsTraining = new double[][] { };
+                double[] outputsTraining = new double[] { };
+                dataminingDb.getInputOutputArrays(inputFields, outputField, "EURUSD", ref inputsTraining, ref outputsTraining, 100 * 1000, 0);
 
-                while (true)
+                double[][] inputsValidation = new double[][] { };
+                double[] outputsValidation = new double[] { };
+                dataminingDb.getInputOutputArrays(inputFields, outputField, "EURUSD", ref inputsValidation, ref outputsValidation, 10 * 1000, 1);
+
+                dataminingDb.unloadPair("EURUSD");
+
+                for (int ns = 0; ns < networksCount; ns++)
                 {
-                    IMachineLearning network = AdvancedNeuralNetwork.getRandom(fields, outputField, false);
-                    dataminingDb.addDataToLearningComponent(fields, outputField, "EURUSD", network);
+                    IMachineLearning network = AdvancedNeuralNetwork.getRandom(inputFields, outputField);
+                    network.train(inputsTraining, outputsTraining, epochs);
 
-                    for (int i = 0; i < epochs; i++)
-                    {
-                        setState("E" + i + " e" + Math.Round(network.getError(), 4).ToString());
-                        network.train();
-                    }
+                    double trainingError = network.getError();
+                    double validationError = network.validateOnData(inputsValidation, outputsValidation);
 
-                    network.addRowToExcel(fields, outputField, excel, sheetName);
+                    string[] excelRow = new string[2 + network.getInfo(inputFields, outputField).Length];
+                    network.getInfo(inputFields, outputField).CopyTo(excelRow, 2);
+                    excelRow[0] = validationError.ToString();
+                    excelRow[1] = trainingError.ToString();
 
-                    //Todo: Test network error on other data :)
-                    //Todo: Testdata
+                    excel.addRow(sheetName, excelRow);
 
-                    //Todo: Finish sheet and save
-                    //excel.FinishSheet(sheetName);
-                    //excel.FinishDoc();
-                    //excel.ShowDocument();
-
-                    /*if (Directory.Exists(path) == false)
-                        Directory.CreateDirectory(path);
-
-                    string name = Math.Round(network.getError(), 4).ToString().Replace(',', '-').Replace('.', '-') + "_" + "EURUSD";
-                    File.WriteAllText(path + name + ".txt", network.getInfoString(fields, outputField));*/
+                    setState("Optimizing NN " + ns + "/" + networksCount);
                 }
+
+                if (Directory.Exists(path) == false)
+                    Directory.CreateDirectory(path);
+
+                excel.FinishSheet(sheetName);
+                excel.FinishDoc();
+                excel.save();
+
             }).Start();
         }
     }
