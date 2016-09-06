@@ -9,7 +9,7 @@ namespace NinjaTrader_Client.Trader.Analysis.IndicatorCollections
 {
     class FirstIndicatorCollection : IndicatorCollection
     {
-        public override DataminingTickdata doCalculations(DataminingTickdata data)
+        public override AdvancedTickData doCalculations(AdvancedTickData data)
         {
             throw new NotImplementedException(); //Todo: Calculate some indicators on the DataminingTickdata
         }

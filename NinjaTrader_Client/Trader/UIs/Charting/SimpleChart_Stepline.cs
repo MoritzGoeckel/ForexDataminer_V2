@@ -74,7 +74,7 @@ namespace NinjaTrader_Client.Trader.Charting
             oszilator_layer.setDataCombineMethod(Chart.Side);
 
             //Get the data from the database
-            List<Tickdata> ticks = database.getPrices(start, end, instrument);
+            List<TickData> ticks = database.getPrices(start, end, instrument);
 
             double[] asks = new double[ticks.Count];
             double[] bids = new double[ticks.Count];
@@ -87,7 +87,7 @@ namespace NinjaTrader_Client.Trader.Charting
 
 
             int index = 0;
-            foreach (Tickdata tick in ticks)
+            foreach (TickData tick in ticks)
             {
                 asks[index] = tick.ask;
                 bids[index] = tick.bid;

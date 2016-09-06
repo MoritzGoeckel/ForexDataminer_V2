@@ -9,15 +9,16 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Model
 {
-    public class Tickdata
+    public class TickData
     {
         public long timestamp;
         public double bid, ask, last;
+        public string instrument;
 
         [BsonId, JsonIgnore]
         public ObjectId _id;
 
-        public Tickdata(long timestamp, double last, double bid, double ask)
+        public TickData(long timestamp, double last, double bid, double ask, string instrument)
         {
             this.timestamp = timestamp;
             this.bid = bid;
@@ -30,9 +31,9 @@ namespace NinjaTrader_Client.Trader.Model
             return (ask + bid) / 2;
         }
 
-        internal DataminingTickdata ToDataminingTickdata()
+        internal AdvancedTickData toAdvancedTickData()
         {
-            return new DataminingTickdata(timestamp, last, bid, ask);
+            return new AdvancedTickData(timestamp, last, bid, ask, instrument);
         }
     }
 }

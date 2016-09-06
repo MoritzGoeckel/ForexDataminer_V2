@@ -13,9 +13,9 @@ using System.Xml.Linq;
 
 namespace NinjaTrader_Client.Trader
 {
-    public class FXCM_Rates_Downloader
+    public class FXCMRatesDownloader
     {
-        private Dictionary<string, Tickdata> saved_values = new Dictionary<string, Tickdata>();
+        private Dictionary<string, TickData> saved_values = new Dictionary<string, TickData>();
 
         private Thread timerThread;
 
@@ -23,10 +23,10 @@ namespace NinjaTrader_Client.Trader
 
         public int errors = 0;
 
-        public delegate void SourceDataArrivedHandler(Tickdata data, string instrument);
+        public delegate void SourceDataArrivedHandler(TickData data);
         public event SourceDataArrivedHandler sourceDataArrived;
 
-        public FXCM_Rates_Downloader()
+        public FXCMRatesDownloader()
         {
             timerThread = new Thread(timedFunction);
         }
@@ -50,20 +50,20 @@ namespace NinjaTrader_Client.Trader
                 foreach (XElement node in childList)
                 {
                     string instrument = node.Attribute("Symbol").Value;
-                    Tickdata data = new Tickdata(Timestamp.getNow(), -1, Double.Parse(node.Element("Bid").Value.Replace(".", ",")), Double.Parse(node.Element("Ask").Value.Replace(".", ",")));
+                    TickData data = new TickData(Timestamp.getNow(), -1, Double.Parse(node.Element("Bid").Value.Replace(".", ",")), Double.Parse(node.Element("Ask").Value.Replace(".", ",")), instrument);
 
                     if (saved_values.ContainsKey(instrument) == false)
                     {
                         saved_values.Add(instrument, data);
                         if (sourceDataArrived != null)
-                            sourceDataArrived(data, instrument);
+                            sourceDataArrived(data);
                     }
                     else {
-                        Tickdata oldData = saved_values[instrument];
+                        TickData oldData = saved_values[instrument];
                         if (oldData.ask != data.ask || oldData.bid != data.bid)
                         {
                             if (sourceDataArrived != null)
-                                sourceDataArrived(data, instrument);
+                                sourceDataArrived(data);
 
                             saved_values[instrument] = data;
                         }

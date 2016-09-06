@@ -12,7 +12,7 @@ namespace NinjaTrader_Client.Trader.TradingAPIs
 {
     class FakeTradingAPI : ITradingAPI
     {
-        private Dictionary<string, PairData> pairData = new Dictionary<string, PairData>();
+        private Dictionary<string, TradingAPIPairData> pairData = new Dictionary<string, TradingAPIPairData>();
         private long now;
 
         private WalkerIndicator tradingTime;
@@ -22,13 +22,13 @@ namespace NinjaTrader_Client.Trader.TradingAPIs
             tradingTime = new TradingTimeIndicator();
         }
 
-        public void setPair(string instrument, Tickdata data)
+        public void setPair(TickData data)
         {
             this.now = data.timestamp;
-            if (pairData.ContainsKey(instrument) == false)
-                pairData.Add(instrument, new PairData());
+            if (pairData.ContainsKey(data.instrument) == false)
+                pairData.Add(data.instrument, new TradingAPIPairData());
 
-            pairData[instrument].lastTickData = data;            
+            pairData[data.instrument].lastTickData = data;            
         }
 
         public override bool isUptodate(string instrument)
@@ -39,7 +39,7 @@ namespace NinjaTrader_Client.Trader.TradingAPIs
             if (pairData[instrument] == null)
                 return false;
 
-            Tickdata data = pairData[instrument].lastTickData;
+            TickData data = pairData[instrument].lastTickData;
             if (data != null)
                 return now - data.timestamp < 1000 * 60 * 3;
             else

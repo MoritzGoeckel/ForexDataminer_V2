@@ -27,25 +27,25 @@ namespace NinjaTrader_Client.Trader
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public Tickdata getPrice(long timestamp, string instrument, bool caching = true)
+        public TickData getPrice(long timestamp, string instrument, bool caching = true)
         {
             return getPriceInternal(timestamp, instrument);
         }
 
-        public List<Tickdata> getPrices(long startTimestamp, long endTimestamp, string instrument)
+        public List<TickData> getPrices(long startTimestamp, long endTimestamp, string instrument)
         {
             var docs = pricesCollection.FindAs<BsonDocument>(Query.And(Query.EQ("instrument", instrument), Query.LT("timestamp", endTimestamp + 1), Query.GT("timestamp", startTimestamp - 1))).SetSortOrder(SortBy.Ascending("timestamp"));
 
-            List<Tickdata> output = new List<Tickdata>();
+            List<TickData> output = new List<TickData>();
             foreach (BsonDocument doc in docs)
             {
-                output.Add(new Tickdata(doc["timestamp"].AsInt64, doc["last"].AsDouble, doc["bid"].AsDouble, doc["ask"].AsDouble));
+                output.Add(new TickData(doc["timestamp"].AsInt64, doc["last"].AsDouble, doc["bid"].AsDouble, doc["ask"].AsDouble, doc["instrument"].AsString));
             }
 
             return output;
         }
 
-        public void setPrice(Tickdata td, string instrument)
+        public void setPrice(TickData td, string instrument)
         {
             try
             {
@@ -127,12 +127,12 @@ namespace NinjaTrader_Client.Trader
 
         //##Not in interface
         
-        private Tickdata getPriceInternal(long timestamp, string instrument)
+        private TickData getPriceInternal(long timestamp, string instrument)
         {
             var docsDarunter = pricesCollection.FindAs<BsonDocument>(Query.And(Query.EQ("instrument", instrument), Query.LT("timestamp", timestamp + 1), Query.GT("timestamp", timestamp - (3 * 60 * 1000)))).SetSortOrder(SortBy.Descending("timestamp")).SetLimit(1);
             BsonDocument darunter = docsDarunter.ToList<BsonDocument>()[0];
 
-            return new Tickdata(darunter["timestamp"].AsInt64, darunter["last"].AsDouble, darunter["bid"].AsDouble, darunter["ask"].AsDouble);
+            return new TickData(darunter["timestamp"].AsInt64, darunter["last"].AsDouble, darunter["bid"].AsDouble, darunter["ask"].AsDouble, darunter["instrument"].AsString);
         }
 
         public void exportData(long startTimestamp, string basePath)
@@ -233,7 +233,7 @@ namespace NinjaTrader_Client.Trader
                             {
                                 if (collectionName.Contains("_") == false)
                                 {
-                                    sql.setPrice(new Tickdata(doc["timestamp"].AsInt64, doc["last"].AsDouble, doc["bid"].AsDouble, doc["ask"].AsDouble), collectionName);
+                                    sql.setPrice(new TickData(doc["timestamp"].AsInt64, doc["last"].AsDouble, doc["bid"].AsDouble, doc["ask"].AsDouble, doc["instrument"].AsString));
                                 }
                                 else
                                 {

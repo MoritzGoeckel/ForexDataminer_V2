@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Model
 {
-    public class DataminingTickdata
+    public class AdvancedTickData
     {
         public long timestamp;
+        public string instrument;
 
         [BsonId, JsonIgnore]
         public ObjectId _id;
@@ -21,7 +22,7 @@ namespace NinjaTrader_Client.Trader.Model
         [BsonIgnore, JsonIgnore]
         public bool changed = false;
 
-        public DataminingTickdata(long timestamp, double last, double bid, double ask)
+        public AdvancedTickData(long timestamp, double last, double bid, double ask, string instrument)
         {
             this.timestamp = timestamp;
 
@@ -30,6 +31,8 @@ namespace NinjaTrader_Client.Trader.Model
             values.Add("ask", ask);
             values.Add("last", last);
             values.Add("mid", getMedianPrice());
+
+            this.instrument = instrument;
         }
 
         public double getMedianPrice()
@@ -37,9 +40,9 @@ namespace NinjaTrader_Client.Trader.Model
             return (values["bid"] + values["ask"]) / 2;
         }
 
-        public Tickdata ToTickdata()
+        public TickData ToTickdata()
         {
-            return new Tickdata(timestamp, values["last"], values["bid"], values["ask"]);
+            return new TickData(timestamp, values["last"], values["bid"], values["ask"], instrument);
         }
     }
 }

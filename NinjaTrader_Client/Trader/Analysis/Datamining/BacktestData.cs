@@ -90,6 +90,7 @@ namespace NinjaTrader_Client.Trader.Backtest
             setResult("positiveDaysRatio", ((double)positiveDays / (double)days).ToString());
 
             //Standart Deviation
+
             double sumNegative = 0, sumPositive = 0, sum = 0;
             double countNegative = 0, countPositive = 0, count = 0;
             double varianceSumNegative = 0, varianceSumPositive = 0, varianceSum = 0;
@@ -217,12 +218,12 @@ namespace NinjaTrader_Client.Trader.Backtest
 
         public string[] getExcelRow()
         {
-
+            //Todo
         }
 
         public string[] getExcelHeader()
         {
-
+            //Todo
         }
     }
 }

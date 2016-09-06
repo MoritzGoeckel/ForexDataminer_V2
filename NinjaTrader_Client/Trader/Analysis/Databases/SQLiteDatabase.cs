@@ -37,10 +37,10 @@ namespace NinjaTrader_Client.Trader.MainAPIs
             Thread.Sleep(500);
         }
 
-        public Tickdata getPrice(long timestamp, string instrument, bool caching = true)
+        public TickData getPrice(long timestamp, string instrument, bool caching = true)
         {
             SQLiteConnection connection = null;
-            Tickdata output = null;
+            TickData output = null;
 
             bool done = false;
             while (done == false)
@@ -60,7 +60,7 @@ namespace NinjaTrader_Client.Trader.MainAPIs
                     SQLiteDataReader Reader = command.ExecuteReader();
 
                     if (Reader.Read())
-                        output = new Tickdata((long)(decimal)Reader["timestamp"], (double)Reader["last"], (double)Reader["bid"], (double)Reader["ask"]);
+                        output = new TickData((long)(decimal)Reader["timestamp"], (double)Reader["last"], (double)Reader["bid"], (double)Reader["ask"], (string)Reader["instrument"]);
                     else
                         output = null;
 
@@ -77,9 +77,9 @@ namespace NinjaTrader_Client.Trader.MainAPIs
             return output;
         }
 
-        public List<Tickdata> getPrices(long startTimestamp, long endTimestamp, string instrument)
+        public List<TickData> getPrices(long startTimestamp, long endTimestamp, string instrument)
         {
-            List<Tickdata> output = new List<Tickdata>();
+            List<TickData> output = new List<TickData>();
             SQLiteConnection connection = null;
 
             bool done = false;
@@ -103,7 +103,7 @@ namespace NinjaTrader_Client.Trader.MainAPIs
                         long ts = (long)(decimal)Reader["timestamp"];
                         double bid = (double)Reader["bid"];
 
-                        output.Add(new Tickdata(ts, (double)Reader["last"], bid, (double)Reader["ask"]));
+                        output.Add(new TickData(ts, (double)Reader["last"], bid, (double)Reader["ask"], (string)Reader["instrument"]));
                     }
                     Reader.Close();
                     done = true;
@@ -118,7 +118,7 @@ namespace NinjaTrader_Client.Trader.MainAPIs
             return output;
         }
 
-        public void setPrice(Tickdata td, string instrument)
+        public void setPrice(TickData td)
         {
             SQLiteConnection connection = getConnection();
 
@@ -127,7 +127,7 @@ namespace NinjaTrader_Client.Trader.MainAPIs
             command.Parameters.AddWithValue("@ask", format(td.ask));
             command.Parameters.AddWithValue("@bid", format(td.bid));
             command.Parameters.AddWithValue("@timestamp", format(td.timestamp));
-            command.Parameters.AddWithValue("@instrument", instrument);
+            command.Parameters.AddWithValue("@instrument", td.instrument);
             command.Prepare();
 
             command.CommandTimeout = timeout;

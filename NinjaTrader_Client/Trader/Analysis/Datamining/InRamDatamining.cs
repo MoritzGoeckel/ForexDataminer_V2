@@ -20,6 +20,8 @@ using System.Collections.Concurrent;
 using NinjaTrader_Client.Trader.Streaming.Strategies;
 using NinjaTrader_Client.Trader.TradingAPIs;
 using NinjaTrader_Client.Trader.Backtest;
+using NinjaTrader_Client.Trader.Streaming;
+using NinjaTrader_Client.Trader.Analysis.IndicatorCollections;
 
 namespace NinjaTrader_Client.Trader
 {
@@ -33,7 +35,7 @@ namespace NinjaTrader_Client.Trader
         ProgressDict progress = new ProgressDict();
         Random z = new Random();
 
-        Dictionary<string, List<DataminingTickdata>> dataInRam = new Dictionary<string, List<DataminingTickdata>>();
+        Dictionary<string, List<AdvancedTickData>> dataInRam = new Dictionary<string, List<AdvancedTickData>>();
         Dictionary<string, DataminingPairInformation> infoDict = new Dictionary<string, DataminingPairInformation>();
 
         int doneOperations = 0;
@@ -73,18 +75,18 @@ namespace NinjaTrader_Client.Trader
 
             DataminingPairInformation info = new DataminingPairInformation(pair);
 
-            dataInRam.Add(pair, new List<DataminingTickdata>());
+            dataInRam.Add(pair, new List<AdvancedTickData>());
 
-            List<DataminingTickdata> list = dataInRam[pair];
+            List<AdvancedTickData> list = dataInRam[pair];
 
             //To avoid a to small buffer on the db
             mongodb.getDB().GetCollection("pair_" + pair).CreateIndex("timestamp");
 
-            var cursors = mongodb.getDB().GetCollection("pair_" + pair).FindAllAs<DataminingTickdata>().SetSortOrder(SortBy.Ascending("timestamp"));
+            var cursors = mongodb.getDB().GetCollection("pair_" + pair).FindAllAs<AdvancedTickData>().SetSortOrder(SortBy.Ascending("timestamp"));
             double max = cursors.Count();
             double current = 0;
 
-            foreach (DataminingTickdata tickdata in cursors)
+            foreach (AdvancedTickData tickdata in cursors)
             {
                 list.Add(tickdata);
 
@@ -112,18 +114,18 @@ namespace NinjaTrader_Client.Trader
 
             DataminingPairInformation info = new DataminingPairInformation(pair);
 
-            dataInRam.Add(pair, new List<DataminingTickdata>());
+            dataInRam.Add(pair, new List<AdvancedTickData>());
 
-            List<DataminingTickdata> list = dataInRam[pair];
+            List<AdvancedTickData> list = dataInRam[pair];
 
             //To avoid a to small buffer on the db
             mongodb.getDB().GetCollection("pair_" + pair).CreateIndex("timestamp");
 
-            var cursors = mongodb.getDB().GetCollection("pair_" + pair).FindAs<DataminingTickdata>(Query.GTE("timestamp", fromTimestamp)).SetSortOrder(SortBy.Ascending("timestamp")).SetLimit(count);
+            var cursors = mongodb.getDB().GetCollection("pair_" + pair).FindAs<AdvancedTickData>(Query.GTE("timestamp", fromTimestamp)).SetSortOrder(SortBy.Ascending("timestamp")).SetLimit(count);
             long max = cursors.Count();
             double current = 0;
 
-            foreach (DataminingTickdata tickdata in cursors)
+            foreach (AdvancedTickData tickdata in cursors)
             {
                 list.Add(tickdata);
 
@@ -151,12 +153,12 @@ namespace NinjaTrader_Client.Trader
             dataInRam[pair] = getSomeSamplesFromData(pair, count, 0);
         }
 
-        public List<DataminingTickdata> getSomeSamplesFromData(string pair, int count, int offset)
+        public List<AdvancedTickData> getSomeSamplesFromData(string pair, int count, int offset)
         {
-            List<DataminingTickdata> list = dataInRam[pair];
+            List<AdvancedTickData> list = dataInRam[pair];
             double stepSize = Convert.ToDouble(list.Count()) / Convert.ToDouble(count);
 
-            List<DataminingTickdata> selectedSamples = new List<DataminingTickdata>();
+            List<AdvancedTickData> selectedSamples = new List<AdvancedTickData>();
 
             int i = 0;
             while (i < count)
@@ -175,7 +177,7 @@ namespace NinjaTrader_Client.Trader
         public void updateInfo(string pair, int maxDatasets = 50 * 1000)
         {
             DataminingPairInformation info = new DataminingPairInformation(pair);
-            List<DataminingTickdata> list = dataInRam[pair];
+            List<AdvancedTickData> list = dataInRam[pair];
 
             double stepSize = Convert.ToDouble(list.Count()) / Convert.ToDouble(maxDatasets);
 
@@ -203,7 +205,7 @@ namespace NinjaTrader_Client.Trader
 
         public void savePair(string instrument)
         {
-            List<DataminingTickdata> inRamList = dataInRam[instrument];
+            List<AdvancedTickData> inRamList = dataInRam[instrument];
 
             List<Thread> threads = new List<Thread>();
 
@@ -228,7 +230,7 @@ namespace NinjaTrader_Client.Trader
                     {
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
 
-                        DataminingTickdata currentTickdata = inRamList[currentId];
+                        AdvancedTickData currentTickdata = inRamList[currentId];
 
                         if(currentTickdata.changed == true)
                         {
@@ -260,7 +262,7 @@ namespace NinjaTrader_Client.Trader
                 mongodb.getDB().GetCollection(collectionName).RemoveAll();
             }
 
-            foreach(KeyValuePair<string, List<DataminingTickdata>> pair in dataInRam)
+            foreach(KeyValuePair<string, List<AdvancedTickData>> pair in dataInRam)
             {
                 pair.Value.Clear();
             }
@@ -276,7 +278,7 @@ namespace NinjaTrader_Client.Trader
         public List<string> getLoadedPairs()
         {
             List<string> pairs = new List<string>();
-            foreach (KeyValuePair<string, List<DataminingTickdata>> pair in dataInRam)
+            foreach (KeyValuePair<string, List<AdvancedTickData>> pair in dataInRam)
                 pairs.Add(pair.Key);
 
             return pairs;
@@ -303,12 +305,12 @@ namespace NinjaTrader_Client.Trader
                     progress.setProgress(name, 0);
                     int done = 0;
 
-                    List<Tickdata> data = otherDatabase.getPrices(threadBeginning, threadEnd, pair);
+                    List<TickData> data = otherDatabase.getPrices(threadBeginning, threadEnd, pair);
                     long count = data.Count();
 
-                    foreach (Tickdata d in data)
+                    foreach (TickData d in data)
                     {
-                        collection.Insert(d.ToDataminingTickdata().ToBsonDocument());
+                        collection.Insert(d.toAdvancedTickData().ToBsonDocument());
 
                         done++;
                         doneWriteOperation();
@@ -342,7 +344,7 @@ namespace NinjaTrader_Client.Trader
             {
                 Thread thread = new Thread(delegate (object actualThreadId)
                 {
-                    List<DataminingTickdata> dataInTimeframe = new List<DataminingTickdata>();
+                    List<AdvancedTickData> dataInTimeframe = new List<AdvancedTickData>();
                     double min = double.MaxValue, max = double.MinValue;
                     
                     int indexBeginning = start + (indexFrame * Convert.ToInt32(actualThreadId));
@@ -354,14 +356,14 @@ namespace NinjaTrader_Client.Trader
                     progress.setProgress(name, 0);
                     int currentId = indexBeginning;
 
-                    List<DataminingTickdata> inBetweenData = new List<DataminingTickdata>();
+                    List<AdvancedTickData> inBetweenData = new List<AdvancedTickData>();
 
                     //Durchlaufe IDs in ThreadFrame
                     while (currentId <= indexEnd)
                     {
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
 
-                        DataminingTickdata currentTickdata = dataInRam[instrument][currentId];
+                        AdvancedTickData currentTickdata = dataInRam[instrument][currentId];
 
                         //Wenn Daten noch nicht da sind
                         if (currentTickdata.values.ContainsKey("outcomeMin_" + timeframe) == false)
@@ -383,7 +385,7 @@ namespace NinjaTrader_Client.Trader
                                 min = double.MaxValue;
                                 max = double.MinValue;
 
-                                foreach (DataminingTickdata data in inBetweenData)
+                                foreach (AdvancedTickData data in inBetweenData)
                                 {
                                     double mid = data.values["mid"];
                                     if (mid > max)
@@ -409,7 +411,7 @@ namespace NinjaTrader_Client.Trader
                             }
 
                             //Das actual outcome
-                            DataminingTickdata outcomeData = dataInRam[instrument][outcomeIndex];
+                            AdvancedTickData outcomeData = dataInRam[instrument][outcomeIndex];
                                 
                             currentTickdata.values.Add("outcomeMin_" + timeframe, min);
                             currentTickdata.values.Add("outcomeMax_" + timeframe, max);
@@ -436,7 +438,7 @@ namespace NinjaTrader_Client.Trader
 
         public void addData(string dataname, SQLiteDatabase database, string instrument)
         {
-            List<DataminingTickdata> inRamList = dataInRam[instrument];
+            List<AdvancedTickData> inRamList = dataInRam[instrument];
             
             List<Thread> threads = new List<Thread>();
 
@@ -462,7 +464,7 @@ namespace NinjaTrader_Client.Trader
                         currentId++;
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
 
-                        DataminingTickdata currentTickdata = inRamList[currentId];
+                        AdvancedTickData currentTickdata = inRamList[currentId];
                         
                         if (currentTickdata.values.ContainsKey(dataname) == false)
                         {
@@ -503,7 +505,7 @@ namespace NinjaTrader_Client.Trader
         {
             ConcurrentDictionary<double, OutcomeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCountPair>();
 
-            List<DataminingTickdata> inRamList = dataInRam[instrument];
+            List<AdvancedTickData> inRamList = dataInRam[instrument];
 
             List<Thread> threads = new List<Thread>();
 
@@ -528,7 +530,7 @@ namespace NinjaTrader_Client.Trader
                     {
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
 
-                        DataminingTickdata currentTickdata = inRamList[currentId];
+                        AdvancedTickData currentTickdata = inRamList[currentId];
                         if (currentTickdata.values.ContainsKey(indicatorId) 
                             && currentTickdata.values.ContainsKey("outcomeMin_" + outcomeTimeframeSeconds)
                             && currentTickdata.values.ContainsKey("outcomeMax_" + outcomeTimeframeSeconds)
@@ -611,7 +613,7 @@ namespace NinjaTrader_Client.Trader
 
             string indicatorID = fieldId + "-" + indicator.getName();
 
-            foreach (DataminingTickdata currentTickdata in dataInRam[instrument])
+            foreach (AdvancedTickData currentTickdata in dataInRam[instrument])
             {
                 progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(done) / Convert.ToDouble(dataInRam[instrument].Count()) * 100d));
                 done++;
@@ -632,7 +634,7 @@ namespace NinjaTrader_Client.Trader
 
         public void addMetaIndicatorSum(string[] ids, double[] weights, string fieldName, string instrument)
         {
-            List<DataminingTickdata> inRamList = dataInRam[instrument];
+            List<AdvancedTickData> inRamList = dataInRam[instrument];
 
             List<Thread> threads = new List<Thread>();
 
@@ -657,7 +659,7 @@ namespace NinjaTrader_Client.Trader
                     {
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
 
-                        DataminingTickdata currentTickdata = inRamList[currentId];
+                        AdvancedTickData currentTickdata = inRamList[currentId];
 
                         if (currentTickdata.values.ContainsKey(fieldName) == false)
                         {
@@ -691,7 +693,7 @@ namespace NinjaTrader_Client.Trader
         {
             string outcomeCodeFieldName = "outcomeCode-" + normalizedDifference + "_" + outcomeTimeframe;
             
-            List<DataminingTickdata> inRamList = dataInRam[instrument];
+            List<AdvancedTickData> inRamList = dataInRam[instrument];
 
             List<Thread> threads = new List<Thread>();
 
@@ -716,7 +718,7 @@ namespace NinjaTrader_Client.Trader
                     {
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
 
-                        DataminingTickdata currentTickdata = inRamList[currentId];
+                        AdvancedTickData currentTickdata = inRamList[currentId];
 
                         if (currentTickdata.values.ContainsKey("buy-" + outcomeCodeFieldName) == false 
                         && currentTickdata.values.ContainsKey("outcomeMax_" + outcomeTimeframe) 
@@ -750,7 +752,7 @@ namespace NinjaTrader_Client.Trader
         //Not tested ???
         public string getSuccessRate(int outcomeTimeframeSeconds, string indicator, double min, double max, string instrument, double tpPercent, double slPercent, bool buy)
         {
-            List<DataminingTickdata> inRamList = dataInRam[instrument];
+            List<AdvancedTickData> inRamList = dataInRam[instrument];
 
             List<Thread> threads = new List<Thread>();
 
@@ -779,7 +781,7 @@ namespace NinjaTrader_Client.Trader
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
                         doneWriteOperation();
 
-                        DataminingTickdata currentTickdata = inRamList[currentId];
+                        AdvancedTickData currentTickdata = inRamList[currentId];
 
                         try
                         {
@@ -851,7 +853,7 @@ namespace NinjaTrader_Client.Trader
         {
             progress.setProgress("Creating input/output array", 0);
 
-            List<DataminingTickdata> dataCollection;
+            List<AdvancedTickData> dataCollection;
 
             if (dataCountReduction == 0)
                 dataCollection = dataInRam[instrument];
@@ -864,7 +866,7 @@ namespace NinjaTrader_Client.Trader
             List<double[]> inputsList = new List<double[]>();
             List<double> outputsList = new List<double>();
 
-            foreach (DataminingTickdata data in dataCollection)
+            foreach (AdvancedTickData data in dataCollection)
             {
                 bool validTick = true;
                 double[] input = new double[inputFields.Length];
@@ -918,15 +920,15 @@ namespace NinjaTrader_Client.Trader
             return dataInRam[pair][dataInRam[pair].Count - 1].timestamp;
         }
 
-        public void backtestStreaming(Strategy strategy, string pair)
+        public void backtestStreaming(string pair, Strategy strategy, ExecutionStrategy execStrat, IndicatorCollection indicators)
         {
             FakeTradingAPI api = new FakeTradingAPI();
-            TradingDataStreamProcessor tradingStreamProcessor = new TradingDataStreamProcessor(strategy, api);
+            StreamingModul tradingStreamProcessor = new StreamingModul(null, indicators, strategy, execStrat, api, pair);
 
-            foreach (DataminingTickdata data in dataInRam[pair])
+            foreach (AdvancedTickData data in dataInRam[pair])
             {
-                api.setPair(pair, data.ToTickdata());
-                tradingStreamProcessor.setNewestData(data);
+                api.setPair(data.ToTickdata());
+                tradingStreamProcessor.pushData(data.ToTickdata());
             }
 
             api.closePositions(pair);

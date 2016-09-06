@@ -10,15 +10,15 @@ using NinjaTrader_Client.Trader.Utils;
 
 namespace NinjaTrader_Client.Trader
 {
-    public class NinjaTraderAPI
+    public class LowLevelNinjaTraderAPI
     {
         private Thread updateDataThread;
         private Client ntClient;
-        private Dictionary<string, Tickdata> instruments;
+        private Dictionary<string, TickData> instruments;
 
         private bool resume = true;
 
-        public delegate void TickdataArrivedHandler(Tickdata data, string instrument);
+        public delegate void TickdataArrivedHandler(TickData data, string instrument);
         public event TickdataArrivedHandler tickdataArrived;
 
         private bool connected = false;
@@ -28,19 +28,19 @@ namespace NinjaTrader_Client.Trader
         }
 
         private string account;
-        public NinjaTraderAPI(List<string> instrumentNames, string account)
+        public LowLevelNinjaTraderAPI(List<string> instrumentNames, string account)
         {
             this.account = account;
-            instruments = new Dictionary<string,Tickdata>();
+            instruments = new Dictionary<string,TickData>();
 
             foreach(string name in instrumentNames)
-                instruments.Add(name, new Tickdata(0, 0, 0, 0));
+                instruments.Add(name, new TickData(0, 0, 0, 0, name));
 
 
             ntClient = new Client();
             if (ntClient.Connected(0) == 0)
             {
-                foreach (KeyValuePair<string, Tickdata> pair in instruments)
+                foreach (KeyValuePair<string, TickData> pair in instruments)
                     if (ntClient.SubscribeMarketData(pair.Key) != 0)
                         throw new Exception("Can't subscribe to " + pair.Key);
 
@@ -78,10 +78,10 @@ namespace NinjaTrader_Client.Trader
                 List<string> instrumentNames = new List<string>(instruments.Keys);
                 foreach (string instrumentName in instrumentNames)
                 {
-                    Tickdata newestData = new Tickdata(Timestamp.getNow(), ntClient.MarketData(instrumentName, 0), ntClient.MarketData(instrumentName, 1), ntClient.MarketData(instrumentName, 2));
+                    TickData newestData = new TickData(Timestamp.getNow(), ntClient.MarketData(instrumentName, 0), ntClient.MarketData(instrumentName, 1), ntClient.MarketData(instrumentName, 2), instrumentName);
                     // 0 = last, 1 = bid, 2 = ask
 
-                    Tickdata oldData = instruments[instrumentName];
+                    TickData oldData = instruments[instrumentName];
                     if (newestData.ask != oldData.ask || newestData.bid != oldData.bid || newestData.last != oldData.last)
                     {
                         if (tickdataArrived != null)
@@ -100,7 +100,7 @@ namespace NinjaTrader_Client.Trader
 
             if (isConnected())
             {
-                foreach (KeyValuePair<string, Tickdata> pair in instruments)
+                foreach (KeyValuePair<string, TickData> pair in instruments)
                     if (ntClient.SubscribeMarketData(pair.Key) != 0)
                         throw new Exception("Can't unsubscribe to " + pair.Key);
 

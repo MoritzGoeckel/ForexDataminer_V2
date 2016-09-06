@@ -48,7 +48,7 @@ namespace NinjaTrader_Client.Trader.Model
                 return currentBid - priceOpen;
         }
 
-        public double getDifference(Tickdata data)
+        public double getDifference(TickData data)
         {
             return getDifference(data.bid, data.ask);
         }

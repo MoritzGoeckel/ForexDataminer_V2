@@ -20,7 +20,7 @@ namespace NinjaTrader_Client.Trader.Datamining
             this.Pair = name;
         }
 
-        public void checkTickdata(DataminingTickdata tickdata)
+        public void checkTickdata(AdvancedTickData tickdata)
         {
             Datasets++;
 

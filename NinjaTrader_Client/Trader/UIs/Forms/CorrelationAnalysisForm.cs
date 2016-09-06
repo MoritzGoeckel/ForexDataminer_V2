@@ -73,7 +73,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
             //This MINMax
             double thisPairMax = 0, thisPairMin = double.MaxValue;
-            foreach (Tickdata data in database.getPrices(start, end, thisPair))
+            foreach (TickData data in database.getPrices(start, end, thisPair))
             {
                 double price = data.getAvgPrice();
                 if (price > thisPairMax)
@@ -84,7 +84,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
             //Other minmax
             double otherPairMax = 0, otherPairMin = double.MaxValue;
-            foreach (Tickdata data in database.getPrices(start, end, otherPair))
+            foreach (TickData data in database.getPrices(start, end, otherPair))
             {
                 double price = data.getAvgPrice();
                 if (price > otherPairMax)

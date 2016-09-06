@@ -11,11 +11,11 @@ namespace NinjaTrader_Client.Trader.TradingAPIs
 {
     public class NTLiveTradingAPI : ITradingAPI
     {
-        private NinjaTraderAPI api;
+        private LowLevelNinjaTraderAPI api;
         private int positionSize;
 
         private static NTLiveTradingAPI theInstace;
-        public static void createInstace(NinjaTraderAPI api, int positionSize)
+        public static void createInstace(LowLevelNinjaTraderAPI api, int positionSize)
         {
             if (theInstace == null)
                 theInstace = new NTLiveTradingAPI(api, positionSize);
@@ -28,14 +28,14 @@ namespace NinjaTrader_Client.Trader.TradingAPIs
             return theInstace;
         }
 
-        private NTLiveTradingAPI(NinjaTraderAPI api, int positionSize)
+        private NTLiveTradingAPI(LowLevelNinjaTraderAPI api, int positionSize)
         {
             this.api = api;
             this.positionSize = positionSize;
             api.tickdataArrived += api_tickdataArrived;
         }
 
-        public NinjaTraderAPI getAPI()
+        public LowLevelNinjaTraderAPI getAPI()
         {
             return api;
         }
@@ -50,12 +50,12 @@ namespace NinjaTrader_Client.Trader.TradingAPIs
             this.positionSize = newPositionSize;
         }
 
-        private Dictionary<string, PairData> pairData = new Dictionary<string,PairData>();
+        private Dictionary<string, TradingAPIPairData> pairData = new Dictionary<string,TradingAPIPairData>();
 
-        void api_tickdataArrived(Tickdata data, string instrument)
+        void api_tickdataArrived(TickData data, string instrument)
         {
             if (pairData.ContainsKey(instrument) == false)
-                pairData.Add(instrument, new PairData());
+                pairData.Add(instrument, new TradingAPIPairData());
 
             int pos = api.getMarketPosition(instrument);
             if (pos != 0)

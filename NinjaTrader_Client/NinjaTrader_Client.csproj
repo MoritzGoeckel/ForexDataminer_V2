@@ -188,13 +188,16 @@
     <Compile Include="Trader\Analysis\Datamining\AI\IMachineLearning.cs" />
     <Compile Include="Trader\Analysis\Datamining\DataminingDataComponent.cs" />
     <Compile Include="Trader\Analysis\Datamining\DataminingDataComponentInfo.cs" />
+    <Compile Include="Trader\Streaming\Strategies\ExecutionStrategy.cs" />
+    <Compile Include="Trader\Streaming\Strategies\StrategySignal.cs" />
+    <Compile Include="Trader\Streaming\StreamingModul.cs" />
     <Compile Include="Trader\Utils\GeneralExcelGenerator.cs" />
     <Compile Include="Trader\Analysis\Datamining\SampleOutcomeExcelGenerator.cs" />
     <Compile Include="Trader\Analysis\Datamining\DataminingPairInformation.cs" />
     <Compile Include="Trader\Analysis\Datamining\InRamDatamining.cs" />
     <Compile Include="Trader\Analysis\IndicatorCollections\FirstIndicatorCollection.cs" />
     <Compile Include="Trader\Analysis\IndicatorCollections\IndicatorCollection.cs" />
-    <Compile Include="Trader\Streaming\APIs\FXCM_Rates_Downloader.cs" />
+    <Compile Include="Trader\Streaming\APIs\FXCMRatesDownloader.cs" />
     <Compile Include="Trader\Streaming\Strategies\Strategy.cs" />
     <Compile Include="Trader\UIs\Forms\AutopilotTradingForm.cs">
       <SubType>Form</SubType>
@@ -226,7 +229,6 @@
     <Compile Include="Trader\UIs\Forms\TradeHistoryChartForm.Designer.cs">
       <DependentUpon>TradeHistoryChartForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Trader\Streaming\TradingDataStreamProcessor.cs" />
     <Compile Include="Trader\UIs\Forms\ChartingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -273,7 +275,7 @@
     <Compile Include="Trader\Analysis\Indicators\MovingAverageIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\TradingTimeIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\StochIndicator.cs" />
-    <Compile Include="Trader\Model\DataminingTickdata.cs" />
+    <Compile Include="Trader\Model\AdvancedTickData.cs" />
     <Compile Include="Trader\UIs\Forms\ShowImageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -284,16 +286,16 @@
     <Compile Include="Trader\Model\TradePosition.cs" />
     <Compile Include="Trader\Model\Config.cs" />
     <Compile Include="Trader\Model\TimeValueData.cs" />
-    <Compile Include="Trader\Model\Tickdata.cs" />
+    <Compile Include="Trader\Model\TickData.cs" />
     <Compile Include="Trader\Analysis\Databases\MongoFacade.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Trader\Streaming\APIs\NinjaTraderAPI.cs" />
+    <Compile Include="Trader\Streaming\APIs\LowLevelNinjaTraderAPI.cs" />
     <Compile Include="Trader\Analysis\Databases\MongoDatabase.cs" />
     <Compile Include="Trader\Streaming\APIs\SSI_Downloader.cs" />
     <Compile Include="Trader\Streaming\APIs\TradingAPIs\ITradingAPI.cs" />
     <Compile Include="Trader\Streaming\APIs\TradingAPIs\NTLiveTradingAPI.cs" />
-    <Compile Include="Trader\Streaming\APIs\TradingAPIs\PairData.cs" />
+    <Compile Include="Trader\Streaming\APIs\TradingAPIs\TradingAPIPairData.cs" />
     <Compile Include="Trader\Utils\HexColorCodes.cs" />
     <Compile Include="Trader\Utils\ProgressDict.cs" />
     <Compile Include="Trader\Utils\StringCompressor.cs" />

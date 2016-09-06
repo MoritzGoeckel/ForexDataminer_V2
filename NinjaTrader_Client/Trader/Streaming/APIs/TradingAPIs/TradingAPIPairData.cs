@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.TradingAPIs
 {
-    class PairData
+    class TradingAPIPairData
     {
         public TradePosition lastLongPosition, lastShortPosition;
         public List<TradePosition> oldPositions = new List<TradePosition>();
-        public Tickdata lastTickData;
+        public TickData lastTickData;
     }
 }

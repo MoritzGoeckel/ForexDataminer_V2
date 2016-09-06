@@ -59,10 +59,10 @@ namespace NinjaTrader_Client.Trader
                     progress.setProgress(name, 0);
                     int done = 0;
 
-                    List<Tickdata> data = otherDatabase.getPrices(threadBeginning, threadEnd, pair);
+                    List<TickData> data = otherDatabase.getPrices(threadBeginning, threadEnd, pair);
                     long count = data.Count();
 
-                    foreach (Tickdata d in data)
+                    foreach (TickData d in data)
                     {
                         database.setPrice(d, pair);
                         done++;
@@ -120,7 +120,7 @@ namespace NinjaTrader_Client.Trader
 
                         try
                         {
-                            Tickdata inTimeframe = database.getPrice(doc["timestamp"].AsInt64 + (timeframeSeconds * 1000), doc["instrument"].AsString);
+                            TickData inTimeframe = database.getPrice(doc["timestamp"].AsInt64 + (timeframeSeconds * 1000), doc["instrument"].AsString);
 
                             var min_doc = collection.FindAs<BsonDocument>(Query.And(Query.EQ("instrument", doc["instrument"].AsString), Query.LT("timestamp", doc["timestamp"].AsInt64 + (timeframeSeconds * 1000)), Query.GT("timestamp", doc["timestamp"].AsInt64)))
                              .SetSortOrder(SortBy.Ascending("bid"))

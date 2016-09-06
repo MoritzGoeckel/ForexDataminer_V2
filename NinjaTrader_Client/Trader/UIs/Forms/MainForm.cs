@@ -22,9 +22,9 @@ namespace NinjaTrader_Client
 
         private SQLiteDatabase priceHistoryDatabase;
 
-        private NinjaTraderAPI ntApi;
+        private LowLevelNinjaTraderAPI ntApi;
         private SSI_Downloader ssiApi;
-        private FXCM_Rates_Downloader webApi;
+        private FXCMRatesDownloader webApi;
 
         private List<string> allInstruments = new List<string>();
         private List<string> minorsInstruments = new List<string>();
@@ -165,7 +165,7 @@ namespace NinjaTrader_Client
 
         private void connect_nt_btn_Click(object sender, EventArgs e)
         {
-            ntApi = new NinjaTraderAPI(allInstruments, "Sim101");
+            ntApi = new LowLevelNinjaTraderAPI(allInstruments, "Sim101");
             NTLiveTradingAPI.createInstace(ntApi, 125); //125 per position * 11 strategies = 1375 investement
         }
 
@@ -179,20 +179,20 @@ namespace NinjaTrader_Client
         }
 
         int insertedSets = 0;
-        private void tickdataArrived(Tickdata data, string instrument)
+        private void tickdataArrived(TickData data)
         {
             if (recordData)
             {
-                priceHistoryDatabase.setPrice(data, instrument);
+                priceHistoryDatabase.setPrice(data);
                 insertedSets++;
             }
 
-            if (prices.ContainsKey(instrument) == false)
-                prices.Add(instrument, data.getAvgPrice());
+            if (prices.ContainsKey(data.instrument) == false)
+                prices.Add(data.instrument, data.getAvgPrice());
             else
-                prices[instrument] = data.getAvgPrice();
+                prices[data.instrument] = data.getAvgPrice();
 
-            lastUpdatedPair = instrument;
+            lastUpdatedPair = data.instrument;
         }
 
         private void connect_web_btn_Click(object sender, EventArgs e)
@@ -201,7 +201,7 @@ namespace NinjaTrader_Client
             ssiApi.sourceDataArrived += sourceDataArrived;
             ssiApi.start();
 
-            webApi = new FXCM_Rates_Downloader();
+            webApi = new FXCMRatesDownloader();
             webApi.sourceDataArrived += tickdataArrived;
             webApi.start();
 
