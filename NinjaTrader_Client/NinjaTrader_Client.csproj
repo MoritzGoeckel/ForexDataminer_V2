@@ -186,6 +186,7 @@
   <ItemGroup>
     <Compile Include="Trader\Analysis\Datamining\AI\AdvancedNeuralNetwork.cs" />
     <Compile Include="Trader\Analysis\Datamining\AI\IMachineLearning.cs" />
+    <Compile Include="Trader\Analysis\Datamining\AI\LogisticRegression.cs" />
     <Compile Include="Trader\Analysis\Datamining\DataminingDataComponent.cs" />
     <Compile Include="Trader\Analysis\Datamining\DataminingDataComponentInfo.cs" />
     <Compile Include="Trader\Streaming\Strategies\ExecutionStrategy.cs" />

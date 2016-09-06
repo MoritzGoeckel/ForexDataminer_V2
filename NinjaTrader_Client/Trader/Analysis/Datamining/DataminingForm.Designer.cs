@@ -59,6 +59,7 @@
             this.data_textbox = new System.Windows.Forms.TextBox();
             this.updateInfo_Btn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.outcome_code_sampling_btn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -307,6 +308,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.outcome_code_sampling_btn);
             this.groupBox4.Controls.Add(this.outcome_sampling_button);
             this.groupBox4.Location = new System.Drawing.Point(18, 380);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -414,6 +416,18 @@
             this.panel1.Size = new System.Drawing.Size(364, 336);
             this.panel1.TabIndex = 25;
             // 
+            // outcome_code_sampling_btn
+            // 
+            this.outcome_code_sampling_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.outcome_code_sampling_btn.Location = new System.Drawing.Point(182, 29);
+            this.outcome_code_sampling_btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.outcome_code_sampling_btn.Name = "outcome_code_sampling_btn";
+            this.outcome_code_sampling_btn.Size = new System.Drawing.Size(164, 35);
+            this.outcome_code_sampling_btn.TabIndex = 17;
+            this.outcome_code_sampling_btn.Text = "Sample Outc. Code";
+            this.outcome_code_sampling_btn.UseVisualStyleBackColor = true;
+            this.outcome_code_sampling_btn.Click += new System.EventHandler(this.outcome_code_sampling_btn_Click);
+            // 
             // DataminingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -478,5 +492,6 @@
         private System.Windows.Forms.TextBox data_textbox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button unload_btn;
+        private System.Windows.Forms.Button outcome_code_sampling_btn;
     }
 }

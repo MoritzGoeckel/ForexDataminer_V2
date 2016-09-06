@@ -387,5 +387,10 @@ namespace NinjaTrader_Client.Trader.Analysis
 
             }).Start();
         }
+
+        private void outcome_code_sampling_btn_Click(object sender, EventArgs e)
+        {
+            //Todo: Implement inRamDatamining ... call
+        }
     }
 }

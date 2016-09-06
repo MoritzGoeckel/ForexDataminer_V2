@@ -600,6 +600,106 @@ namespace NinjaTrader_Client.Trader
             excel.FinishSheet(sheetName);
         }
 
+        //Todo
+        /*public void getOutcomeCodeIndicatorSampling(SampleOutcomeExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, double stepSize, string instrument)
+        {
+            ConcurrentDictionary<double, OutcomeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCountPair>();
+
+            List<AdvancedTickData> inRamList = dataInRam[instrument];
+
+            List<Thread> threads = new List<Thread>();
+
+            int start = 0;
+            int end = dataInRam[instrument].Count();
+
+            int indexFrame = (end - start) / threadsCount;
+            int threadId = 0;
+
+            while (threadId < threadsCount)
+            {
+                Thread thread = new Thread(delegate (object actualThreadId)
+                {
+                    int indexBeginning = start + (indexFrame * Convert.ToInt32(actualThreadId));
+                    int indexEnd = indexBeginning + indexFrame;
+
+                    string name = "indicator sampling " + indicatorId + " ID_" + indexBeginning + ":" + indexEnd;
+                    progress.setProgress(name, 0);
+                    int currentId = indexBeginning;
+
+                    while (currentId <= indexEnd)
+                    {
+                        progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
+
+                        AdvancedTickData currentTickdata = inRamList[currentId];
+                        if (currentTickdata.values.ContainsKey(indicatorId)
+                            && currentTickdata.values.ContainsKey("outcomeMin_" + outcomeTimeframeSeconds)
+                            && currentTickdata.values.ContainsKey("outcomeMax_" + outcomeTimeframeSeconds)
+                            && currentTickdata.values.ContainsKey("outcomeActual_" + outcomeTimeframeSeconds))
+                        {
+                            double indicatorKey = Math.Floor(currentTickdata.values[indicatorId] / stepSize) * stepSize;
+
+                            if (valueCounts.ContainsKey(indicatorKey) == false)
+                            {
+                                OutcomeCountPair pair = new OutcomeCountPair();
+                                pair.MaxSum = currentTickdata.values["outcomeMax_" + outcomeTimeframeSeconds];
+                                pair.MinSum = currentTickdata.values["outcomeMin_" + outcomeTimeframeSeconds];
+                                pair.ActualSum = currentTickdata.values["outcomeActual_" + outcomeTimeframeSeconds];
+                                pair.Count = 1;
+
+                                valueCounts.TryAdd(indicatorKey, pair);
+                            }
+                            else
+                            {
+                                valueCounts[indicatorKey].Count++;
+
+                                valueCounts[indicatorKey].MinSum += currentTickdata.values["outcomeMin_" + outcomeTimeframeSeconds];
+                                valueCounts[indicatorKey].MaxSum += currentTickdata.values["outcomeMax_" + outcomeTimeframeSeconds];
+                                valueCounts[indicatorKey].ActualSum += currentTickdata.values["outcomeActual_" + outcomeTimeframeSeconds];
+
+                                doneWriteOperation();
+                            }
+                        }
+
+                        currentId++;
+                    }
+
+                    progress.remove(name);
+
+                });
+
+                thread.Start(threadId);
+                threads.Add(thread);
+
+                threadId++;
+            }
+
+            waitForThreads(threads);
+
+            //Excel sheet...
+
+            string sheetName = indicatorId + "_" + (outcomeTimeframeSeconds / 1000 / 60) + "_" + instrument;
+
+            if (sheetName.Length >= 30)
+                sheetName = sheetName.Substring(0, 29);
+
+            excel.CreateSheet(sheetName);
+
+            foreach (KeyValuePair<double, OutcomeCountPair> pair in valueCounts)
+            {
+                double maxAvg = pair.Value.MaxSum / pair.Value.Count;
+                double minAvg = pair.Value.MinSum / pair.Value.Count;
+                double actualAvg = pair.Value.ActualSum / pair.Value.Count;
+
+                double minVsMax = pair.Value.MinSum + pair.Value.MaxSum / pair.Value.Count;
+
+                excel.addRow(sheetName, pair.Key, pair.Key + stepSize, Convert.ToInt32(pair.Value.Count), maxAvg, minAvg, minVsMax, actualAvg, (maxAvg + minAvg));
+
+                doneWriteOperation();
+            }
+
+            excel.FinishSheet(sheetName);
+        }*/
+
         public ProgressDict getProgress()
         {
             return progress;
