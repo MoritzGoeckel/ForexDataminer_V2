@@ -13,7 +13,6 @@ namespace NinjaTrader_Client.Trader.Streaming
 {
     class StreamingModul
     {
-        SQLiteDatabase sqliteDb;
         IndicatorCollection indicators;
         Strategy strategy;
         ExecutionStrategy execStrat;
@@ -21,9 +20,8 @@ namespace NinjaTrader_Client.Trader.Streaming
 
         string instrument;
 
-        public StreamingModul(SQLiteDatabase sqliteDb, IndicatorCollection indicators, Strategy strategy, ExecutionStrategy execStrat, ITradingAPI tradingApi, string instrument)
+        public StreamingModul(IndicatorCollection indicators, Strategy strategy, ExecutionStrategy execStrat, ITradingAPI tradingApi, string instrument)
         {
-            this.sqliteDb = sqliteDb;
             this.indicators = indicators;
             this.strategy = strategy;
             this.execStrat = execStrat;
@@ -39,9 +37,6 @@ namespace NinjaTrader_Client.Trader.Streaming
                 throw new Exception("Old data recieved!");
 
             lastPushedTimestamp = newestTickdata.timestamp;
-
-            if (sqliteDb != null)
-                sqliteDb.setPrice(newestTickdata);
 
             AdvancedTickData advancedTickdata = indicators.doCalculations(newestTickdata);
 

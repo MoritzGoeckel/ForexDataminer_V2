@@ -11,7 +11,7 @@ namespace NinjaTrader_Client.Trader.Streaming.Strategies
 {
     public abstract class Strategy
     {
-        public abstract StrategySignal pushData(AdvancedTickData data);
+        public abstract StrategySignal pushData(AdvancedTickData data); //Return 0 if not sure about indicators
         public abstract string getName();
         public abstract Dictionary<string, string> getResult();
         public abstract Dictionary<string, string> getParameters();

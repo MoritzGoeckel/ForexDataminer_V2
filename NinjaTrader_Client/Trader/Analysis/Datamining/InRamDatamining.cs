@@ -600,15 +600,23 @@ namespace NinjaTrader_Client.Trader
             excel.FinishSheet(sheetName);
         }
 
-        //Todo
-        /*public void getOutcomeCodeIndicatorSampling(SampleOutcomeExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, double stepSize, string instrument)
+        private class OutcomeCodeCountPair
         {
-            ConcurrentDictionary<double, OutcomeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCountPair>();
+            public double buy = 0;
+            public double sell = 0;
+            public double Count = 0;
+        };
+
+        public void getOutcomeCodeIndicatorSampling(SampleOutcomeCodeExcelGenerator excel, string indicatorId, double stepSize, double normalizedDifference, int outcomeTimeframe, string instrument)
+        {
+            ConcurrentDictionary<double, OutcomeCodeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCodeCountPair>();
 
             List<AdvancedTickData> inRamList = dataInRam[instrument];
 
             List<Thread> threads = new List<Thread>();
 
+            string outcomeCodeFieldName = "outcomeCode-" + normalizedDifference + "_" + outcomeTimeframe;
+            
             int start = 0;
             int end = dataInRam[instrument].Count();
 
@@ -631,19 +639,15 @@ namespace NinjaTrader_Client.Trader
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
 
                         AdvancedTickData currentTickdata = inRamList[currentId];
-                        if (currentTickdata.values.ContainsKey(indicatorId)
-                            && currentTickdata.values.ContainsKey("outcomeMin_" + outcomeTimeframeSeconds)
-                            && currentTickdata.values.ContainsKey("outcomeMax_" + outcomeTimeframeSeconds)
-                            && currentTickdata.values.ContainsKey("outcomeActual_" + outcomeTimeframeSeconds))
+                        if (currentTickdata.values.ContainsKey(indicatorId) && currentTickdata.values.ContainsKey(outcomeCodeFieldName))
                         {
                             double indicatorKey = Math.Floor(currentTickdata.values[indicatorId] / stepSize) * stepSize;
 
                             if (valueCounts.ContainsKey(indicatorKey) == false)
                             {
-                                OutcomeCountPair pair = new OutcomeCountPair();
-                                pair.MaxSum = currentTickdata.values["outcomeMax_" + outcomeTimeframeSeconds];
-                                pair.MinSum = currentTickdata.values["outcomeMin_" + outcomeTimeframeSeconds];
-                                pair.ActualSum = currentTickdata.values["outcomeActual_" + outcomeTimeframeSeconds];
+                                OutcomeCodeCountPair pair = new OutcomeCodeCountPair();
+                                pair.buy += currentTickdata.values["buy-" + outcomeCodeFieldName];
+                                pair.sell += currentTickdata.values["sell-" + outcomeCodeFieldName];
                                 pair.Count = 1;
 
                                 valueCounts.TryAdd(indicatorKey, pair);
@@ -652,9 +656,9 @@ namespace NinjaTrader_Client.Trader
                             {
                                 valueCounts[indicatorKey].Count++;
 
-                                valueCounts[indicatorKey].MinSum += currentTickdata.values["outcomeMin_" + outcomeTimeframeSeconds];
-                                valueCounts[indicatorKey].MaxSum += currentTickdata.values["outcomeMax_" + outcomeTimeframeSeconds];
-                                valueCounts[indicatorKey].ActualSum += currentTickdata.values["outcomeActual_" + outcomeTimeframeSeconds];
+                                valueCounts[indicatorKey].buy += currentTickdata.values["buy-" + outcomeCodeFieldName];
+                                valueCounts[indicatorKey].sell += currentTickdata.values["sell-" + outcomeCodeFieldName];
+                                valueCounts[indicatorKey].Count++;
 
                                 doneWriteOperation();
                             }
@@ -677,28 +681,25 @@ namespace NinjaTrader_Client.Trader
 
             //Excel sheet...
 
-            string sheetName = indicatorId + "_" + (outcomeTimeframeSeconds / 1000 / 60) + "_" + instrument;
+            string sheetName = "OutcomeCode_"+indicatorId + "_" + (outcomeTimeframe / 1000 / 60) + "_" + instrument;
 
             if (sheetName.Length >= 30)
                 sheetName = sheetName.Substring(0, 29);
 
             excel.CreateSheet(sheetName);
 
-            foreach (KeyValuePair<double, OutcomeCountPair> pair in valueCounts)
+            foreach (KeyValuePair<double, OutcomeCodeCountPair> pair in valueCounts)
             {
-                double maxAvg = pair.Value.MaxSum / pair.Value.Count;
-                double minAvg = pair.Value.MinSum / pair.Value.Count;
-                double actualAvg = pair.Value.ActualSum / pair.Value.Count;
+                double buyAvg = pair.Value.buy / pair.Value.Count;
+                double sellAvg = pair.Value.sell / pair.Value.Count;
 
-                double minVsMax = pair.Value.MinSum + pair.Value.MaxSum / pair.Value.Count;
-
-                excel.addRow(sheetName, pair.Key, pair.Key + stepSize, Convert.ToInt32(pair.Value.Count), maxAvg, minAvg, minVsMax, actualAvg, (maxAvg + minAvg));
+                excel.addRow(sheetName, pair.Key, pair.Key + stepSize, Convert.ToInt32(pair.Value.Count), buyAvg, sellAvg);
 
                 doneWriteOperation();
             }
 
             excel.FinishSheet(sheetName);
-        }*/
+        }
 
         public ProgressDict getProgress()
         {
@@ -1023,7 +1024,7 @@ namespace NinjaTrader_Client.Trader
         public void backtestStreaming(string pair, Strategy strategy, ExecutionStrategy execStrat, IndicatorCollection indicators)
         {
             FakeTradingAPI api = new FakeTradingAPI();
-            StreamingModul tradingStreamProcessor = new StreamingModul(null, indicators, strategy, execStrat, api, pair);
+            StreamingModul tradingStreamProcessor = new StreamingModul(indicators, strategy, execStrat, api, pair);
 
             foreach (AdvancedTickData data in dataInRam[pair])
             {
