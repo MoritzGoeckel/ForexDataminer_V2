@@ -13,6 +13,7 @@ using System.Threading;
 
 namespace NinjaTrader_Client
 {
+    //Todo: Autopilot form bauen, altes überarbeiten
     public partial class MainForm : Form
     {
         public MainForm()

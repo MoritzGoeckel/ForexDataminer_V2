@@ -219,11 +219,13 @@ namespace NinjaTrader_Client.Trader.Backtest
         public string[] getExcelRow()
         {
             //Todo
+            throw new NotImplementedException();
         }
 
         public string[] getExcelHeader()
         {
             //Todo
+            throw new NotImplementedException();
         }
     }
 }

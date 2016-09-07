@@ -173,7 +173,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                 SampleOutcomeExcelGenerator excel = new SampleOutcomeExcelGenerator(Application.StartupPath + @"\Analysis\" + DateTime.Now.ToString("yyyy_dd_mm") + "_" + "EURUSD" + ".xls");
 
-                setState("SSI 1");
+                setState("Outcomesampling");
                 dataminingDb.getOutcomeIndicatorSampling(excel, "mid-" + new DataminingDataComponent("Stoch", 1000 * 60 * 60).getID(), 15 * 60 * 1000, 0.05, "EURUSD");
 
                 excel.FinishDoc();
@@ -390,7 +390,18 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void outcome_code_sampling_btn_Click(object sender, EventArgs e)
         {
-            //Todo: Implement inRamDatamining ... call
+            new Thread(delegate () {
+                if (Directory.Exists(Application.StartupPath + @"\Analysis\") == false)
+                    Directory.CreateDirectory(Application.StartupPath + @"\Analysis\");
+
+                SampleOutcomeCodeExcelGenerator excel = new SampleOutcomeCodeExcelGenerator(Application.StartupPath + @"\Analysis\" + DateTime.Now.ToString("yyyy_dd_mm") + "_" + "EURUSD" + ".xls");
+
+                setState("OutcomeCodeSampling");
+                dataminingDb.getOutcomeCodeIndicatorSampling(excel, "mid-" + new DataminingDataComponent("Stoch", 1000 * 60 * 60).getID(), 15 * 60 * 1000, 0.001, 600000, "EURUSD");
+
+                excel.FinishDoc();
+                excel.ShowDocument();
+            }).Start();
         }
     }
 }

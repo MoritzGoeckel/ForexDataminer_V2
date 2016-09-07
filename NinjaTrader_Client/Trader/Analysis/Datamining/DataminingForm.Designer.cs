@@ -51,6 +51,7 @@
             this.addData_btn = new System.Windows.Forms.Button();
             this.outcome_btn = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.outcome_code_sampling_btn = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.optimizeParametersNN_btn = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -59,7 +60,7 @@
             this.data_textbox = new System.Windows.Forms.TextBox();
             this.updateInfo_Btn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.outcome_code_sampling_btn = new System.Windows.Forms.Button();
+            this.create_log_regression_btn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -101,9 +102,9 @@
             this.create_ann_button.Location = new System.Drawing.Point(8, 29);
             this.create_ann_button.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.create_ann_button.Name = "create_ann_button";
-            this.create_ann_button.Size = new System.Drawing.Size(164, 35);
+            this.create_ann_button.Size = new System.Drawing.Size(82, 35);
             this.create_ann_button.TabIndex = 9;
-            this.create_ann_button.Text = "Create ANN";
+            this.create_ann_button.Text = "ANN";
             this.create_ann_button.UseVisualStyleBackColor = true;
             this.create_ann_button.Click += new System.EventHandler(this.create_ann_button_click);
             // 
@@ -319,8 +320,21 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Analysis";
             // 
+            // outcome_code_sampling_btn
+            // 
+            this.outcome_code_sampling_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.outcome_code_sampling_btn.Location = new System.Drawing.Point(182, 29);
+            this.outcome_code_sampling_btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.outcome_code_sampling_btn.Name = "outcome_code_sampling_btn";
+            this.outcome_code_sampling_btn.Size = new System.Drawing.Size(164, 35);
+            this.outcome_code_sampling_btn.TabIndex = 17;
+            this.outcome_code_sampling_btn.Text = "Sample Outc. Code";
+            this.outcome_code_sampling_btn.UseVisualStyleBackColor = true;
+            this.outcome_code_sampling_btn.Click += new System.EventHandler(this.outcome_code_sampling_btn_Click);
+            // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.create_log_regression_btn);
             this.groupBox5.Controls.Add(this.optimizeParametersNN_btn);
             this.groupBox5.Controls.Add(this.create_ann_button);
             this.groupBox5.Location = new System.Drawing.Point(20, 471);
@@ -416,17 +430,16 @@
             this.panel1.Size = new System.Drawing.Size(364, 336);
             this.panel1.TabIndex = 25;
             // 
-            // outcome_code_sampling_btn
+            // create_log_regression_btn
             // 
-            this.outcome_code_sampling_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.outcome_code_sampling_btn.Location = new System.Drawing.Point(182, 29);
-            this.outcome_code_sampling_btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.outcome_code_sampling_btn.Name = "outcome_code_sampling_btn";
-            this.outcome_code_sampling_btn.Size = new System.Drawing.Size(164, 35);
-            this.outcome_code_sampling_btn.TabIndex = 17;
-            this.outcome_code_sampling_btn.Text = "Sample Outc. Code";
-            this.outcome_code_sampling_btn.UseVisualStyleBackColor = true;
-            this.outcome_code_sampling_btn.Click += new System.EventHandler(this.outcome_code_sampling_btn_Click);
+            this.create_log_regression_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.create_log_regression_btn.Location = new System.Drawing.Point(91, 29);
+            this.create_log_regression_btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.create_log_regression_btn.Name = "create_log_regression_btn";
+            this.create_log_regression_btn.Size = new System.Drawing.Size(80, 35);
+            this.create_log_regression_btn.TabIndex = 11;
+            this.create_log_regression_btn.Text = "LogReg";
+            this.create_log_regression_btn.UseVisualStyleBackColor = true;
             // 
             // DataminingForm
             // 
@@ -493,5 +506,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button unload_btn;
         private System.Windows.Forms.Button outcome_code_sampling_btn;
+        private System.Windows.Forms.Button create_log_regression_btn;
     }
 }
