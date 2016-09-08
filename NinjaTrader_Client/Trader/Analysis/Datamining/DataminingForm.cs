@@ -112,20 +112,6 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void create_ann_button_click(object sender, EventArgs e)
         {
-            //Todo:
-            //- Using a saved network
-            //- dividing the data in training- and validation- data (80% / 20%)
-
-            //- implementing the SVM and other Learning algos
-
-            //- creating or modifing the old backtest framework
-            //- creating or modifing the old strategy framework
-
-            //- creating a possibility to execute the strategy and analysis (indicators) on the fly
-            //- trading with that
-
-            //- creating input dialogs for a fast datamining workflow
-
             new Thread(delegate () {
 
                 string path = Application.StartupPath + "/AI/";

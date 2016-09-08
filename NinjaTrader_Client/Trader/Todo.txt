@@ -1,0 +1,24 @@
+﻿//Implementing
+
+Dividing the data in training- and validation- data (80% / 20%)
+IMachineLearning: (implement svm)
+DataminingForm: Creating input dialogs for a fast datamining workflow
+MainForm: Remove data functionality
+Autopilot: Create a autopilot window
+StreamingModul: Provide info from the streaming modul for the autopilot window
+Create recording data window
+Advanced Neural Network: Do we need to double convert data? :(
+Refactor inramdatamining, its too big
+
+//Datamining
+
+Find indicators with statistical correlations to the outcome
+Combine them with machinelearning
+Create a strategy
+Create a executen strategy
+
+//Testing
+
+Backtest
+Papertrade
+Livetrade

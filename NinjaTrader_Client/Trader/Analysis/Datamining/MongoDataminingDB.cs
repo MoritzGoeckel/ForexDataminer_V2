@@ -103,7 +103,6 @@ namespace NinjaTrader_Client.Trader
 
                 Thread thread = new Thread(delegate ()
                 {
-
                     string name = "outcome " + timeframeSeconds + " ID_" + threadBeginning + ":" + threadEnd;
                     progress.setProgress(name, 0);
                     int done = 0;
@@ -226,7 +225,6 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
-        //Todo: Excel reporting
         void IDataminingDatabase.getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, double min, double max, int steps, string indicatorId, int outcomeTimeframeSeconds, string instument)
         {
             List<Thread> threads = new List<Thread>();
