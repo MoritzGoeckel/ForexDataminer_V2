@@ -53,6 +53,7 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.outcome_code_sampling_btn = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.create_log_regression_btn = new System.Windows.Forms.Button();
             this.optimizeParametersNN_btn = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -60,7 +61,6 @@
             this.data_textbox = new System.Windows.Forms.TextBox();
             this.updateInfo_Btn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.create_log_regression_btn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -346,6 +346,17 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "AI";
             // 
+            // create_log_regression_btn
+            // 
+            this.create_log_regression_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.create_log_regression_btn.Location = new System.Drawing.Point(91, 29);
+            this.create_log_regression_btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.create_log_regression_btn.Name = "create_log_regression_btn";
+            this.create_log_regression_btn.Size = new System.Drawing.Size(80, 35);
+            this.create_log_regression_btn.TabIndex = 11;
+            this.create_log_regression_btn.Text = "LogReg";
+            this.create_log_regression_btn.UseVisualStyleBackColor = true;
+            // 
             // optimizeParametersNN_btn
             // 
             this.optimizeParametersNN_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -429,17 +440,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(364, 336);
             this.panel1.TabIndex = 25;
-            // 
-            // create_log_regression_btn
-            // 
-            this.create_log_regression_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.create_log_regression_btn.Location = new System.Drawing.Point(91, 29);
-            this.create_log_regression_btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.create_log_regression_btn.Name = "create_log_regression_btn";
-            this.create_log_regression_btn.Size = new System.Drawing.Size(80, 35);
-            this.create_log_regression_btn.TabIndex = 11;
-            this.create_log_regression_btn.Text = "LogReg";
-            this.create_log_regression_btn.UseVisualStyleBackColor = true;
             // 
             // DataminingForm
             // 

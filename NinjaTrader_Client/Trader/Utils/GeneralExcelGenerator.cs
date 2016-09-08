@@ -18,6 +18,11 @@ namespace NinjaTrader_Client.Trader.Datamining
 
         Dictionary<string, int> sheetRows = new Dictionary<string, int>();
 
+        public bool doesSheetExist(string name)
+        {
+            return sheets.ContainsKey(name);
+        }
+
         string path;
         public GeneralExcelGenerator(string path)
         {

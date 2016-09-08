@@ -218,14 +218,42 @@ namespace NinjaTrader_Client.Trader.Backtest
 
         public string[] getExcelRow()
         {
-            //Todo
-            throw new NotImplementedException();
+            string[] output = new string[resultSet.Count + parameterSet.Count];
+
+            int column = 0;
+            foreach (KeyValuePair<string, string> pair in resultSet)
+            {
+                output[column] = pair.Value;
+                column++;
+            }
+
+            foreach (KeyValuePair<string, string> pair in parameterSet)
+            {
+                output[column] = pair.Value;
+                column++;
+            }
+
+            return output;
         }
 
         public string[] getExcelHeader()
         {
-            //Todo
-            throw new NotImplementedException();
+            string[] output = new string[resultSet.Count + parameterSet.Count];
+
+            int column = 0;
+            foreach (KeyValuePair<string, string> pair in resultSet)
+            {
+                output[column] = pair.Key;
+                column++;
+            }
+
+            foreach (KeyValuePair<string, string> pair in parameterSet)
+            {
+                output[column] = pair.Key;
+                column++;
+            }
+
+            return output;
         }
     }
 }

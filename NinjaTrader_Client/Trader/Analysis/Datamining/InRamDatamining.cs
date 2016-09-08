@@ -1021,7 +1021,7 @@ namespace NinjaTrader_Client.Trader
             return dataInRam[pair][dataInRam[pair].Count - 1].timestamp;
         }
 
-        public void backtestStreaming(string pair, Strategy strategy, ExecutionStrategy execStrat, IndicatorCollection indicators)
+        public void backtestStreaming(string pair, Strategy strategy, ExecutionStrategy execStrat, IndicatorCollection indicators, GeneralExcelGenerator excel)
         {
             FakeTradingAPI api = new FakeTradingAPI();
             StreamingModul tradingStreamProcessor = new StreamingModul(indicators, strategy, execStrat, api, pair);
@@ -1038,7 +1038,14 @@ namespace NinjaTrader_Client.Trader
             result.setParameter(strategy.getParameters());
             result.setResult(strategy.getResult());
 
-            //Todo: Result, excel etc
+            if (excel != null)
+            {
+                string sheetName = "Backtest-" + strategy.getName();
+                if (excel.doesSheetExist(sheetName) == false)
+                    excel.CreateSheet(sheetName, result.getExcelHeader());
+
+                excel.addRow(sheetName, result.getExcelRow());
+            }
         }
     }
 }
