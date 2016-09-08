@@ -4,7 +4,7 @@
 	IMachineLearning: (implement svm)
 DataminingForm: Creating input dialogs for a fast datamining workflow
 MainForm: Remove data functionality, should just be a menu
-Autopilot: Create a autopilot window for using the streamingModul
+Autopilot: Create a autopilot window
 StreamingModul: Provide info from the streaming modul for the autopilot window
 DataRecordingForm: Create recording data window
 	Advanced Neural Network: Do we need to double convert data? :(

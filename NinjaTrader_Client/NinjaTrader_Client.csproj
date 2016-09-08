@@ -365,6 +365,7 @@
     <Content Include="Trader\Notes\pairs.txt" />
     <Content Include="Trader\Notes\Todo.txt" />
     <Content Include="Trader\Notes\readme.txt" />
+    <Content Include="Trader\Todo.txt" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
