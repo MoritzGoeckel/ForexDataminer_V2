@@ -3,17 +3,13 @@
 	Dividing the data in training- and validation- data (80% / 20%)
 	IMachineLearning: (implement svm)
 
-DataminingForm: Creating input dialogs for a fast datamining workflow
-
 	Advanced Neural Network: Do we need to double convert data? :(
-	Refactor inramdatamining, its too big
+	Refactor inRamDatamining, its too big
 
 	Implement Idicator idea: Regression time to price -> Prediction
 	Implement Indicator idea: Regression price to outcome -> Prediction
 
 (Hm... architecture change?) Handle Data like SSI in Streamingdb
-
-Create migrationscript for database
 
 //Datamining
 

@@ -501,7 +501,7 @@ namespace NinjaTrader_Client.Trader
             public double Count;
         };
         
-        public void getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, double stepSize, string instrument)
+        public void getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, string indicatorId, int outcomeTimeframe, double stepSize, string instrument)
         {
             ConcurrentDictionary<double, OutcomeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCountPair>();
 
@@ -532,18 +532,18 @@ namespace NinjaTrader_Client.Trader
 
                         AdvancedTickData currentTickdata = inRamList[currentId];
                         if (currentTickdata.values.ContainsKey(indicatorId) 
-                            && currentTickdata.values.ContainsKey("outcomeMin_" + outcomeTimeframeSeconds)
-                            && currentTickdata.values.ContainsKey("outcomeMax_" + outcomeTimeframeSeconds)
-                            && currentTickdata.values.ContainsKey("outcomeActual_" + outcomeTimeframeSeconds))
+                            && currentTickdata.values.ContainsKey("outcomeMin_" + outcomeTimeframe)
+                            && currentTickdata.values.ContainsKey("outcomeMax_" + outcomeTimeframe)
+                            && currentTickdata.values.ContainsKey("outcomeActual_" + outcomeTimeframe))
                         {
                             double indicatorKey = Math.Floor(currentTickdata.values[indicatorId] / stepSize) * stepSize;
 
                             if (valueCounts.ContainsKey(indicatorKey) == false)
                             {
                                 OutcomeCountPair pair = new OutcomeCountPair();
-                                pair.MaxSum = currentTickdata.values["outcomeMax_" + outcomeTimeframeSeconds];
-                                pair.MinSum = currentTickdata.values["outcomeMin_" + outcomeTimeframeSeconds];
-                                pair.ActualSum = currentTickdata.values["outcomeActual_" + outcomeTimeframeSeconds];
+                                pair.MaxSum = currentTickdata.values["outcomeMax_" + outcomeTimeframe];
+                                pair.MinSum = currentTickdata.values["outcomeMin_" + outcomeTimeframe];
+                                pair.ActualSum = currentTickdata.values["outcomeActual_" + outcomeTimeframe];
                                 pair.Count = 1;
 
                                 valueCounts.TryAdd(indicatorKey, pair);
@@ -552,9 +552,9 @@ namespace NinjaTrader_Client.Trader
                             {
                                 valueCounts[indicatorKey].Count++;
 
-                                valueCounts[indicatorKey].MinSum += currentTickdata.values["outcomeMin_" + outcomeTimeframeSeconds];
-                                valueCounts[indicatorKey].MaxSum += currentTickdata.values["outcomeMax_" + outcomeTimeframeSeconds];
-                                valueCounts[indicatorKey].ActualSum += currentTickdata.values["outcomeActual_" + outcomeTimeframeSeconds];
+                                valueCounts[indicatorKey].MinSum += currentTickdata.values["outcomeMin_" + outcomeTimeframe];
+                                valueCounts[indicatorKey].MaxSum += currentTickdata.values["outcomeMax_" + outcomeTimeframe];
+                                valueCounts[indicatorKey].ActualSum += currentTickdata.values["outcomeActual_" + outcomeTimeframe];
 
                                 doneWriteOperation();
                             }
@@ -577,7 +577,7 @@ namespace NinjaTrader_Client.Trader
 
             //Excel sheet...
 
-            string sheetName = indicatorId + "_" + (outcomeTimeframeSeconds / 1000 / 60) + "_" + instrument;
+            string sheetName = indicatorId + "_" + (outcomeTimeframe / 1000 / 60) + "_" + instrument;
 
             if (sheetName.Length >= 30)
                 sheetName = sheetName.Substring(0, 29);
@@ -851,7 +851,7 @@ namespace NinjaTrader_Client.Trader
         }
 
         //Not tested ???
-        public string getSuccessRate(int outcomeTimeframeSeconds, string indicator, double min, double max, string instrument, double tpPercent, double slPercent, bool buy)
+        public string getSuccessRate(int outcomeTimeframe, string indicator, double min, double max, string instrument, double tpPercent, double slPercent, bool buy)
         {
             List<AdvancedTickData> inRamList = dataInRam[instrument];
 
@@ -888,9 +888,9 @@ namespace NinjaTrader_Client.Trader
                         {
                             double onePercent = currentTickdata.values["mid"] / 100d;
 
-                            double maxDiff = currentTickdata.values["outcomeMax_" + outcomeTimeframeSeconds] / onePercent - 100; //calculate percent difference
-                            double minDiff = currentTickdata.values["outcomeMin_" + outcomeTimeframeSeconds] / onePercent - 100;
-                            double actualDiff = currentTickdata.values["outcomeActual_" + outcomeTimeframeSeconds] / onePercent - 100;
+                            double maxDiff = currentTickdata.values["outcomeMax_" + outcomeTimeframe] / onePercent - 100; //calculate percent difference
+                            double minDiff = currentTickdata.values["outcomeMin_" + outcomeTimeframe] / onePercent - 100;
+                            double actualDiff = currentTickdata.values["outcomeActual_" + outcomeTimeframe] / onePercent - 100;
 
                             if (buy)
                             {
@@ -945,7 +945,7 @@ namespace NinjaTrader_Client.Trader
             double successRate = (Convert.ToDouble(successes) / Convert.ToDouble(count));
             double slTpRatio = tpPercent / slPercent;
 
-            return "outcomeTimeframeSeconds:" + outcomeTimeframeSeconds + " Indicator:" + indicator + " min:" + min + " max:" + max + " instrument:" + instrument + " tp:" + tpPercent + " sl:" + slPercent + " buy:" + buy + Environment.NewLine
+            return "outcomeTimeframeSeconds:" + outcomeTimeframe + " Indicator:" + indicator + " min:" + min + " max:" + max + " instrument:" + instrument + " tp:" + tpPercent + " sl:" + slPercent + " buy:" + buy + Environment.NewLine
                     + "Sucesses" + seperator + "Count" + seperator + "SucessRate" + seperator + "Result" + seperator + "Percent gained" + Environment.NewLine
                     + successes + seperator + count + seperator + successRate + seperator + (successRate * slTpRatio) + seperator + result;
         }
@@ -1029,7 +1029,7 @@ namespace NinjaTrader_Client.Trader
             foreach (AdvancedTickData data in dataInRam[pair])
             {
                 api.setPair(data.ToTickdata());
-                tradingStreamProcessor.pushData(data.ToTickdata());
+                tradingStreamProcessor.pushDataAndTrade(data.ToTickdata());
             }
 
             api.closePositions(pair);
