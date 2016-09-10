@@ -7,6 +7,7 @@ using NinjaTrader_Client.Trader.Model;
 using NinjaTrader_Client.Trader.Utils;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -63,7 +64,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                 foreach (KeyValuePair<string, DataminingDataComponentInfo> compInf in pair.Value.Components)
                 {
-                    dataInfoB.Append("  " + compInf.Key + " ~" + Math.Round(compInf.Value.getOccurencesRatio(pair.Value.Datasets), 3) + Environment.NewLine);
+                    dataInfoB.Append("  " + compInf.Key + " Ocurrence: " + Math.Round(compInf.Value.getOccurencesRatio(pair.Value.Datasets), 3) + " Values: " + compInf.Value.min + "~" + compInf.Value.max + Environment.NewLine);
                 }
 
                 dataInfoB.Append(Environment.NewLine);
@@ -149,7 +150,7 @@ namespace NinjaTrader_Client.Trader.Analysis
                     SampleOutcomeExcelGenerator excel = new SampleOutcomeExcelGenerator(Application.StartupPath + @"\Analysis\" + DateTime.Now.ToString("yyyy_dd_mm") + "_" + parameters["instrument"] + ".xls");
 
                     setState("Outcomesampling");
-                    dataminingDb.getOutcomeIndicatorSampling(excel, parameters["indicatorid"], Convert.ToInt32(parameters["outcometimeframe"]), double.Parse(parameters["stepsize"]), parameters["instrument"]);
+                    dataminingDb.getOutcomeIndicatorSampling(excel, parameters["indicatorid"], Convert.ToInt32(parameters["outcometimeframe"]), double.Parse(parameters["stepsize"], CultureInfo.InvariantCulture), parameters["instrument"]);
 
                     excel.FinishDoc();
                     excel.ShowDocument();
@@ -237,7 +238,7 @@ namespace NinjaTrader_Client.Trader.Analysis
                 new Thread(delegate () {
                     Dictionary<string, string> parameters = id.getResult();
 
-                    dataminingDb.addIndicator(new VolumeAtPriceIndicator(Convert.ToInt64(parameters["timeframe"]), double.Parse(parameters["stepsize"]), Convert.ToInt64(parameters["samplingrate"])), parameters["instrument"], "mid");
+                    dataminingDb.addIndicator(new VolumeAtPriceIndicator(Convert.ToInt64(parameters["timeframe"]), double.Parse(parameters["stepsize"], CultureInfo.InvariantCulture), Convert.ToInt64(parameters["samplingrate"])), parameters["instrument"], "mid");
 
                     dataminingDb.updateInfo(parameters["instrument"]);
                 }).Start();
@@ -269,7 +270,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                     List<double> wights = new List<double>();
                     foreach (string s in parameters["wightArrayBy|"].Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
-                        wights.Add(double.Parse(s));
+                        wights.Add(double.Parse(s, CultureInfo.InvariantCulture));
 
                     string[] fieldnames = parameters["fieldsArrayBy|"].Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
@@ -302,7 +303,7 @@ namespace NinjaTrader_Client.Trader.Analysis
                 new Thread(delegate () {
                     Dictionary<string, string> parameters = id.getResult();
 
-                    dataminingDb.addOutcomeCode(double.Parse(parameters["normalizedDifference"]), Convert.ToInt32(parameters["timeframe"]), parameters["instrument"]);
+                    dataminingDb.addOutcomeCode(double.Parse(parameters["normalizedDifference"], CultureInfo.InvariantCulture), Convert.ToInt32(parameters["timeframe"]), parameters["instrument"]);
 
                     dataminingDb.updateInfo(parameters["instrument"]);
                 }).Start();
@@ -332,7 +333,7 @@ namespace NinjaTrader_Client.Trader.Analysis
                     SampleOutcomeCodeExcelGenerator excel = new SampleOutcomeCodeExcelGenerator(Application.StartupPath + @"\Analysis\" + DateTime.Now.ToString("yyyy_dd_mm") + "_" + parameters["instrument"] + ".xls");
 
                     setState("OutcomeCodeSampling");
-                    dataminingDb.getOutcomeCodeIndicatorSampling(excel, parameters["indicatorId"], double.Parse(parameters["stepsize"]), double.Parse(parameters["normalizedDifference"]), Convert.ToInt32(parameters["outcomeTimeframe"]), parameters["instrument"]);
+                    dataminingDb.getOutcomeCodeIndicatorSampling(excel, parameters["indicatorId"], double.Parse(parameters["stepsize"], CultureInfo.InvariantCulture), double.Parse(parameters["normalizedDifference"], CultureInfo.InvariantCulture), Convert.ToInt32(parameters["outcomeTimeframe"]), parameters["instrument"]);
 
                     excel.FinishDoc();
                     excel.ShowDocument();
