@@ -31,9 +31,9 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
             foreach(string s in inputFields)
             {
                 TextBox t = new TextBox();
-                t.Location = new Point(100, y);
+                t.Location = new Point(400, y);
                 Label l = new Label();
-                l.Location = new Point(10, y);
+                l.Location = new Point(0, y);
                 l.Text = s;
 
                 inputGroupBox.Controls.Add(l);
