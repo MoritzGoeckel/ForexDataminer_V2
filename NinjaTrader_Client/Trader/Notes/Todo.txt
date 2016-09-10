@@ -1,8 +1,0 @@
-﻿Visualisierung
-	Backtests
-	Datamining
-
-Component based Strategies
-	Decition Components
-	Riskmanagement Components
-	Inverter for components

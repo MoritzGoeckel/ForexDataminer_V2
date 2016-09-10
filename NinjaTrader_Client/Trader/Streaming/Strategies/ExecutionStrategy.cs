@@ -10,5 +10,6 @@ namespace NinjaTrader_Client.Trader.Streaming.Strategies
     public abstract class ExecutionStrategy
     {
         public abstract void doTrading(StrategySignal currentSignal, ITradingAPI api);
+        public abstract string getName();
     }
 }

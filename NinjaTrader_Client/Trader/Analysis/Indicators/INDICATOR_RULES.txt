@@ -1,5 +1,4 @@
-﻿
-1. Every indicator value must be normalized with the asset price. In that way it 
+﻿1. Every indicator value must be normalized with the asset price. In that way it 
 	stays comparable between different assets. (Best practice: Devide it through the price in the end)
 
 2. Every indicator has to be either between 0 and 1 or between -1 and 1. Exceptions are possible but should be avoided.

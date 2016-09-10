@@ -30,7 +30,7 @@ namespace NinjaTrader_Client.Trader.Indicators
             }
 
             if (data.Count == 0 || min == double.MaxValue || max == double.MinValue)
-                throw new Exception("StochIndicator getMinMaxInData<TickData>: data.Count == " + data.Count + " or min->" + (min == double.MaxValue ? "ns" : "okay") + " or max->" + (max == double.MinValue ? "ns" : "okay"));
+                throw new Exception("Range Indicator getMinMaxInData<TickData>: data.Count == " + data.Count + " or min->" + (min == double.MaxValue ? "ns" : "okay") + " or max->" + (max == double.MinValue ? "ns" : "okay"));
         }
 
         long timestampNow;

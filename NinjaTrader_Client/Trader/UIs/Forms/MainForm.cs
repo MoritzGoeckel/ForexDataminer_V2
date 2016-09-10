@@ -10,6 +10,7 @@ using NinjaTrader_Client.Trader.MainAPIs;
 using NinjaTrader_Client.Trader.Utils;
 using NinjaTrader_Client.Trader.Indicators;
 using System.Threading;
+using NinjaTrader_Client.Trader.UIs.Forms;
 
 namespace NinjaTrader_Client
 {
@@ -21,45 +22,13 @@ namespace NinjaTrader_Client
             InitializeComponent();
         }
 
-        private SQLiteDatabase priceHistoryDatabase;
-
         private LowLevelNinjaTraderAPI ntApi;
-        private SSI_Downloader ssiApi;
-        private FXCMRatesDownloader webApi;
-
-        private List<string> allInstruments = new List<string>();
-        private List<string> minorsInstruments = new List<string>();
-        private List<string> majorsInstruments = new List<string>();
-
-        private bool recordData = false;
-
-        private Dictionary<string, double> prices = new Dictionary<string, double>();
-        private string lastUpdatedPair = null;
+        private SQLiteDatabase priceHistoryDatabase;
 
         private void Form1_Load(object sender, EventArgs e)
         {
             update_info_timer.Start();
-
-            majorsInstruments.Add("EURUSD");
-            majorsInstruments.Add("GBPUSD");
-            majorsInstruments.Add("USDJPY");
-            majorsInstruments.Add("USDCHF");
-
-            minorsInstruments.Add("AUDCAD");
-            minorsInstruments.Add("AUDJPY");
-            minorsInstruments.Add("AUDUSD");
-            minorsInstruments.Add("CHFJPY");
-            minorsInstruments.Add("EURCHF");
-            minorsInstruments.Add("EURGBP");
-            minorsInstruments.Add("EURJPY");
-            minorsInstruments.Add("GBPCHF");
-            minorsInstruments.Add("GBPJPY");
-            minorsInstruments.Add("NZDUSD");
-            minorsInstruments.Add("USDCAD");
-
-            allInstruments.AddRange(majorsInstruments);
-            allInstruments.AddRange(minorsInstruments);
-
+            
             Config.startConfig(Application.StartupPath);
             priceHistoryDatabase = new SQLiteDatabase(Application.StartupPath + "//priceHistorySQLite.s3db");
         }
@@ -68,15 +37,6 @@ namespace NinjaTrader_Client
         {
             if(ntApi != null)
                 ntApi.stop();
-
-            if(ssiApi != null)
-                ssiApi.stop();
-
-            if(webApi != null)
-                webApi.stop();
-
-            /*if(priceHistoryDatabase != null)
-                priceHistoryDatabase.shutdown();*/
         }
 
         private void chart_btn_Click(object sender, EventArgs e)
@@ -115,7 +75,7 @@ namespace NinjaTrader_Client
 
         private void correlation_btn_Click(object sender, EventArgs e)
         {
-            CorrelationAnalysisForm cf = new CorrelationAnalysisForm(priceHistoryDatabase, 1000, 31, allInstruments);
+            CorrelationAnalysisForm cf = new CorrelationAnalysisForm(priceHistoryDatabase, 1000, 31, AvailableInstruments.allInstruments);
             cf.Show();
         }
 
@@ -160,65 +120,20 @@ namespace NinjaTrader_Client
 
         private void start_autopilot_btn_Click(object sender, EventArgs e)
         {
-            AutopilotTradingForm atf = new AutopilotTradingForm(priceHistoryDatabase);
-            atf.Show();
+            //AutopilotTradingForm atf = new AutopilotTradingForm(priceHistoryDatabase, new FakeTradingAPI(), );
+            //atf.Show();
         }
 
         private void connect_nt_btn_Click(object sender, EventArgs e)
         {
-            ntApi = new LowLevelNinjaTraderAPI(allInstruments, "Sim101");
+            ntApi = new LowLevelNinjaTraderAPI(AvailableInstruments.allInstruments, "Sim101");
             NTLiveTradingAPI.createInstace(ntApi, 125); //125 per position * 11 strategies = 1375 investement
-        }
-
-        private void sourceDataArrived(double value, long timestamp, string sourceName, string instrument)
-        {
-            if (recordData)
-            {
-                priceHistoryDatabase.setData(new TimeValueData(timestamp, value), sourceName, instrument);
-                insertedSets++;
-            }
-        }
-
-        int insertedSets = 0;
-        private void tickdataArrived(TickData data)
-        {
-            if (recordData)
-            {
-                priceHistoryDatabase.setPrice(data);
-                insertedSets++;
-            }
-
-            if (prices.ContainsKey(data.instrument) == false)
-                prices.Add(data.instrument, data.getAvgPrice());
-            else
-                prices[data.instrument] = data.getAvgPrice();
-
-            lastUpdatedPair = data.instrument;
-        }
-
-        private void connect_web_btn_Click(object sender, EventArgs e)
-        {
-            ssiApi = new SSI_Downloader(allInstruments);
-            ssiApi.sourceDataArrived += sourceDataArrived;
-            ssiApi.start();
-
-            webApi = new FXCMRatesDownloader();
-            webApi.sourceDataArrived += tickdataArrived;
-            webApi.start();
-
-            connect_web_btn.Enabled = false;
-        }
-
-        private void record_web_btn_Click(object sender, EventArgs e)
-        {
-            record_web_btn.Enabled = false;
-            recordData = true;
         }
 
         private void update_info_timer_Tick(object sender, EventArgs e)
         {
             this.Invoke(new Action(() => {
-                string output = "Data collected: " + insertedSets + Environment.NewLine;
+                string output = "";
 
                 if (NTLiveTradingAPI.getTheInstace() != null)
                 {
@@ -228,28 +143,16 @@ namespace NinjaTrader_Client
                         "Buying power: " + NTLiveTradingAPI.getTheInstace().getBuyingPower() + Environment.NewLine;
                 }
 
-                output += Environment.NewLine +
-                    (ntApi != null ? "NT CONNECTED!" : "no nt connection") + Environment.NewLine +
-                    (recordData ? "RECORDING!" : "not recording") + Environment.NewLine +
-                    (ssiApi != null && webApi != null ? "DOWNLOADING!" : "not downloading") + Environment.NewLine;
-
-                if(prices.Count > 0)
-                {
-                    output += Environment.NewLine;
-                    foreach(string pair in majorsInstruments)
-                    {
-                        if(prices.ContainsKey(pair))
-                            output += pair + " " + Math.Round(prices[pair], 5) + Environment.NewLine;
-                    }
-                }
-
-                if(lastUpdatedPair != null)
-                {
-                    output += Environment.NewLine + "Last update: " + lastUpdatedPair + Environment.NewLine;
-                }
-
+                output += Environment.NewLine + (ntApi != null ? "NT CONNECTED!" : "no nt connection");
+                
                 info_label.Text = output;
             }));
+        }
+
+        private void openDataRecordingFormBtn_Click(object sender, EventArgs e)
+        {
+            DataRecordingForm drf = new DataRecordingForm();
+            drf.ShowDialog();
         }
     }
 }

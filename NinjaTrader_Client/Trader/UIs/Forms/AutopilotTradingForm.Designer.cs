@@ -30,101 +30,80 @@
         {
             this.components = new System.ComponentModel.Container();
             this.pairInfoLabel = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.startTradingBtn = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.strategyInfoLabel = new System.Windows.Forms.Label();
-            this.apiStateLabel = new System.Windows.Forms.Label();
             this.updateUITimer = new System.Windows.Forms.Timer(this.components);
+            this.streamerInfoLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // pairInfoLabel
             // 
             this.pairInfoLabel.AutoSize = true;
-            this.pairInfoLabel.Location = new System.Drawing.Point(13, 13);
+            this.pairInfoLabel.Location = new System.Drawing.Point(20, 20);
+            this.pairInfoLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.pairInfoLabel.Name = "pairInfoLabel";
-            this.pairInfoLabel.Size = new System.Drawing.Size(35, 13);
+            this.pairInfoLabel.Size = new System.Drawing.Size(51, 20);
             this.pairInfoLabel.TabIndex = 0;
             this.pairInfoLabel.Text = "label1";
             // 
-            // button1
+            // startTradingBtn
             // 
-            this.button1.Location = new System.Drawing.Point(672, 13);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "EURUSD";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.addEURUSDStrategyButton_Clicked);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(672, 42);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Trade TXT";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.addTxtStrategyButton_Click);
+            this.startTradingBtn.Location = new System.Drawing.Point(1008, 20);
+            this.startTradingBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.startTradingBtn.Name = "startTradingBtn";
+            this.startTradingBtn.Size = new System.Drawing.Size(112, 35);
+            this.startTradingBtn.TabIndex = 1;
+            this.startTradingBtn.Text = "Start";
+            this.startTradingBtn.UseVisualStyleBackColor = true;
+            this.startTradingBtn.Click += new System.EventHandler(this.startTradingBtn_Clicked);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(672, 428);
+            this.button3.Location = new System.Drawing.Point(1008, 658);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(112, 35);
             this.button3.TabIndex = 3;
             this.button3.Text = "STOP";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.stopTradingButton_Clicked);
             // 
-            // strategyInfoLabel
-            // 
-            this.strategyInfoLabel.AutoSize = true;
-            this.strategyInfoLabel.Location = new System.Drawing.Point(176, 13);
-            this.strategyInfoLabel.Name = "strategyInfoLabel";
-            this.strategyInfoLabel.Size = new System.Drawing.Size(35, 13);
-            this.strategyInfoLabel.TabIndex = 4;
-            this.strategyInfoLabel.Text = "label1";
-            // 
-            // apiStateLabel
-            // 
-            this.apiStateLabel.AutoSize = true;
-            this.apiStateLabel.Location = new System.Drawing.Point(339, 13);
-            this.apiStateLabel.Name = "apiStateLabel";
-            this.apiStateLabel.Size = new System.Drawing.Size(35, 13);
-            this.apiStateLabel.TabIndex = 5;
-            this.apiStateLabel.Text = "label1";
-            // 
             // updateUITimer
             // 
             this.updateUITimer.Tick += new System.EventHandler(this.updateUITimer_Tick);
             // 
+            // streamerInfoLabel
+            // 
+            this.streamerInfoLabel.AutoSize = true;
+            this.streamerInfoLabel.Location = new System.Drawing.Point(440, 20);
+            this.streamerInfoLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.streamerInfoLabel.Name = "streamerInfoLabel";
+            this.streamerInfoLabel.Size = new System.Drawing.Size(51, 20);
+            this.streamerInfoLabel.TabIndex = 4;
+            this.streamerInfoLabel.Text = "label1";
+            // 
             // AutopilotTradingForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(759, 463);
-            this.Controls.Add(this.apiStateLabel);
-            this.Controls.Add(this.strategyInfoLabel);
+            this.ClientSize = new System.Drawing.Size(1138, 712);
+            this.Controls.Add(this.streamerInfoLabel);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.startTradingBtn);
             this.Controls.Add(this.pairInfoLabel);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "AutopilotTradingForm";
             this.Text = "AutopilotTradingForm";
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
 
         private System.Windows.Forms.Label pairInfoLabel;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button startTradingBtn;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Label strategyInfoLabel;
-        private System.Windows.Forms.Label apiStateLabel;
         private System.Windows.Forms.Timer updateUITimer;
+        private System.Windows.Forms.Label streamerInfoLabel;
     }
 }

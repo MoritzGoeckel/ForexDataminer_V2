@@ -190,9 +190,17 @@
     <Compile Include="Trader\Analysis\Datamining\DataminingDataComponent.cs" />
     <Compile Include="Trader\Analysis\Datamining\DataminingDataComponentInfo.cs" />
     <Compile Include="Trader\Analysis\Datamining\SampleOutcomeCodeExcelGenerator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\VolumeAtPriceIndicator.cs" />
     <Compile Include="Trader\Streaming\Strategies\ExecutionStrategy.cs" />
     <Compile Include="Trader\Streaming\Strategies\StrategySignal.cs" />
     <Compile Include="Trader\Streaming\StreamingModul.cs" />
+    <Compile Include="Trader\UIs\Forms\DataRecordingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\UIs\Forms\DataRecordingForm.Designer.cs">
+      <DependentUpon>DataRecordingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trader\Utils\AvailableInstruments.cs" />
     <Compile Include="Trader\Utils\GeneralExcelGenerator.cs" />
     <Compile Include="Trader\Analysis\Datamining\SampleOutcomeExcelGenerator.cs" />
     <Compile Include="Trader\Analysis\Datamining\DataminingPairInformation.cs" />
@@ -314,6 +322,9 @@
     <EmbeddedResource Include="Trader\Analysis\Datamining\DataminingForm.resx">
       <DependentUpon>DataminingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Trader\UIs\Forms\DataRecordingForm.resx">
+      <DependentUpon>DataRecordingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Trader\UIs\Forms\TradeHistoryChartForm.resx">
       <DependentUpon>TradeHistoryChartForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -363,7 +374,6 @@
   <ItemGroup>
     <Content Include="Trader\Analysis\Indicators\INDICATOR_RULES.txt" />
     <Content Include="Trader\Notes\pairs.txt" />
-    <Content Include="Trader\Notes\Todo.txt" />
     <Content Include="Trader\Notes\readme.txt" />
     <Content Include="Trader\Todo.txt" />
   </ItemGroup>
