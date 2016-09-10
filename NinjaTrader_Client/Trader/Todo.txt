@@ -3,7 +3,7 @@
 	Dividing the data in training- and validation- data (80% / 20%)
 	IMachineLearning: (implement svm)
 
-	Advanced Neural Network: Do we need to double convert data? :(
+Advanced Neural Network: Do we need to double convert data? :(
 	Refactor inRamDatamining, its too big
 
 	Implement Idicator idea: Regression time to price -> Prediction
