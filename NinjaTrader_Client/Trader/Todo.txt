@@ -11,6 +11,8 @@ Advanced Neural Network: Do we need to double convert data? :(
 
 (Hm... architecture change?) Handle Data like SSI in Streamingdb
 
+	Generating inputs for MA, maybe a genetic algorithm or a "outcome indicator correlation"-detection
+
 //Datamining
 
 --> #1 Find indicators with statistical correlations to the outcome
