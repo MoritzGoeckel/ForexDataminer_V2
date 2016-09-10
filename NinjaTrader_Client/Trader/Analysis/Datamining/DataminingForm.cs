@@ -64,7 +64,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                 foreach (KeyValuePair<string, DataminingDataComponentInfo> compInf in pair.Value.Components)
                 {
-                    dataInfoB.Append("  " + compInf.Key + " ~" + Math.Round(compInf.Value.getOccurencesRatio(pair.Value.Datasets), 3) + Environment.NewLine);
+                    dataInfoB.Append("  " + compInf.Key + " Ocurrence: " + Math.Round(compInf.Value.getOccurencesRatio(pair.Value.Datasets), 3) + " Values: " + compInf.Value.min + "~" + compInf.Value.max + Environment.NewLine);
                 }
 
                 dataInfoB.Append(Environment.NewLine);
