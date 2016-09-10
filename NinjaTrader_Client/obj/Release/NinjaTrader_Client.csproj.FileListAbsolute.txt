@@ -1,0 +1,1 @@
+E:\Programmieren\C# Neu\NinjaTrader_Client\NinjaTrader_Client\bin\Release\NinjaTrader_Client.exe.config
