@@ -12,6 +12,7 @@ namespace NinjaTrader_Client.Trader.Indicators
         private List<TimestampValuePair> history = new List<TimestampValuePair>();
 
         private Dictionary<int, int> priceOcurrencesDict = new Dictionary<int, int>();
+        int entriesInOcurrencesDict = 0;
         private void modifyOccurancesAtValue(double value, int amount)
         {
             int nValue = Convert.ToInt32(value / stepsize);
@@ -19,6 +20,7 @@ namespace NinjaTrader_Client.Trader.Indicators
                 priceOcurrencesDict.Add(nValue, 0);
 
             priceOcurrencesDict[nValue] += amount;
+            entriesInOcurrencesDict += amount;
 
             if (priceOcurrencesDict[nValue] <= 0)
                 priceOcurrencesDict.Remove(nValue);
@@ -52,13 +54,10 @@ namespace NinjaTrader_Client.Trader.Indicators
                 throw new Exception("Same timestamp different value!");
 
             if (_timestamp == timestampNow && _value == lastAddedValue)
-                return;
+                throw new Exception("Already added");
 
-            while(timestampNow + samplingRate < _timestamp)
-            {
-                timestampNow += samplingRate;
-                modifyOccurancesAtValue(lastAddedValue, 1);
-            }
+            if (_timestamp - timestampNow < samplingRate) //Only add values every sampling rate ticks
+                return;
 
             history.Add(new TimestampValuePair { timestamp = _timestamp, value = _value });
             modifyOccurancesAtValue(_value, 1);
@@ -67,7 +66,6 @@ namespace NinjaTrader_Client.Trader.Indicators
             lastAddedValue = _value;
         }
 
-        double lastRegardedTimestamp = 0;
         public override TimeValueData getIndicator()
         {
             while (history.Count != 0 && history[0].timestamp < timestampNow - timeframe)
@@ -75,8 +73,15 @@ namespace NinjaTrader_Client.Trader.Indicators
                 modifyOccurancesAtValue(history[0].value, -1);
                 history.RemoveAt(0);
             }
-            
-            return new TimeValueData(timestampNow, Convert.ToDouble(getOccurancesAtValue(lastAddedValue)) / Convert.ToDouble(history.Count));
+
+            double value = Convert.ToDouble(getOccurancesAtValue(lastAddedValue)) / Convert.ToDouble(entriesInOcurrencesDict);
+            if (value < 0 || value > 1)
+                throw new Exception("Value hast to be between 0 and 1. = " + getOccurancesAtValue(lastAddedValue) + " / " + entriesInOcurrencesDict + " " + value);
+
+            if (entriesInOcurrencesDict != history.Count)
+                throw new Exception("entriesInOcurrencesDict != history.count " + entriesInOcurrencesDict + " != " + history.Count + " should be same!");
+
+            return new TimeValueData(timestampNow, value);
         }
 
         public override string getName()

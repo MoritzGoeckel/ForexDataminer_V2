@@ -639,7 +639,7 @@ namespace NinjaTrader_Client.Trader
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
 
                         AdvancedTickData currentTickdata = inRamList[currentId];
-                        if (currentTickdata.values.ContainsKey(indicatorId) && currentTickdata.values.ContainsKey(outcomeCodeFieldName))
+                        if (currentTickdata.values.ContainsKey(indicatorId) && currentTickdata.values.ContainsKey("sell-" + outcomeCodeFieldName) && currentTickdata.values.ContainsKey("buy-" + outcomeCodeFieldName))
                         {
                             double indicatorKey = Math.Floor(currentTickdata.values[indicatorId] / stepSize) * stepSize;
 

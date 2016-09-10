@@ -25,7 +25,6 @@ namespace NinjaTrader_Client
     public partial class AutopilotTradingForm : Form
     {
         private bool continueLiveTradingThread = false;
-        private string output = "";
 
         private StreamingModul streamer;
 
@@ -46,15 +45,11 @@ namespace NinjaTrader_Client
             {
                 streamer = new StreamingModul(indicators, strat, execStrat, tradingApi, instrument);
 
-                output = "Preparing";
-
                 //Prepare streamer
                 List<TickData> tickdataToPrepare = priceHistoryDatabase.getPrices(Timestamp.getNow() - 24 * 60 * 60 * 1000, Timestamp.getNow(), instrument);
                 foreach (TickData tick in tickdataToPrepare)
                     streamer.prepareDataWithoutTrading(tick);
 
-                output = "Done preparing";
-                                
                 ssiApi = new SSI_Downloader(AvailableInstruments.allInstruments);
                 ssiApi.sourceDataArrived += sourceDataArrived;
                 ssiApi.start();
