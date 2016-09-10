@@ -38,7 +38,6 @@
             this.secondsTxbox = new System.Windows.Forms.TextBox();
             this.minutesTxbox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
-            this.inputGroupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,19 +62,18 @@
             // 
             // inputGroupBox
             // 
-            this.inputGroupBox.Controls.Add(this.submitBtn);
             this.inputGroupBox.Location = new System.Drawing.Point(12, 12);
             this.inputGroupBox.Name = "inputGroupBox";
-            this.inputGroupBox.Size = new System.Drawing.Size(390, 525);
+            this.inputGroupBox.Size = new System.Drawing.Size(390, 492);
             this.inputGroupBox.TabIndex = 1;
             this.inputGroupBox.TabStop = false;
             this.inputGroupBox.Text = "Input";
             // 
             // submitBtn
             // 
-            this.submitBtn.Location = new System.Drawing.Point(296, 486);
+            this.submitBtn.Location = new System.Drawing.Point(12, 510);
             this.submitBtn.Name = "submitBtn";
-            this.submitBtn.Size = new System.Drawing.Size(88, 33);
+            this.submitBtn.Size = new System.Drawing.Size(390, 33);
             this.submitBtn.TabIndex = 0;
             this.submitBtn.Text = "Submit";
             this.submitBtn.UseVisualStyleBackColor = true;
@@ -92,7 +90,7 @@
             this.groupBox2.Size = new System.Drawing.Size(374, 531);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Calc";
+            this.groupBox2.Text = "Utils";
             // 
             // label1
             // 
@@ -132,6 +130,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1305, 555);
+            this.Controls.Add(this.submitBtn);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.inputGroupBox);
             this.Controls.Add(this.groupBox1);
@@ -141,7 +140,6 @@
             this.Load += new System.EventHandler(this.Inputdialog_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.inputGroupBox.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
