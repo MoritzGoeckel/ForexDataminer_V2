@@ -64,16 +64,16 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                 foreach (KeyValuePair<string, DataminingDataComponentInfo> compInf in pair.Value.Components)
                 {
-                    dataInfoB.Append("  " + compInf.Key + " Ocurrence: " + Math.Round(compInf.Value.getOccurencesRatio(pair.Value.Datasets), 3) + " Values: " + compInf.Value.min + "~" + compInf.Value.max + Environment.NewLine);
+                    dataInfoB.Append("  " + compInf.Key + " O:" + Math.Round(compInf.Value.getOccurencesRatio(pair.Value.Datasets), 3) + " V:" + Math.Round(compInf.Value.min, 5) + "~" + Math.Round(compInf.Value.max, 5) + Environment.NewLine);
                 }
 
                 dataInfoB.Append(Environment.NewLine);
             }
 
-            if (data_textbox.Text != dataInfoB.ToString())
+            if (dataInfoTextbox.Text != dataInfoB.ToString())
             {
                 File.WriteAllText(Application.StartupPath + "//dataInfo.txt", dataInfoB.ToString());
-                data_textbox.Text = dataInfoB.ToString();
+                dataInfoTextbox.Text = dataInfoB.ToString();
             }
         }
 
@@ -90,7 +90,7 @@ namespace NinjaTrader_Client.Trader.Analysis
         {
             if (MessageBox.Show("Save data?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                Inputdialog id = new Inputdialog(new string[] { "instrument" }, dataminingDb.getInfo());
+                DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument" }, dataminingDb.getInfo());
                 id.ShowDialog();
 
                 if (id.isValidResult())
@@ -105,7 +105,7 @@ namespace NinjaTrader_Client.Trader.Analysis
         {
             if (MessageBox.Show("Import data?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                Inputdialog id = new Inputdialog(new string[] { "instrument" }, dataminingDb.getInfo());
+                DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument" }, dataminingDb.getInfo());
                 id.ShowDialog();
 
                 if (id.isValidResult())
@@ -120,7 +120,7 @@ namespace NinjaTrader_Client.Trader.Analysis
         {
             if (MessageBox.Show("Load data?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                Inputdialog id = new Inputdialog(new string[] { "instrument" }, dataminingDb.getInfo());
+                DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument" }, dataminingDb.getInfo());
                 id.ShowDialog();
 
                 if (id.isValidResult())
@@ -135,7 +135,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void outcome_sampling_button_Click(object sender, EventArgs e)
         {
-            Inputdialog id = new Inputdialog(new string[] { "instrument", "stepsize", "indicatorid", "outcometimeframe" }, dataminingDb.getInfo());
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "stepsize", "indicatorid", "outcometimeframe" }, dataminingDb.getInfo());
             id.ShowDialog();
 
             if (id.isValidResult())
@@ -160,7 +160,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void updateInfo_Btn_Click(object sender, EventArgs e)
         {
-            Inputdialog id = new Inputdialog(new string[] { "instrument" }, dataminingDb.getInfo());
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument" }, dataminingDb.getInfo());
             id.ShowDialog();
 
             if(id.isValidResult())
@@ -171,7 +171,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void indicator_stoch_btn_Click(object sender, EventArgs e)
         {
-            Inputdialog id = new Inputdialog(new string[] { "instrument", "timeframe" }, dataminingDb.getInfo());
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "timeframe" }, dataminingDb.getInfo());
             id.ShowDialog();
 
             if (id.isValidResult())
@@ -186,7 +186,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void indicator_range_btn_Click(object sender, EventArgs e)
         {
-            Inputdialog id = new Inputdialog(new string[] { "instrument", "timeframe" }, dataminingDb.getInfo());
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "timeframe" }, dataminingDb.getInfo());
             id.ShowDialog();
 
             if (id.isValidResult())
@@ -201,7 +201,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void indicator_deviation_btn_Click(object sender, EventArgs e)
         {
-            Inputdialog id = new Inputdialog(new string[] { "instrument", "timeframe" }, dataminingDb.getInfo());
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "timeframe" }, dataminingDb.getInfo());
             id.ShowDialog();
 
             if (id.isValidResult())
@@ -216,7 +216,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void indicator_time_btn_Click(object sender, EventArgs e)
         {
-            Inputdialog id = new Inputdialog(new string[] { "instrument" }, dataminingDb.getInfo());
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument" }, dataminingDb.getInfo());
             id.ShowDialog();
 
             if (id.isValidResult())
@@ -231,7 +231,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void indicator_volume_btn_Click(object sender, EventArgs e)
         {
-            Inputdialog id = new Inputdialog(new string[] { "instrument", "timeframe", "samplingrate", "stepsize" }, dataminingDb.getInfo());
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "timeframe", "samplingrate", "stepsize" }, dataminingDb.getInfo());
             id.ShowDialog();
 
             if (id.isValidResult())
@@ -246,7 +246,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void indicator_ma_btn_Click(object sender, EventArgs e)
         {
-            Inputdialog id = new Inputdialog(new string[] { "instrument", "timeframe" }, dataminingDb.getInfo());
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "timeframe" }, dataminingDb.getInfo());
             id.ShowDialog();
 
             if (id.isValidResult())
@@ -261,7 +261,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void metaIndicatorSum_btn_Click(object sender, EventArgs e)
         {
-            Inputdialog id = new Inputdialog(new string[] { "instrument", "fieldsArrayBy|", "wightArrayBy|", "fieldname" }, dataminingDb.getInfo());
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "fieldsArrayBy|", "wightArrayBy|", "fieldname" }, dataminingDb.getInfo());
             id.ShowDialog();
 
             if(id.isValidResult())
@@ -282,7 +282,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void outcome_btn_Click(object sender, EventArgs e)
         {
-            Inputdialog id = new Inputdialog(new string[] { "instrument", "timeframe"}, dataminingDb.getInfo());
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "timeframe"}, dataminingDb.getInfo());
             id.ShowDialog();
 
             if (id.isValidResult())
@@ -296,7 +296,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void outcomeCode_btn_Click(object sender, EventArgs e)
         {
-            Inputdialog id = new Inputdialog(new string[] { "instrument", "timeframe", "normalizedDifference" }, dataminingDb.getInfo());
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "timeframe", "normalizedDifference" }, dataminingDb.getInfo());
             id.ShowDialog();
 
             if (id.isValidResult())
@@ -311,7 +311,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void unload_btn_Click(object sender, EventArgs e)
         {
-            Inputdialog id = new Inputdialog(new string[] { "instrument" }, dataminingDb.getInfo());
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument" }, dataminingDb.getInfo());
             id.ShowDialog();
 
             if (id.isValidResult())
@@ -320,7 +320,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void outcome_code_sampling_btn_Click(object sender, EventArgs e)
         {
-            Inputdialog id = new Inputdialog(new string[] { "instrument", "indicatorId", "normalizedDifference", "outcomeTimeframe", "stepsize" }, dataminingDb.getInfo());
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "indicatorId", "normalizedDifference", "outcomeTimeframe", "stepsize" }, dataminingDb.getInfo());
             id.ShowDialog();
 
             if (id.isValidResult())

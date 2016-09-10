@@ -1,6 +1,6 @@
 ﻿namespace NinjaTrader_Client.Trader.Analysis.Datamining
 {
-    partial class Inputdialog
+    partial class DataminingInputDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.infoTxbox = new System.Windows.Forms.TextBox();
             this.inputGroupBox = new System.Windows.Forms.GroupBox();
             this.submitBtn = new System.Windows.Forms.Button();
-            this.infoTxbox = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.minutesTxbox = new System.Windows.Forms.TextBox();
-            this.secondsTxbox = new System.Windows.Forms.TextBox();
-            this.msTxBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.msTxBox = new System.Windows.Forms.TextBox();
+            this.secondsTxbox = new System.Windows.Forms.TextBox();
+            this.minutesTxbox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.inputGroupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -51,6 +51,15 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Info";
+            // 
+            // infoTxbox
+            // 
+            this.infoTxbox.Location = new System.Drawing.Point(7, 26);
+            this.infoTxbox.Multiline = true;
+            this.infoTxbox.Name = "infoTxbox";
+            this.infoTxbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.infoTxbox.Size = new System.Drawing.Size(492, 499);
+            this.infoTxbox.TabIndex = 0;
             // 
             // inputGroupBox
             // 
@@ -72,15 +81,6 @@
             this.submitBtn.UseVisualStyleBackColor = true;
             this.submitBtn.Click += new System.EventHandler(this.submitBtn_Click);
             // 
-            // infoTxbox
-            // 
-            this.infoTxbox.Location = new System.Drawing.Point(7, 26);
-            this.infoTxbox.Multiline = true;
-            this.infoTxbox.Name = "infoTxbox";
-            this.infoTxbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.infoTxbox.Size = new System.Drawing.Size(492, 499);
-            this.infoTxbox.TabIndex = 0;
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label1);
@@ -94,30 +94,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Calc";
             // 
-            // minutesTxbox
-            // 
-            this.minutesTxbox.Location = new System.Drawing.Point(258, 64);
-            this.minutesTxbox.Name = "minutesTxbox";
-            this.minutesTxbox.Size = new System.Drawing.Size(100, 26);
-            this.minutesTxbox.TabIndex = 0;
-            this.minutesTxbox.TextChanged += new System.EventHandler(this.minutesTxbox_TextChanged);
-            // 
-            // secondsTxbox
-            // 
-            this.secondsTxbox.Location = new System.Drawing.Point(152, 64);
-            this.secondsTxbox.Name = "secondsTxbox";
-            this.secondsTxbox.Size = new System.Drawing.Size(100, 26);
-            this.secondsTxbox.TabIndex = 1;
-            this.secondsTxbox.TextChanged += new System.EventHandler(this.secondsTxbox_TextChanged);
-            // 
-            // msTxBox
-            // 
-            this.msTxBox.Location = new System.Drawing.Point(19, 64);
-            this.msTxBox.Name = "msTxBox";
-            this.msTxBox.Size = new System.Drawing.Size(127, 26);
-            this.msTxBox.TabIndex = 2;
-            this.msTxBox.TextChanged += new System.EventHandler(this.msTxBox_TextChanged);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -127,7 +103,31 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "MS                           Sec                   Min";
             // 
-            // Inputdialog
+            // msTxBox
+            // 
+            this.msTxBox.Location = new System.Drawing.Point(19, 64);
+            this.msTxBox.Name = "msTxBox";
+            this.msTxBox.Size = new System.Drawing.Size(127, 26);
+            this.msTxBox.TabIndex = 2;
+            this.msTxBox.TextChanged += new System.EventHandler(this.msTxBox_TextChanged);
+            // 
+            // secondsTxbox
+            // 
+            this.secondsTxbox.Location = new System.Drawing.Point(152, 64);
+            this.secondsTxbox.Name = "secondsTxbox";
+            this.secondsTxbox.Size = new System.Drawing.Size(100, 26);
+            this.secondsTxbox.TabIndex = 1;
+            this.secondsTxbox.TextChanged += new System.EventHandler(this.secondsTxbox_TextChanged);
+            // 
+            // minutesTxbox
+            // 
+            this.minutesTxbox.Location = new System.Drawing.Point(258, 64);
+            this.minutesTxbox.Name = "minutesTxbox";
+            this.minutesTxbox.Size = new System.Drawing.Size(100, 26);
+            this.minutesTxbox.TabIndex = 0;
+            this.minutesTxbox.TextChanged += new System.EventHandler(this.minutesTxbox_TextChanged);
+            // 
+            // DataminingInputDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -135,7 +135,8 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.inputGroupBox);
             this.Controls.Add(this.groupBox1);
-            this.Name = "Inputdialog";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Name = "DataminingInputDialog";
             this.Text = "Inputdialog";
             this.Load += new System.EventHandler(this.Inputdialog_Load);
             this.groupBox1.ResumeLayout(false);

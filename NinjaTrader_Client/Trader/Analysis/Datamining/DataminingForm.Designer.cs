@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DataminingForm));
             this.updateUI_timer = new System.Windows.Forms.Timer(this.components);
             this.progress_label = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.create_ann_button = new System.Windows.Forms.Button();
             this.delete_btn = new System.Windows.Forms.Button();
             this.button_start_q = new System.Windows.Forms.Button();
@@ -50,15 +49,12 @@
             this.addData_btn = new System.Windows.Forms.Button();
             this.outcome_btn = new System.Windows.Forms.Button();
             this.indicator_stoch_btn = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.outcome_code_sampling_btn = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.create_log_regression_btn = new System.Windows.Forms.Button();
             this.optimizeParametersNN_btn = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.data_textbox = new System.Windows.Forms.TextBox();
             this.updateInfo_Btn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
@@ -67,13 +63,12 @@
             this.indicator_time_btn = new System.Windows.Forms.Button();
             this.indicator_deviation_btn = new System.Windows.Forms.Button();
             this.indicator_range_btn = new System.Windows.Forms.Button();
+            this.dataInfoTextbox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            this.groupBox7.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.SuspendLayout();
@@ -89,19 +84,9 @@
             this.progress_label.Location = new System.Drawing.Point(12, 72);
             this.progress_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.progress_label.Name = "progress_label";
-            this.progress_label.Size = new System.Drawing.Size(434, 877);
+            this.progress_label.Size = new System.Drawing.Size(434, 736);
             this.progress_label.TabIndex = 2;
             this.progress_label.Text = "no info yet";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(9, 23);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(404, 919);
-            this.textBox1.TabIndex = 6;
             // 
             // create_ann_button
             // 
@@ -133,7 +118,7 @@
             this.button_start_q.Location = new System.Drawing.Point(8, 29);
             this.button_start_q.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button_start_q.Name = "button_start_q";
-            this.button_start_q.Size = new System.Drawing.Size(164, 35);
+            this.button_start_q.Size = new System.Drawing.Size(183, 35);
             this.button_start_q.TabIndex = 14;
             this.button_start_q.Text = "Start big operation";
             this.button_start_q.UseVisualStyleBackColor = true;
@@ -152,7 +137,7 @@
             // outcome_sampling_button
             // 
             this.outcome_sampling_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.outcome_sampling_button.Location = new System.Drawing.Point(9, 29);
+            this.outcome_sampling_button.Location = new System.Drawing.Point(9, 76);
             this.outcome_sampling_button.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.outcome_sampling_button.Name = "outcome_sampling_button";
             this.outcome_sampling_button.Size = new System.Drawing.Size(164, 35);
@@ -169,7 +154,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox1.Size = new System.Drawing.Size(454, 954);
+            this.groupBox1.Size = new System.Drawing.Size(454, 823);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Info";
@@ -177,6 +162,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.unload_btn);
+            this.groupBox2.Controls.Add(this.addData_btn);
             this.groupBox2.Controls.Add(this.load_btn);
             this.groupBox2.Controls.Add(this.save_btn);
             this.groupBox2.Controls.Add(this.import_btn);
@@ -240,9 +226,9 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.outcome_code_sampling_btn);
+            this.groupBox3.Controls.Add(this.outcome_sampling_button);
             this.groupBox3.Controls.Add(this.outcomeCode_btn);
-            this.groupBox3.Controls.Add(this.metaIndicatorSum_btn);
-            this.groupBox3.Controls.Add(this.addData_btn);
             this.groupBox3.Controls.Add(this.outcome_btn);
             this.groupBox3.Location = new System.Drawing.Point(18, 195);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -251,12 +237,12 @@
             this.groupBox3.Size = new System.Drawing.Size(365, 175);
             this.groupBox3.TabIndex = 19;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Building";
+            this.groupBox3.Text = "Outcome";
             // 
             // outcomeCode_btn
             // 
             this.outcomeCode_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.outcomeCode_btn.Location = new System.Drawing.Point(182, 29);
+            this.outcomeCode_btn.Location = new System.Drawing.Point(182, 31);
             this.outcomeCode_btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.outcomeCode_btn.Name = "outcomeCode_btn";
             this.outcomeCode_btn.Size = new System.Drawing.Size(164, 35);
@@ -268,19 +254,19 @@
             // metaIndicatorSum_btn
             // 
             this.metaIndicatorSum_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.metaIndicatorSum_btn.Location = new System.Drawing.Point(9, 74);
+            this.metaIndicatorSum_btn.Location = new System.Drawing.Point(7, 296);
             this.metaIndicatorSum_btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.metaIndicatorSum_btn.Name = "metaIndicatorSum_btn";
-            this.metaIndicatorSum_btn.Size = new System.Drawing.Size(164, 35);
+            this.metaIndicatorSum_btn.Size = new System.Drawing.Size(186, 35);
             this.metaIndicatorSum_btn.TabIndex = 15;
-            this.metaIndicatorSum_btn.Text = "Add Meta";
+            this.metaIndicatorSum_btn.Text = "Meta";
             this.metaIndicatorSum_btn.UseVisualStyleBackColor = true;
             this.metaIndicatorSum_btn.Click += new System.EventHandler(this.metaIndicatorSum_btn_Click);
             // 
             // addData_btn
             // 
             this.addData_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addData_btn.Location = new System.Drawing.Point(10, 29);
+            this.addData_btn.Location = new System.Drawing.Point(182, 117);
             this.addData_btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.addData_btn.Name = "addData_btn";
             this.addData_btn.Size = new System.Drawing.Size(164, 35);
@@ -292,7 +278,7 @@
             // outcome_btn
             // 
             this.outcome_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.outcome_btn.Location = new System.Drawing.Point(9, 118);
+            this.outcome_btn.Location = new System.Drawing.Point(10, 31);
             this.outcome_btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.outcome_btn.Name = "outcome_btn";
             this.outcome_btn.Size = new System.Drawing.Size(164, 35);
@@ -313,23 +299,10 @@
             this.indicator_stoch_btn.UseVisualStyleBackColor = true;
             this.indicator_stoch_btn.Click += new System.EventHandler(this.indicator_stoch_btn_Click);
             // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.outcome_code_sampling_btn);
-            this.groupBox4.Controls.Add(this.outcome_sampling_button);
-            this.groupBox4.Location = new System.Drawing.Point(18, 380);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox4.Size = new System.Drawing.Size(364, 80);
-            this.groupBox4.TabIndex = 20;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Analysis";
-            // 
             // outcome_code_sampling_btn
             // 
             this.outcome_code_sampling_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.outcome_code_sampling_btn.Location = new System.Drawing.Point(182, 29);
+            this.outcome_code_sampling_btn.Location = new System.Drawing.Point(182, 76);
             this.outcome_code_sampling_btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.outcome_code_sampling_btn.Name = "outcome_code_sampling_btn";
             this.outcome_code_sampling_btn.Size = new System.Drawing.Size(164, 35);
@@ -343,11 +316,11 @@
             this.groupBox5.Controls.Add(this.create_log_regression_btn);
             this.groupBox5.Controls.Add(this.optimizeParametersNN_btn);
             this.groupBox5.Controls.Add(this.create_ann_button);
-            this.groupBox5.Location = new System.Drawing.Point(20, 471);
+            this.groupBox5.Location = new System.Drawing.Point(18, 380);
             this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox5.Size = new System.Drawing.Size(363, 80);
+            this.groupBox5.Size = new System.Drawing.Size(365, 80);
             this.groupBox5.TabIndex = 21;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "AI";
@@ -355,7 +328,7 @@
             // create_log_regression_btn
             // 
             this.create_log_regression_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.create_log_regression_btn.Location = new System.Drawing.Point(91, 29);
+            this.create_log_regression_btn.Location = new System.Drawing.Point(93, 29);
             this.create_log_regression_btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.create_log_regression_btn.Name = "create_log_regression_btn";
             this.create_log_regression_btn.Size = new System.Drawing.Size(80, 35);
@@ -366,7 +339,7 @@
             // optimizeParametersNN_btn
             // 
             this.optimizeParametersNN_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.optimizeParametersNN_btn.Location = new System.Drawing.Point(180, 29);
+            this.optimizeParametersNN_btn.Location = new System.Drawing.Point(182, 29);
             this.optimizeParametersNN_btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.optimizeParametersNN_btn.Name = "optimizeParametersNN_btn";
             this.optimizeParametersNN_btn.Size = new System.Drawing.Size(164, 35);
@@ -378,59 +351,35 @@
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.button_start_q);
-            this.groupBox6.Location = new System.Drawing.Point(20, 549);
+            this.groupBox6.Location = new System.Drawing.Point(389, 380);
             this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox6.Size = new System.Drawing.Size(363, 77);
+            this.groupBox6.Size = new System.Drawing.Size(199, 80);
             this.groupBox6.TabIndex = 22;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Misc";
             // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.textBox1);
-            this.groupBox7.Location = new System.Drawing.Point(1409, 13);
-            this.groupBox7.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox7.Size = new System.Drawing.Size(426, 954);
-            this.groupBox7.TabIndex = 23;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Output";
-            // 
             // groupBox8
             // 
-            this.groupBox8.Controls.Add(this.data_textbox);
+            this.groupBox8.Controls.Add(this.dataInfoTextbox);
             this.groupBox8.Controls.Add(this.updateInfo_Btn);
             this.groupBox8.Location = new System.Drawing.Point(1058, 13);
             this.groupBox8.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox8.Size = new System.Drawing.Size(342, 954);
+            this.groupBox8.Size = new System.Drawing.Size(562, 823);
             this.groupBox8.TabIndex = 24;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Data";
             // 
-            // data_textbox
-            // 
-            this.data_textbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.data_textbox.Location = new System.Drawing.Point(14, 23);
-            this.data_textbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.data_textbox.Multiline = true;
-            this.data_textbox.Name = "data_textbox";
-            this.data_textbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.data_textbox.Size = new System.Drawing.Size(318, 875);
-            this.data_textbox.TabIndex = 12;
-            this.data_textbox.Text = "no data yet";
-            // 
             // updateInfo_Btn
             // 
             this.updateInfo_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.updateInfo_Btn.Location = new System.Drawing.Point(14, 909);
+            this.updateInfo_Btn.Location = new System.Drawing.Point(14, 773);
             this.updateInfo_Btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.updateInfo_Btn.Name = "updateInfo_Btn";
-            this.updateInfo_Btn.Size = new System.Drawing.Size(320, 35);
+            this.updateInfo_Btn.Size = new System.Drawing.Size(530, 35);
             this.updateInfo_Btn.TabIndex = 11;
             this.updateInfo_Btn.Text = "Update info";
             this.updateInfo_Btn.UseVisualStyleBackColor = true;
@@ -441,15 +390,16 @@
             this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Location = new System.Drawing.Point(18, 635);
+            this.panel1.Location = new System.Drawing.Point(18, 470);
             this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(364, 336);
+            this.panel1.Size = new System.Drawing.Size(571, 366);
             this.panel1.TabIndex = 25;
             // 
             // groupBox9
             // 
             this.groupBox9.Controls.Add(this.indicator_ma_btn);
+            this.groupBox9.Controls.Add(this.metaIndicatorSum_btn);
             this.groupBox9.Controls.Add(this.indicator_volume_btn);
             this.groupBox9.Controls.Add(this.indicator_time_btn);
             this.groupBox9.Controls.Add(this.indicator_deviation_btn);
@@ -522,19 +472,26 @@
             this.indicator_range_btn.UseVisualStyleBackColor = true;
             this.indicator_range_btn.Click += new System.EventHandler(this.indicator_range_btn_Click);
             // 
+            // dataInfoTextbox
+            // 
+            this.dataInfoTextbox.Location = new System.Drawing.Point(14, 23);
+            this.dataInfoTextbox.Multiline = true;
+            this.dataInfoTextbox.Name = "dataInfoTextbox";
+            this.dataInfoTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.dataInfoTextbox.Size = new System.Drawing.Size(530, 742);
+            this.dataInfoTextbox.TabIndex = 12;
+            // 
             // DataminingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1848, 991);
+            this.ClientSize = new System.Drawing.Size(1629, 844);
             this.Controls.Add(this.groupBox9);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox8);
-            this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -546,11 +503,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             this.groupBox9.ResumeLayout(false);
@@ -561,7 +515,6 @@
         #endregion
         private System.Windows.Forms.Timer updateUI_timer;
         private System.Windows.Forms.Label progress_label;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button create_ann_button;
         private System.Windows.Forms.Button delete_btn;
         private System.Windows.Forms.Button button_start_q;
@@ -576,16 +529,13 @@
         private System.Windows.Forms.Button indicator_stoch_btn;
         private System.Windows.Forms.Button outcomeCode_btn;
         private System.Windows.Forms.Button metaIndicatorSum_btn;
-        private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Button optimizeParametersNN_btn;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Button save_btn;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Button load_btn;
         private System.Windows.Forms.Button updateInfo_Btn;
-        private System.Windows.Forms.TextBox data_textbox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button unload_btn;
         private System.Windows.Forms.Button outcome_code_sampling_btn;
@@ -596,5 +546,6 @@
         private System.Windows.Forms.Button indicator_time_btn;
         private System.Windows.Forms.Button indicator_deviation_btn;
         private System.Windows.Forms.Button indicator_range_btn;
+        private System.Windows.Forms.TextBox dataInfoTextbox;
     }
 }

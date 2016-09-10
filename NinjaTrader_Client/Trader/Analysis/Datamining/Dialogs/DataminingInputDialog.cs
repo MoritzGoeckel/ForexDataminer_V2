@@ -11,13 +11,15 @@ using System.Windows.Forms;
 
 namespace NinjaTrader_Client.Trader.Analysis.Datamining
 {
-    public partial class Inputdialog : Form
+    public partial class DataminingInputDialog : Form
     {
-        string[] inputFields;
-        Dictionary<string, TextBox> outputs = new Dictionary<string, TextBox>();
-        Dictionary<string, DataminingPairInformation> dbInfo;
+        private string[] inputFields;
+        private Dictionary<string, TextBox> outputs = new Dictionary<string, TextBox>();
+        private Dictionary<string, DataminingPairInformation> dbInfo;
 
-        public Inputdialog(string[] inputFields, Dictionary<string, DataminingPairInformation> dbInfo)
+        private static Dictionary<string, string> historicNameValues = new Dictionary<string, string>();
+
+        public DataminingInputDialog(string[] inputFields, Dictionary<string, DataminingPairInformation> dbInfo)
         {
             this.dbInfo = dbInfo;
             this.inputFields = inputFields;
@@ -27,20 +29,23 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
 
         private void Inputdialog_Load(object sender, EventArgs e)
         {
-            int y = 10;
+            int y = 30;
             foreach(string s in inputFields)
             {
                 Label l = new Label();
-                l.Location = new Point(0, y);
+                l.Location = new Point(5, y);
                 l.Text = s;
 
                 TextBox t = new TextBox();
-                t.Location = new Point(l.Width, y);
-                
+                t.Location = new Point(l.Width + 10, y);
+
+                if (historicNameValues.ContainsKey(s))
+                    t.Text = historicNameValues[s];
+
                 inputGroupBox.Controls.Add(l);
                 inputGroupBox.Controls.Add(t);
 
-                y += 30;
+                y += 35;
 
                 outputs.Add(s, t);
             }
@@ -54,7 +59,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
 
                     foreach (KeyValuePair<string, DataminingDataComponentInfo> compInf in pair.Value.Components)
                     {
-                        dataInfoB.Append("  " + compInf.Key + " Ocurrence: " + Math.Round(compInf.Value.getOccurencesRatio(pair.Value.Datasets), 3) + " Values: " + compInf.Value.min + "~" + compInf.Value.max + Environment.NewLine);
+                        dataInfoB.Append("  " + compInf.Key + " O:" + Math.Round(compInf.Value.getOccurencesRatio(pair.Value.Datasets), 3) + " V:" + Math.Round(compInf.Value.min, 5) + "~" + Math.Round(compInf.Value.max, 5) + Environment.NewLine);
                     }
 
                     dataInfoB.Append(Environment.NewLine);
@@ -74,13 +79,22 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
         {
             validOutput = true;
             foreach (KeyValuePair<string, TextBox> pair in outputs)
+            {
                 if (pair.Value.Text == null || pair.Value.Text == "" || pair.Value.Text == " ")
                 {
                     validOutput = false;
                     pair.Value.BackColor = Color.Red;
                 }
                 else
+                {
                     pair.Value.BackColor = Color.White;
+
+                    if (historicNameValues.ContainsKey(pair.Key) == false)
+                        historicNameValues.Add(pair.Key, pair.Value.Text);
+                    else
+                        historicNameValues[pair.Key] = pair.Value.Text;
+                }
+            }
 
             if (validOutput)
                 this.Close();
@@ -99,20 +113,32 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
 
         private void secondsTxbox_TextChanged(object sender, EventArgs e)
         {
-            minutesTxbox.Text = (Convert.ToInt32(secondsTxbox.Text) / 60).ToString();
-            msTxBox.Text = (Convert.ToInt32(secondsTxbox.Text) * 1000).ToString();
+            try
+            {
+                minutesTxbox.Text = (Convert.ToInt32(secondsTxbox.Text) / 60).ToString();
+                msTxBox.Text = (Convert.ToInt32(secondsTxbox.Text) * 1000).ToString();
+            }
+            catch { }
         }
 
         private void minutesTxbox_TextChanged(object sender, EventArgs e)
         {
-            secondsTxbox.Text = (Convert.ToInt32(minutesTxbox.Text) * 60).ToString();
-            msTxBox.Text = (Convert.ToInt32(minutesTxbox.Text) * 60 * 1000).ToString();
+            try
+            {
+                secondsTxbox.Text = (Convert.ToInt32(minutesTxbox.Text) * 60).ToString();
+                msTxBox.Text = (Convert.ToInt32(minutesTxbox.Text) * 60 * 1000).ToString();
+            }
+            catch { }
         }
 
         private void msTxBox_TextChanged(object sender, EventArgs e)
         {
-            minutesTxbox.Text = (Convert.ToInt32(msTxBox.Text) / 1000 / 60).ToString();
-            secondsTxbox.Text = (Convert.ToInt32(msTxBox.Text) / 1000).ToString();
+            try
+            {
+                minutesTxbox.Text = (Convert.ToInt32(msTxBox.Text) / 1000 / 60).ToString();
+                secondsTxbox.Text = (Convert.ToInt32(msTxBox.Text) / 1000).ToString();
+            }
+            catch { }
         }
     }
 }
