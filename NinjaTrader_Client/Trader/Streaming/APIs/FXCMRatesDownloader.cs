@@ -52,6 +52,9 @@ namespace NinjaTrader_Client.Trader
                     string instrument = node.Attribute("Symbol").Value;
                     TickData data = new TickData(Timestamp.getNow(), -1, Double.Parse(node.Element("Bid").Value.Replace(".", ",")), Double.Parse(node.Element("Ask").Value.Replace(".", ",")), instrument);
 
+                    if (instrument == null)
+                        throw new Exception("Instrument is null");
+
                     if (saved_values.ContainsKey(instrument) == false)
                     {
                         saved_values.Add(instrument, data);

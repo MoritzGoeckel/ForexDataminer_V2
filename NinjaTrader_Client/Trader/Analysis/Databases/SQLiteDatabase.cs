@@ -120,6 +120,9 @@ namespace NinjaTrader_Client.Trader.MainAPIs
 
         public void setPrice(TickData td)
         {
+            if (td.instrument == null)
+                throw new Exception("Instrumen is null");
+
             SQLiteConnection connection = getConnection();
 
             SQLiteCommand command = new SQLiteCommand("INSERT INTO prices (instrument, timestamp, bid, ask, last) VALUES (@instrument, @timestamp, @bid, @ask, @last)", connection);

@@ -36,9 +36,10 @@
             // 
             // recordDataBtn
             // 
-            this.recordDataBtn.Location = new System.Drawing.Point(56, 74);
+            this.recordDataBtn.Location = new System.Drawing.Point(37, 48);
+            this.recordDataBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.recordDataBtn.Name = "recordDataBtn";
-            this.recordDataBtn.Size = new System.Drawing.Size(147, 72);
+            this.recordDataBtn.Size = new System.Drawing.Size(98, 47);
             this.recordDataBtn.TabIndex = 0;
             this.recordDataBtn.Text = "Start recording";
             this.recordDataBtn.UseVisualStyleBackColor = true;
@@ -46,24 +47,27 @@
             // 
             // updateLabelTimer
             // 
+            this.updateLabelTimer.Interval = 1000;
             this.updateLabelTimer.Tick += new System.EventHandler(this.updateLabelTimer_Tick);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(259, 24);
+            this.label1.Location = new System.Drawing.Point(173, 16);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 20);
+            this.label1.Size = new System.Drawing.Size(42, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "No Info";
             // 
             // DataRecordingForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(719, 303);
+            this.ClientSize = new System.Drawing.Size(479, 197);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.recordDataBtn);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "DataRecordingForm";
             this.Text = "DataRecordingForm";
             this.ResumeLayout(false);

@@ -41,6 +41,7 @@ namespace NinjaTrader_Client.Trader.UIs.Forms
             webApi.sourceDataArrived += tickdataArrived;
             webApi.start();
 
+            updateLabelTimer.Start();
             recordDataBtn.Enabled = false;
         }
 

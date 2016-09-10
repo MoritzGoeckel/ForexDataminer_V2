@@ -24,6 +24,7 @@ namespace NinjaTrader_Client.Trader.Model
             this.bid = bid;
             this.ask = ask;
             this.last = last;
+            this.instrument = instrument;
         }
 
         public double getAvgPrice()
