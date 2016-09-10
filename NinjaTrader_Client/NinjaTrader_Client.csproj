@@ -142,10 +142,10 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="MongoDB.Bson">
-      <HintPath>..\Output\Database\mongo\MongoDB.Bson.dll</HintPath>
+      <HintPath>..\DLL\MongoDB.Bson.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Driver">
-      <HintPath>..\Output\Database\mongo\MongoDB.Driver.dll</HintPath>
+      <HintPath>..\DLL\MongoDB.Driver.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.2.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="netchartdir">
