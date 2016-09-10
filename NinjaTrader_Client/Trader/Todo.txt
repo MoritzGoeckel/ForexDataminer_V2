@@ -13,16 +13,16 @@ Advanced Neural Network: Do we need to double convert data? :(
 
 //Datamining
 
-Find indicators with statistical correlations to the outcome
-Combine them with machinelearning
-Create a strategy
-Create a executen strategy
+--> #1 Find indicators with statistical correlations to the outcome
+#2 Combine them with machinelearning
+#3 Create a strategy
+#4 Create a executen strategy
 
 //Testing
 
-Backtest
-Papertrade
-Livetrade
+#1 Backtest
+#2 Papertrade
+#3 Livetrade
 
 //Legend
 
