@@ -41,37 +41,40 @@ namespace NinjaTrader_Client.Trader
         {
             while(resume)
             {
-                XDocument doc = XDocument.Load("http://rates.fxcm.com/RatesXML");
+                try {
+                    XDocument doc = XDocument.Load("http://rates.fxcm.com/RatesXML");
 
-                IEnumerable<XElement> childList =
-                from el in doc.Element("Rates").Elements()
-                select el;
+                    IEnumerable<XElement> childList =
+                    from el in doc.Element("Rates").Elements()
+                    select el;
 
-                foreach (XElement node in childList)
-                {
-                    string instrument = node.Attribute("Symbol").Value;
-                    TickData data = new TickData(Timestamp.getNow(), -1, Double.Parse(node.Element("Bid").Value.Replace(".", ",")), Double.Parse(node.Element("Ask").Value.Replace(".", ",")), instrument);
-
-                    if (instrument == null)
-                        throw new Exception("Instrument is null");
-
-                    if (saved_values.ContainsKey(instrument) == false)
+                    foreach (XElement node in childList)
                     {
-                        saved_values.Add(instrument, data);
-                        if (sourceDataArrived != null)
-                            sourceDataArrived(data);
-                    }
-                    else {
-                        TickData oldData = saved_values[instrument];
-                        if (oldData.ask != data.ask || oldData.bid != data.bid)
+                        string instrument = node.Attribute("Symbol").Value;
+                        TickData data = new TickData(Timestamp.getNow(), -1, Double.Parse(node.Element("Bid").Value.Replace(".", ",")), Double.Parse(node.Element("Ask").Value.Replace(".", ",")), instrument);
+
+                        if (instrument == null)
+                            throw new Exception("Instrument is null");
+
+                        if (saved_values.ContainsKey(instrument) == false)
                         {
+                            saved_values.Add(instrument, data);
                             if (sourceDataArrived != null)
                                 sourceDataArrived(data);
+                        }
+                        else {
+                            TickData oldData = saved_values[instrument];
+                            if (oldData.ask != data.ask || oldData.bid != data.bid)
+                            {
+                                if (sourceDataArrived != null)
+                                    sourceDataArrived(data);
 
-                            saved_values[instrument] = data;
+                                saved_values[instrument] = data;
+                            }
                         }
                     }
                 }
+                catch { }
 
                 Thread.Sleep(interval);
             }

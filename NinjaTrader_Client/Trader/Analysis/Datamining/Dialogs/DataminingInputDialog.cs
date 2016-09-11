@@ -29,6 +29,9 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
 
         private void Inputdialog_Load(object sender, EventArgs e)
         {
+            TextBox firstTxbox = null;
+            int tabIndex = 0;
+
             int y = 30;
             foreach(string s in inputFields)
             {
@@ -38,6 +41,11 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
 
                 TextBox t = new TextBox();
                 t.Location = new Point(l.Width + 10, y);
+
+                if (tabIndex == 0)
+                    firstTxbox = t;
+
+                t.TabIndex = tabIndex++;
 
                 if (historicNameValues.ContainsKey(s))
                     t.Text = historicNameValues[s];
@@ -49,6 +57,8 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
 
                 outputs.Add(s, t);
             }
+
+            submitBtn.TabIndex = tabIndex;
 
             if (dbInfo != null)
             {
@@ -67,6 +77,8 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
 
                 infoTxbox.Text = dataInfoB.ToString();
             }
+
+            firstTxbox.Focus();
         }
 
         public bool isValidResult()
