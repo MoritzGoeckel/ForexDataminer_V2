@@ -723,8 +723,11 @@ namespace NinjaTrader_Client.Trader
 
                 if (currentTickdata.values.ContainsKey(indicatorID) == false)
                 {
-                    currentTickdata.values.Add(indicatorID, indicator.getIndicator().value);
-                    currentTickdata.changed = true;
+                    try {
+                        currentTickdata.values.Add(indicatorID, indicator.getIndicator().value);
+                        currentTickdata.changed = true;
+                    }
+                    catch { }
 
                     doneWriteOperation();
                 }
@@ -848,6 +851,33 @@ namespace NinjaTrader_Client.Trader
             }
 
             waitForThreads(threads);
+        }
+
+        public string getOutcomeCodeDistribution(double normalizedDifference, int outcomeTimeframe, string instrument)
+        {
+            string outcomeCodeFieldName = "outcomeCode-" + normalizedDifference + "_" + outcomeTimeframe;
+
+            List<AdvancedTickData> inRamList = dataInRam[instrument];
+
+            double datasets = 0;
+            double buys = 0;
+            double sells = 0;
+
+            foreach(AdvancedTickData data in inRamList)
+            {
+                if(data.values.ContainsKey("buy-" + outcomeCodeFieldName))
+                {
+                    datasets++;
+                    buys += Convert.ToInt32(data.values["buy-" + outcomeCodeFieldName]);
+                    sells += Convert.ToInt32(data.values["sell-" + outcomeCodeFieldName]);
+
+                }
+            }
+
+            double buyRatio = buys / datasets;
+            double sellRatio = sells / datasets;
+
+            return "b:" + buyRatio + " s:" + sellRatio;
         }
 
         //Not tested ???

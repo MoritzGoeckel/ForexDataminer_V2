@@ -139,6 +139,8 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
             {
                 secondsTxbox.Text = (Convert.ToInt32(minutesTxbox.Text) * 60).ToString();
                 msTxBox.Text = (Convert.ToInt32(minutesTxbox.Text) * 60 * 1000).ToString();
+                hoursTextBox.Text = (Convert.ToInt32(minutesTxbox.Text) / 60).ToString();
+
             }
             catch { }
         }
@@ -149,6 +151,20 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
             {
                 minutesTxbox.Text = (Convert.ToInt32(msTxBox.Text) / 1000 / 60).ToString();
                 secondsTxbox.Text = (Convert.ToInt32(msTxBox.Text) / 1000).ToString();
+                hoursTextBox.Text = (Convert.ToInt32(msTxBox.Text) / 60 / 60 / 1000).ToString();
+
+            }
+            catch { }
+        }
+
+        private void hoursTextBox_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                minutesTxbox.Text = (Convert.ToInt32(hoursTextBox.Text) * 60).ToString();
+                secondsTxbox.Text = (Convert.ToInt32(hoursTextBox.Text) * 60 * 60).ToString();
+                msTxBox.Text = (Convert.ToInt32(hoursTextBox.Text) * 60 * 60 * 1000).ToString();
+
             }
             catch { }
         }

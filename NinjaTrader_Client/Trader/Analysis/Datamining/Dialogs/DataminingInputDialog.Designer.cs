@@ -37,6 +37,8 @@
             this.msTxBox = new System.Windows.Forms.TextBox();
             this.secondsTxbox = new System.Windows.Forms.TextBox();
             this.minutesTxbox = new System.Windows.Forms.TextBox();
+            this.hoursTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -87,6 +89,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.hoursTextBox);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.msTxBox);
             this.groupBox2.Controls.Add(this.secondsTxbox);
@@ -137,6 +141,24 @@
             this.minutesTxbox.TabIndex = 103;
             this.minutesTxbox.TextChanged += new System.EventHandler(this.minutesTxbox_TextChanged);
             // 
+            // hoursTextBox
+            // 
+            this.hoursTextBox.Location = new System.Drawing.Point(90, 162);
+            this.hoursTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.hoursTextBox.Name = "hoursTextBox";
+            this.hoursTextBox.Size = new System.Drawing.Size(68, 20);
+            this.hoursTextBox.TabIndex = 104;
+            this.hoursTextBox.TextChanged += new System.EventHandler(this.hoursTextBox_TextChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(90, 144);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(28, 13);
+            this.label2.TabIndex = 105;
+            this.label2.Text = "hour";
+            // 
             // DataminingInputDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -170,5 +192,7 @@
         private System.Windows.Forms.TextBox minutesTxbox;
         private System.Windows.Forms.TextBox msTxBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox hoursTextBox;
     }
 }

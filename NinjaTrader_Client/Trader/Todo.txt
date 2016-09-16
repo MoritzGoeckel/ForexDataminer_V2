@@ -10,8 +10,8 @@ Advanced Neural Network: Do we need to double convert data? :(
 	Implement Indicator idea: Regression price to outcome -> Prediction
 
 (Hm... architecture change?) Handle Data like SSI in Streamingdb
-
-	Generating inputs for MA, maybe a genetic algorithm or a "outcome indicator correlation"-detection
+Getpredictive power for given indicator
+Indicators: MACD MA STOCH RSI
 
 //Datamining
 
@@ -22,9 +22,9 @@ Advanced Neural Network: Do we need to double convert data? :(
 
 //Testing
 
-#1 Backtest
-#2 Papertrade
-#3 Livetrade
+#5 Backtest
+#6 Papertrade
+#7 Livetrade
 
 //Legend
 

@@ -318,6 +318,20 @@ namespace NinjaTrader_Client.Trader.Analysis
                 dataminingDb.unloadPair(id.getResult()["instrument"]);
         }
 
+        private void getCodeDistributionBtn_Click(object sender, EventArgs e)
+        {
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "timeframe", "normalizedDifference" }, dataminingDb.getInfo());
+            id.ShowDialog();
+
+            Dictionary<string, string> parameters = id.getResult();
+
+            if (id.isValidResult())
+            {
+                string msg = dataminingDb.getOutcomeCodeDistribution(double.Parse(parameters["normalizedDifference"], CultureInfo.InvariantCulture), Convert.ToInt32(parameters["timeframe"]), parameters["instrument"]);
+                MessageBox.Show(msg);
+            }
+        }
+
         private void outcome_code_sampling_btn_Click(object sender, EventArgs e)
         {
             DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "indicatorId", "normalizedDifference", "outcomeTimeframe", "stepsize" }, dataminingDb.getInfo());
@@ -458,5 +472,7 @@ namespace NinjaTrader_Client.Trader.Analysis
                 setState("Done learning");
             }).Start();
         }
+
+        
     }
 }
