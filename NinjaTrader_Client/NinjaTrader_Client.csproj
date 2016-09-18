@@ -195,6 +195,9 @@
     <Compile Include="Trader\Analysis\Datamining\Dialogs\DataminingInputDialog.Designer.cs">
       <DependentUpon>DataminingInputDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Trader\Analysis\Datamining\Distribution.cs" />
+    <Compile Include="Trader\Analysis\Datamining\DistributionRange.cs" />
+    <Compile Include="Trader\Analysis\Datamining\PredictivePowerAnalyzer.cs" />
     <Compile Include="Trader\Analysis\Datamining\SampleOutcomeCodeExcelGenerator.cs" />
     <Compile Include="Trader\Analysis\Indicators\VolumeAtPriceIndicator.cs" />
     <Compile Include="Trader\Streaming\Strategies\ExecutionStrategy.cs" />

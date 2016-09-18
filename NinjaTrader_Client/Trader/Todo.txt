@@ -3,15 +3,20 @@
 	Dividing the data in training- and validation- data (80% / 20%)
 	IMachineLearning: (implement svm)
 
-Advanced Neural Network: Do we need to double convert data? :(
 	Refactor inRamDatamining, its too big
 
 	Implement Idicator idea: Regression time to price -> Prediction
 	Implement Indicator idea: Regression price to outcome -> Prediction
 
 (Hm... architecture change?) Handle Data like SSI in Streamingdb
-Getpredictive power for given indicator
-Indicators: MACD MA STOCH RSI
+
+Get predictive power for given indicator (Outcome / OutcomeCode) (Code first)
+	Trying out indicators with GetPredictivePower (Random / Genetic)
+
+Indicators: MACD RSI 
+Drived Indicators: MA-Crossover STOCH-Crossover/Border
+
+Advanced Neural Network: Do we need to double convert data? :(
 
 //Datamining
 

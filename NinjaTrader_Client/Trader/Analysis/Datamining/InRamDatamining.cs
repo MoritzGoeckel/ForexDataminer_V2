@@ -22,6 +22,7 @@ using NinjaTrader_Client.Trader.TradingAPIs;
 using NinjaTrader_Client.Trader.Backtest;
 using NinjaTrader_Client.Trader.Streaming;
 using NinjaTrader_Client.Trader.Analysis.IndicatorCollections;
+using NinjaTrader_Client.Trader.Analysis.Datamining;
 
 namespace NinjaTrader_Client.Trader
 {
@@ -174,7 +175,7 @@ namespace NinjaTrader_Client.Trader
             return selectedSamples;
         }
 
-        public void updateInfo(string pair, int maxDatasets = 50 * 1000)
+        public void updateInfo(string pair, int maxDatasets = 150 * 1000)
         {
             DataminingPairInformation info = new DataminingPairInformation(pair);
             List<AdvancedTickData> list = dataInRam[pair];
@@ -493,7 +494,7 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
-        private class OutcomeCountPair
+        public class OutcomeCountPair
         {
             public double MinSum;
             public double MaxSum;
@@ -501,7 +502,7 @@ namespace NinjaTrader_Client.Trader
             public double Count;
         };
         
-        public void getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, string indicatorId, int outcomeTimeframe, double stepSize, string instrument)
+        public void getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, string indicatorId, int outcomeTimeframe, int steps, DistributionRange samplingRange, string instrument)
         {
             ConcurrentDictionary<double, OutcomeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCountPair>();
 
@@ -515,6 +516,8 @@ namespace NinjaTrader_Client.Trader
             int indexFrame = (end - start) / threadsCount;
             int threadId = 0;
 
+            double stepSize = samplingRange.max - samplingRange.min / Convert.ToDouble(steps);
+            
             while (threadId < threadsCount)
             {
                 Thread thread = new Thread(delegate (object actualThreadId)
@@ -532,6 +535,8 @@ namespace NinjaTrader_Client.Trader
 
                         AdvancedTickData currentTickdata = inRamList[currentId];
                         if (currentTickdata.values.ContainsKey(indicatorId) 
+                            && currentTickdata.values[indicatorId] >= samplingRange.min
+                            && currentTickdata.values[indicatorId] <= samplingRange.max
                             && currentTickdata.values.ContainsKey("outcomeMin_" + outcomeTimeframe)
                             && currentTickdata.values.ContainsKey("outcomeMax_" + outcomeTimeframe)
                             && currentTickdata.values.ContainsKey("outcomeActual_" + outcomeTimeframe))
@@ -600,14 +605,14 @@ namespace NinjaTrader_Client.Trader
             excel.FinishSheet(sheetName);
         }
 
-        private class OutcomeCodeCountPair
+        public class OutcomeCodeCountPair
         {
-            public double buy = 0;
-            public double sell = 0;
+            public double buySum = 0;
+            public double sellSum = 0;
             public double Count = 0;
         };
 
-        public void getOutcomeCodeIndicatorSampling(SampleOutcomeCodeExcelGenerator excel, string indicatorId, double stepSize, double normalizedDifference, int outcomeTimeframe, string instrument)
+        public void getOutcomeCodeIndicatorSampling(SampleOutcomeCodeExcelGenerator excel, string indicatorId, int steps, DistributionRange samplingRange, double normalizedDifference, int outcomeTimeframe, string instrument)
         {
             ConcurrentDictionary<double, OutcomeCodeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCodeCountPair>();
 
@@ -623,6 +628,8 @@ namespace NinjaTrader_Client.Trader
             int indexFrame = (end - start) / threadsCount;
             int threadId = 0;
 
+            double stepSize = samplingRange.max - samplingRange.min / Convert.ToDouble(steps);
+            
             while (threadId < threadsCount)
             {
                 Thread thread = new Thread(delegate (object actualThreadId)
@@ -639,15 +646,19 @@ namespace NinjaTrader_Client.Trader
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
 
                         AdvancedTickData currentTickdata = inRamList[currentId];
-                        if (currentTickdata.values.ContainsKey(indicatorId) && currentTickdata.values.ContainsKey("sell-" + outcomeCodeFieldName) && currentTickdata.values.ContainsKey("buy-" + outcomeCodeFieldName))
+                        if (currentTickdata.values.ContainsKey(indicatorId) 
+                        && currentTickdata.values[indicatorId] >= samplingRange.min 
+                        && currentTickdata.values[indicatorId] <= samplingRange.max 
+                        && currentTickdata.values.ContainsKey("sell-" + outcomeCodeFieldName) 
+                        && currentTickdata.values.ContainsKey("buy-" + outcomeCodeFieldName))
                         {
                             double indicatorKey = Math.Floor(currentTickdata.values[indicatorId] / stepSize) * stepSize;
 
                             if (valueCounts.ContainsKey(indicatorKey) == false)
                             {
                                 OutcomeCodeCountPair pair = new OutcomeCodeCountPair();
-                                pair.buy += currentTickdata.values["buy-" + outcomeCodeFieldName];
-                                pair.sell += currentTickdata.values["sell-" + outcomeCodeFieldName];
+                                pair.buySum += currentTickdata.values["buy-" + outcomeCodeFieldName];
+                                pair.sellSum += currentTickdata.values["sell-" + outcomeCodeFieldName];
                                 pair.Count = 1;
 
                                 valueCounts.TryAdd(indicatorKey, pair);
@@ -656,8 +667,8 @@ namespace NinjaTrader_Client.Trader
                             {
                                 valueCounts[indicatorKey].Count++;
 
-                                valueCounts[indicatorKey].buy += currentTickdata.values["buy-" + outcomeCodeFieldName];
-                                valueCounts[indicatorKey].sell += currentTickdata.values["sell-" + outcomeCodeFieldName];
+                                valueCounts[indicatorKey].buySum += currentTickdata.values["buy-" + outcomeCodeFieldName];
+                                valueCounts[indicatorKey].sellSum += currentTickdata.values["sell-" + outcomeCodeFieldName];
                                 valueCounts[indicatorKey].Count++;
 
                                 doneWriteOperation();
@@ -690,8 +701,8 @@ namespace NinjaTrader_Client.Trader
 
             foreach (KeyValuePair<double, OutcomeCodeCountPair> pair in valueCounts)
             {
-                double buyAvg = pair.Value.buy / pair.Value.Count;
-                double sellAvg = pair.Value.sell / pair.Value.Count;
+                double buyAvg = pair.Value.buySum / pair.Value.Count;
+                double sellAvg = pair.Value.sellSum / pair.Value.Count;
 
                 excel.addRow(sheetName, pair.Key, pair.Key + stepSize, Convert.ToInt32(pair.Value.Count), buyAvg, sellAvg);
 

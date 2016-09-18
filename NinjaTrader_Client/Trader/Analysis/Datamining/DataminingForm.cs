@@ -64,7 +64,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                 foreach (KeyValuePair<string, DataminingDataComponentInfo> compInf in pair.Value.Components)
                 {
-                    dataInfoB.Append("  " + compInf.Key + " O:" + Math.Round(compInf.Value.getOccurencesRatio(pair.Value.Datasets), 3) + " V:" + Math.Round(compInf.Value.min, 5) + "~" + Math.Round(compInf.Value.max, 5) + Environment.NewLine);
+                    dataInfoB.Append("  " + compInf.Key + " O:" + Math.Round(compInf.Value.getOccurencesRatio(pair.Value.Datasets), 3) + " V:" + Math.Round(compInf.Value.getRange().min, 5) + "~" + Math.Round(compInf.Value.getRange().max, 5) + Environment.NewLine);
                 }
 
                 dataInfoB.Append(Environment.NewLine);
@@ -166,6 +166,7 @@ namespace NinjaTrader_Client.Trader.Analysis
             if(id.isValidResult())
                 new Thread(delegate () {
                     dataminingDb.updateInfo(id.getResult()["instrument"]);
+                    //Todo: Update textbox text
                 }).Start();
         }
 

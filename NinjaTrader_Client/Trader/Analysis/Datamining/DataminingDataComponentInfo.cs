@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NinjaTrader_Client.Trader.Analysis.Datamining;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,11 +10,25 @@ namespace NinjaTrader_Client.Trader.Datamining
     public class DataminingDataComponentInfo : DataminingDataComponent
     {
         public int occurences = 0;
-        public double min = double.MaxValue, max = double.MinValue;
+
+        public Distribution distribution = new Distribution();
 
         public double getOccurencesRatio(int total)
         {
             return (double)occurences / (double)total;
+        }
+
+        private DistributionRange cachedRange = null;
+        public DistributionRange getRange()
+        {
+            //Maybe drop the entire distribution after that? (because of ram)
+            //todo:
+            distribution.dropPercentOnce(10);
+
+            if (cachedRange == null)
+                cachedRange = distribution.calculateRange();
+
+            return cachedRange;
         }
 
         public DataminingDataComponentInfo(string name, int timeframeSeconds) : base(name, timeframeSeconds)
@@ -26,13 +41,9 @@ namespace NinjaTrader_Client.Trader.Datamining
             
         }
 
-        public void checkHeighLow(double value)
+        public void checkDistribution(double value)
         {
-            if (value > max)
-                max = value;
-
-            if (value < min)
-                min = value;
+            distribution.addValue(value);
         }
     }
 }

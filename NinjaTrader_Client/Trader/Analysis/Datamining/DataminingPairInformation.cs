@@ -30,7 +30,7 @@ namespace NinjaTrader_Client.Trader.Datamining
                     Components.Add(v.Key, new DataminingDataComponentInfo(v.Key));
 
                 Components[v.Key].occurences++;
-                Components[v.Key].checkHeighLow(v.Value);
+                Components[v.Key].checkDistribution(v.Value);
             }
         }
     }
