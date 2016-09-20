@@ -10,11 +10,15 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
     {
         private Dictionary<double, int> distribution = new Dictionary<double, int>();
         private bool droppedData = false;
-
+        private DistributionRange cachedRange = new DistributionRange(double.MaxValue, double.MinValue);
+        
         public void addValue(double value)
         {
-            if(distribution.ContainsKey(value) == false)
+            if (distribution.ContainsKey(value) == false)
+            {
                 distribution.Add(value, 0);
+                cachedRange.checkValue(value);
+            }
 
             distribution[value]++;
         }
@@ -36,15 +40,12 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
                     min = pair.Key;
             }
 
-            return new DistributionRange(min, max);
+            return cachedRange = new DistributionRange(min, max);
         }
 
-        public void dropPercentOnce(int percent)
+        internal DistributionRange getRange()
         {
-            if (droppedData == false)
-                dropPercent(percent);
-
-            droppedData = true;
+            return cachedRange;
         }
 
         public void dropPercent(int percent)
@@ -95,6 +96,8 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
                     values.RemoveAt(values.Count - 1);
                 }
             }
+
+            calculateRange();
         }
     }
 }

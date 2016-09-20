@@ -8,13 +8,21 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
 {
     public class DistributionRange
     {
-        public double min { get; }
-        public double max { get; }
+        public double min, max;
 
         public DistributionRange(double min, double max)
         {
             this.min = min;
             this.max = max;
+        }
+
+        internal void checkValue(double value)
+        {
+            if (value > max)
+                max = value;
+
+            if (value < min)
+                min = value;
         }
     }
 }

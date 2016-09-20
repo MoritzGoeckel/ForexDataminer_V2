@@ -15,11 +15,11 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
     {
         private string[] inputFields;
         private Dictionary<string, TextBox> outputs = new Dictionary<string, TextBox>();
-        private Dictionary<string, DataminingPairInformation> dbInfo;
+        private Dictionary<string, PairDataInformation> dbInfo;
 
         private static Dictionary<string, string> historicNameValues = new Dictionary<string, string>();
 
-        public DataminingInputDialog(string[] inputFields, Dictionary<string, DataminingPairInformation> dbInfo)
+        public DataminingInputDialog(string[] inputFields, Dictionary<string, PairDataInformation> dbInfo)
         {
             this.dbInfo = dbInfo;
             this.inputFields = inputFields;
@@ -63,11 +63,11 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
             if (dbInfo != null)
             {
                 StringBuilder dataInfoB = new StringBuilder("");
-                foreach (KeyValuePair<string, DataminingPairInformation> pair in dbInfo)
+                foreach (KeyValuePair<string, PairDataInformation> pair in dbInfo)
                 {
                     dataInfoB.Append(pair.Key + " (" + pair.Value.AllDatasets + ")" + Environment.NewLine);
 
-                    foreach (KeyValuePair<string, DataminingDataComponentInfo> compInf in pair.Value.Components)
+                    foreach (KeyValuePair<string, IndicatorDataInfo> compInf in pair.Value.Components)
                     {
                         dataInfoB.Append("  " + compInf.Key + " O:" + Math.Round(compInf.Value.getOccurencesRatio(pair.Value.Datasets), 3) + " V:" + Math.Round(compInf.Value.min, 5) + "~" + Math.Round(compInf.Value.max, 5) + Environment.NewLine);
                     }

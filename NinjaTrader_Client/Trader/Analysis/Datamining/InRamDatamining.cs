@@ -31,13 +31,13 @@ namespace NinjaTrader_Client.Trader
     {
         MongoFacade mongodb;
 
-        int threadsCount = 20;
+        int threadsCount = 4;
 
         ProgressDict progress = new ProgressDict();
         Random z = new Random();
 
         Dictionary<string, List<AdvancedTickData>> dataInRam = new Dictionary<string, List<AdvancedTickData>>();
-        Dictionary<string, DataminingPairInformation> infoDict = new Dictionary<string, DataminingPairInformation>();
+        Dictionary<string, PairDataInformation> infoDict = new Dictionary<string, PairDataInformation>();
 
         int doneOperations = 0;
         DateTime lastChecked = DateTime.Now;
@@ -74,7 +74,7 @@ namespace NinjaTrader_Client.Trader
             if (dataInRam.ContainsKey(pair))
                 dataInRam.Remove(pair);
 
-            DataminingPairInformation info = new DataminingPairInformation(pair);
+            PairDataInformation info = new PairDataInformation(pair);
 
             dataInRam.Add(pair, new List<AdvancedTickData>());
 
@@ -113,7 +113,7 @@ namespace NinjaTrader_Client.Trader
             if (dataInRam.ContainsKey(pair))
                 dataInRam.Remove(pair);
 
-            DataminingPairInformation info = new DataminingPairInformation(pair);
+            PairDataInformation info = new PairDataInformation(pair);
 
             dataInRam.Add(pair, new List<AdvancedTickData>());
 
@@ -177,7 +177,7 @@ namespace NinjaTrader_Client.Trader
 
         public void updateInfo(string pair, int maxDatasets = 150 * 1000)
         {
-            DataminingPairInformation info = new DataminingPairInformation(pair);
+            PairDataInformation info = new PairDataInformation(pair);
             List<AdvancedTickData> list = dataInRam[pair];
 
             double stepSize = Convert.ToDouble(list.Count()) / Convert.ToDouble(maxDatasets);
@@ -271,7 +271,7 @@ namespace NinjaTrader_Client.Trader
             dataInRam.Clear();
         }
 
-        public Dictionary<string, DataminingPairInformation> getInfo()
+        public Dictionary<string, PairDataInformation> getInfo()
         {
             return infoDict;
         }
@@ -437,6 +437,58 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
+        public void removeIndicator(string indicatorID, string instrument)
+        {
+            List<AdvancedTickData> inRamList = dataInRam[instrument];
+
+            List<Thread> threads = new List<Thread>();
+
+            int start = 0;
+            int end = dataInRam[instrument].Count();
+
+            int indexFrame = (end - start) / threadsCount;
+            int threadId = 0;
+
+            while (threadId < threadsCount)
+            {
+                Thread thread = new Thread(delegate (object actualThreadId)
+                {
+                    int indexBeginning = start + (indexFrame * Convert.ToInt32(actualThreadId));
+                    int indexEnd = indexBeginning + indexFrame;
+
+                    string name = "Remove Indicator " + indicatorID + " ID_" + indexBeginning + ":" + indexEnd;
+                    progress.setProgress(name, 0);
+                    int currentId = indexBeginning;
+
+                    while (currentId <= indexEnd)
+                    {
+                        currentId++;
+                        progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
+
+                        AdvancedTickData currentTickdata = inRamList[currentId];
+
+                        if (currentTickdata.values.ContainsKey(indicatorID) == false)
+                        {
+                            currentTickdata.values.Remove(indicatorID);
+                            currentTickdata.changed = true;
+
+                            doneWriteOperation();
+                        }
+                    }
+
+                    progress.remove(name);
+
+                });
+
+                thread.Start(threadId);
+                threads.Add(thread);
+
+                threadId++;
+            }
+
+            waitForThreads(threads);
+        }
+
         public void addData(string dataname, SQLiteDatabase database, string instrument)
         {
             List<AdvancedTickData> inRamList = dataInRam[instrument];
@@ -502,7 +554,7 @@ namespace NinjaTrader_Client.Trader
             public double Count;
         };
         
-        public void getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, string indicatorId, int outcomeTimeframe, int steps, DistributionRange samplingRange, string instrument)
+        public double getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, string indicatorId, int outcomeTimeframe, int steps, DistributionRange samplingRange, string instrument)
         {
             ConcurrentDictionary<double, OutcomeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCountPair>();
 
@@ -580,29 +632,32 @@ namespace NinjaTrader_Client.Trader
 
             waitForThreads(threads);
 
-            //Excel sheet...
-
-            string sheetName = indicatorId + "_" + (outcomeTimeframe / 1000 / 60) + "_" + instrument;
-
-            if (sheetName.Length >= 30)
-                sheetName = sheetName.Substring(0, 29);
-
-            excel.CreateSheet(sheetName);
-
-            foreach (KeyValuePair<double, OutcomeCountPair> pair in valueCounts)
+            if (excel != null)
             {
-                double maxAvg = pair.Value.MaxSum / pair.Value.Count;
-                double minAvg = pair.Value.MinSum / pair.Value.Count;
-                double actualAvg = pair.Value.ActualSum / pair.Value.Count;
+                string sheetName = indicatorId + "_" + (outcomeTimeframe / 1000 / 60) + "_" + instrument;
 
-                double minVsMax = pair.Value.MinSum + pair.Value.MaxSum / pair.Value.Count;
+                if (sheetName.Length >= 30)
+                    sheetName = sheetName.Substring(0, 29);
 
-                excel.addRow(sheetName, pair.Key, pair.Key + stepSize, Convert.ToInt32(pair.Value.Count), maxAvg, minAvg, minVsMax, actualAvg, (maxAvg + minAvg));
+                excel.CreateSheet(sheetName);
 
-                doneWriteOperation();
+                foreach (KeyValuePair<double, OutcomeCountPair> pair in valueCounts)
+                {
+                    double maxAvg = pair.Value.MaxSum / pair.Value.Count;
+                    double minAvg = pair.Value.MinSum / pair.Value.Count;
+                    double actualAvg = pair.Value.ActualSum / pair.Value.Count;
+
+                    double minVsMax = pair.Value.MinSum + pair.Value.MaxSum / pair.Value.Count;
+
+                    excel.addRow(sheetName, pair.Key, pair.Key + stepSize, Convert.ToInt32(pair.Value.Count), maxAvg, minAvg, minVsMax, actualAvg, (maxAvg + minAvg));
+
+                    doneWriteOperation();
+                }
+
+                excel.FinishSheet(sheetName);
             }
 
-            excel.FinishSheet(sheetName);
+            return PredictivePowerAnalyzer.getPredictivePower(valueCounts);
         }
 
         public class OutcomeCodeCountPair
@@ -612,7 +667,7 @@ namespace NinjaTrader_Client.Trader
             public double Count = 0;
         };
 
-        public void getOutcomeCodeIndicatorSampling(SampleOutcomeCodeExcelGenerator excel, string indicatorId, int steps, DistributionRange samplingRange, double normalizedDifference, int outcomeTimeframe, string instrument)
+        public double getOutcomeCodeIndicatorSampling(SampleOutcomeCodeExcelGenerator excel, string indicatorId, int steps, DistributionRange samplingRange, double normalizedDifference, int outcomeTimeframe, string instrument)
         {
             ConcurrentDictionary<double, OutcomeCodeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCodeCountPair>();
 
@@ -690,26 +745,29 @@ namespace NinjaTrader_Client.Trader
 
             waitForThreads(threads);
 
-            //Excel sheet...
-
-            string sheetName = "OutcomeCode_"+indicatorId + "_" + (outcomeTimeframe / 1000 / 60) + "_" + instrument;
-
-            if (sheetName.Length >= 30)
-                sheetName = sheetName.Substring(0, 29);
-
-            excel.CreateSheet(sheetName);
-
-            foreach (KeyValuePair<double, OutcomeCodeCountPair> pair in valueCounts)
+            if (excel != null)
             {
-                double buyAvg = pair.Value.buySum / pair.Value.Count;
-                double sellAvg = pair.Value.sellSum / pair.Value.Count;
+                string sheetName = "OutcomeCode_" + indicatorId + "_" + (outcomeTimeframe / 1000 / 60) + "_" + instrument;
 
-                excel.addRow(sheetName, pair.Key, pair.Key + stepSize, Convert.ToInt32(pair.Value.Count), buyAvg, sellAvg);
+                if (sheetName.Length >= 30)
+                    sheetName = sheetName.Substring(0, 29);
 
-                doneWriteOperation();
+                excel.CreateSheet(sheetName);
+
+                foreach (KeyValuePair<double, OutcomeCodeCountPair> pair in valueCounts)
+                {
+                    double buyAvg = pair.Value.buySum / pair.Value.Count;
+                    double sellAvg = pair.Value.sellSum / pair.Value.Count;
+
+                    excel.addRow(sheetName, pair.Key, pair.Key + stepSize, Convert.ToInt32(pair.Value.Count), buyAvg, sellAvg);
+
+                    doneWriteOperation();
+                }
+
+                excel.FinishSheet(sheetName);
             }
 
-            excel.FinishSheet(sheetName);
+            return PredictivePowerAnalyzer.getPredictivePower(valueCounts);
         }
 
         public ProgressDict getProgress()

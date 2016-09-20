@@ -11,12 +11,18 @@
 (Hm... architecture change?) Handle Data like SSI in Streamingdb
 
 Get predictive power for given indicator (Outcome / OutcomeCode) (Code first)
-	Trying out indicators with GetPredictivePower (Random / Genetic)
+	--> Work over the Infohandling for Indicators
 
 Indicators: MACD RSI 
-Drived Indicators: MA-Crossover STOCH-Crossover/Border
+Derived Indicators: 
+	MA-Crossover, 
+	STOCH-Crossover/Border, 
+	Volume on price -> Always tends to go to the most vol (uphill)
 
 Advanced Neural Network: Do we need to double convert data? :(
+
+Trying out indicators with GetPredictivePower (Random / Genetic)
+	Write to File, Delete from db again
 
 //Datamining
 

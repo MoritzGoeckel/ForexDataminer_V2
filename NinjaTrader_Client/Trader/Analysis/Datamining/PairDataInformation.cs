@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Datamining
 {
-    public class DataminingPairInformation
+    public class PairDataInformation
     {
         public string Pair;
-        public Dictionary<string, DataminingDataComponentInfo> Components = new Dictionary<string, DataminingDataComponentInfo>();
+        public Dictionary<string, IndicatorDataInfo> Components = new Dictionary<string, IndicatorDataInfo>();
 
         public int AllDatasets = 0;
         public int Datasets = 0;
 
-        public DataminingPairInformation(string name)
+        public PairDataInformation(string name)
         {
             this.Pair = name;
         }
@@ -27,7 +27,7 @@ namespace NinjaTrader_Client.Trader.Datamining
             foreach (KeyValuePair<string, double> v in tickdata.values)
             {
                 if (Components.ContainsKey(v.Key) == false)
-                    Components.Add(v.Key, new DataminingDataComponentInfo(v.Key));
+                    Components.Add(v.Key, new IndicatorDataInfo(v.Key));
 
                 Components[v.Key].occurences++;
                 Components[v.Key].checkDistribution(v.Value);

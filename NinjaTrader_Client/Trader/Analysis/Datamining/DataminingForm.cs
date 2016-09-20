@@ -58,13 +58,13 @@ namespace NinjaTrader_Client.Trader.Analysis
 
             //Render dataInfo
             StringBuilder dataInfoB = new StringBuilder("");
-            foreach(KeyValuePair<string, DataminingPairInformation> pair in dataminingDb.getInfo())
+            foreach(KeyValuePair<string, PairDataInformation> pairInfo in dataminingDb.getInfo())
             {
-                dataInfoB.Append(pair.Key + " (" + pair.Value.AllDatasets + ")" + Environment.NewLine);
+                dataInfoB.Append(pairInfo.Key + " (" + pairInfo.Value.AllDatasets + ")" + Environment.NewLine);
 
-                foreach (KeyValuePair<string, DataminingDataComponentInfo> compInf in pair.Value.Components)
+                foreach (KeyValuePair<string, IndicatorDataInfo> indicatorInfo in pairInfo.Value.Components)
                 {
-                    dataInfoB.Append("  " + compInf.Key + " O:" + Math.Round(compInf.Value.getOccurencesRatio(pair.Value.Datasets), 3) + " V:" + Math.Round(compInf.Value.getRange().min, 5) + "~" + Math.Round(compInf.Value.getRange().max, 5) + Environment.NewLine);
+                    dataInfoB.Append(indicatorInfo.Key + " O:" + Math.Round(indicatorInfo.Value.getOccurencesRatio(pairInfo.Value.Datasets), 3) + " V:" + Math.Round(indicatorInfo.Value.getRange().min, 5) + "~" + Math.Round(indicatorInfo.Value.getRange().max, 5) + Environment.NewLine);
                 }
 
                 dataInfoB.Append(Environment.NewLine);
@@ -127,8 +127,6 @@ namespace NinjaTrader_Client.Trader.Analysis
                     new Thread(delegate ()
                     {
                         dataminingDb.loadPair(id.getResult()["instrument"]);
-
-                        dataminingDb.updateInfo("EURUSD");
                     }).Start();
             }
         }
@@ -162,12 +160,11 @@ namespace NinjaTrader_Client.Trader.Analysis
         {
             DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument" }, dataminingDb.getInfo());
             id.ShowDialog();
-
-            if(id.isValidResult())
-                new Thread(delegate () {
-                    dataminingDb.updateInfo(id.getResult()["instrument"]);
-                    //Todo: Update textbox text
-                }).Start();
+            
+            if (id.isValidResult())
+            {
+                dataminingDb.updateInfo(id.getResult()["instrument"]);
+            }
         }
 
         private void indicator_stoch_btn_Click(object sender, EventArgs e)
@@ -178,10 +175,7 @@ namespace NinjaTrader_Client.Trader.Analysis
             if (id.isValidResult())
                 new Thread(delegate () {
                     Dictionary<string, string> parameters = id.getResult();
-                    
                     dataminingDb.addIndicator(new StochIndicator(Convert.ToInt64(parameters["timeframe"])), parameters["instrument"], "mid");
-
-                    dataminingDb.updateInfo(parameters["instrument"]);
                 }).Start();
         }
 
@@ -193,10 +187,7 @@ namespace NinjaTrader_Client.Trader.Analysis
             if (id.isValidResult())
                 new Thread(delegate () {
                     Dictionary<string, string> parameters = id.getResult();
-
                     dataminingDb.addIndicator(new RangeIndicator(Convert.ToInt64(parameters["timeframe"])), parameters["instrument"], "mid");
-
-                    dataminingDb.updateInfo(parameters["instrument"]);
                 }).Start();
         }
 
@@ -208,10 +199,7 @@ namespace NinjaTrader_Client.Trader.Analysis
             if (id.isValidResult())
                 new Thread(delegate () {
                     Dictionary<string, string> parameters = id.getResult();
-
                     dataminingDb.addIndicator(new StandartDeviationIndicator(Convert.ToInt64(parameters["timeframe"])), parameters["instrument"], "mid");
-
-                    dataminingDb.updateInfo(parameters["instrument"]);
                 }).Start();
         }
 
@@ -223,10 +211,7 @@ namespace NinjaTrader_Client.Trader.Analysis
             if (id.isValidResult())
                 new Thread(delegate () {
                     Dictionary<string, string> parameters = id.getResult();
-
                     dataminingDb.addIndicator(new TradingTimeIndicator(), parameters["instrument"], "mid");
-
-                    dataminingDb.updateInfo(parameters["instrument"]);
                 }).Start();
         }
 
@@ -238,10 +223,7 @@ namespace NinjaTrader_Client.Trader.Analysis
             if (id.isValidResult())
                 new Thread(delegate () {
                     Dictionary<string, string> parameters = id.getResult();
-
                     dataminingDb.addIndicator(new VolumeAtPriceIndicator(Convert.ToInt64(parameters["timeframe"]), double.Parse(parameters["stepsize"], CultureInfo.InvariantCulture), Convert.ToInt64(parameters["samplingrate"])), parameters["instrument"], "mid");
-
-                    dataminingDb.updateInfo(parameters["instrument"]);
                 }).Start();
         }
 
@@ -253,10 +235,7 @@ namespace NinjaTrader_Client.Trader.Analysis
             if (id.isValidResult())
                 new Thread(delegate () {
                     Dictionary<string, string> parameters = id.getResult();
-
                     dataminingDb.addIndicator(new MovingAverageIndicator(Convert.ToInt64(parameters["timeframe"])), parameters["instrument"], "mid");
-
-                    dataminingDb.updateInfo(parameters["instrument"]);
                 }).Start();
         }
 
@@ -276,8 +255,6 @@ namespace NinjaTrader_Client.Trader.Analysis
                     string[] fieldnames = parameters["fieldsArrayBy|"].Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
                     dataminingDb.addMetaIndicatorSum(fieldnames, wights.ToArray(), parameters["fieldname"], parameters["instrument"]);
-
-                    dataminingDb.updateInfo(parameters["instrument"]);
                 }).Start();
         }
 
@@ -289,9 +266,7 @@ namespace NinjaTrader_Client.Trader.Analysis
             if (id.isValidResult())
                 new Thread(delegate () {
                     Dictionary<string, string> parameters = id.getResult();
-
                     dataminingDb.addOutcome(Convert.ToInt32(parameters["timeframe"]), parameters["instrument"]);
-                    dataminingDb.updateInfo(parameters["instrument"]);
                 }).Start();
         }
 
@@ -303,10 +278,7 @@ namespace NinjaTrader_Client.Trader.Analysis
             if (id.isValidResult())
                 new Thread(delegate () {
                     Dictionary<string, string> parameters = id.getResult();
-
                     dataminingDb.addOutcomeCode(double.Parse(parameters["normalizedDifference"], CultureInfo.InvariantCulture), Convert.ToInt32(parameters["timeframe"]), parameters["instrument"]);
-
-                    dataminingDb.updateInfo(parameters["instrument"]);
                 }).Start();
         }
 
@@ -427,8 +399,6 @@ namespace NinjaTrader_Client.Trader.Analysis
             new Thread(delegate () {
                 dataminingDb.addData("ssi-win-mt4", sourceDatabase, "EURUSD");
                 dataminingDb.addData("ssi-mt4", sourceDatabase, "EURUSD");
-
-                dataminingDb.updateInfo("EURUSD");
             }).Start();
         }
 
