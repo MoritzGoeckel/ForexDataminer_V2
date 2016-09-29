@@ -1,28 +1,41 @@
 ﻿//Implementing
 
-	Dividing the data in training- and validation- data (80% / 20%)
 	IMachineLearning: (implement svm)
-
 	Refactor inRamDatamining, its too big
 
-	Implement Idicator idea: Regression time to price -> Prediction
-	Implement Indicator idea: Regression price to outcome -> Prediction
 
+Dividing the data in training- and validation- data (80% / 20%)
+	
 (Hm... architecture change?) Handle Data like SSI in Streamingdb
 
 Get predictive power for given indicator (Outcome / OutcomeCode) (Code first)
 	--> Work over the Infohandling for Indicators
+		-->Save indicatorinfo / Pairinfo about distribution etc in database / other table
+		-->Read that
+		-->Posibility to recompute
+		-->save the cheap info
+	--> Possible to do a regression to test predictiveness?
 
-Indicators: MACD RSI 
+Indicators: MACD RSI NN-Timeseries+(Outcome)
 Derived Indicators: 
 	MA-Crossover, 
 	STOCH-Crossover/Border, 
 	Volume on price -> Always tends to go to the most vol (uphill)
+Implement Idicator idea: Regression time to price -> Prediction
+Implement Indicator idea: Regression price to outcome -> Prediction
+Implement Indicator idear: NN for graphical structure of graph to outcome
 
 Advanced Neural Network: Do we need to double convert data? :(
 
 Trying out indicators with GetPredictivePower (Random / Genetic)
 	Write to File, Delete from db again
+
+NN -> Change format to OneVSAll mothod with output = [1 0] for Buy and [0 1] for sell and [0 0] for nothing
+
+ML -> Label testdata to not take into account when training
+	Define own classification error function to compute
+
+Remove nonsense data from indicator sampling etc in excel
 
 //Datamining
 
@@ -37,6 +50,4 @@ Trying out indicators with GetPredictivePower (Random / Genetic)
 #6 Papertrade
 #7 Livetrade
 
-//Legend
-
-indented is less important
+//Create some unittests, cover the parts that are hard to test

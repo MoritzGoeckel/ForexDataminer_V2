@@ -25,7 +25,9 @@ namespace NinjaTrader_Client.Trader.Indicators
 
         public abstract string getName();
 
-        public TimeValueData getIndicator(long timestamp, double value)
+        public abstract bool isValid(long timestamp);
+
+        public TimeValueData setNextDataAndGetIndicator(long timestamp, double value)
         {
             setNextData(timestamp, value);
             return getIndicator();

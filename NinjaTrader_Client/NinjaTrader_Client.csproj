@@ -187,7 +187,7 @@
     <Compile Include="Trader\Analysis\Datamining\AI\AdvancedNeuralNetwork.cs" />
     <Compile Include="Trader\Analysis\Datamining\AI\IMachineLearning.cs" />
     <Compile Include="Trader\Analysis\Datamining\AI\MyLogisticRegression.cs" />
-    <Compile Include="Trader\Analysis\Datamining\IndicatorInfo.cs" />
+    <Compile Include="Trader\Analysis\Datamining\IndicatorID.cs" />
     <Compile Include="Trader\Analysis\Datamining\IndicatorDataInfo.cs" />
     <Compile Include="Trader\Analysis\Datamining\Dialogs\DataminingInputDialog.cs">
       <SubType>Form</SubType>

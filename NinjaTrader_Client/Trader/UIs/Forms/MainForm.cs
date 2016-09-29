@@ -102,7 +102,7 @@ namespace NinjaTrader_Client
 
         private void test_btn_Click(object sender, EventArgs e)
         {
-            double tradingTimeCode = new TradingTimeIndicator().getIndicator(Timestamp.getNow(), 0).value;
+            double tradingTimeCode = new TradingTimeIndicator().setNextDataAndGetIndicator(Timestamp.getNow(), 0).value;
             DateTime dt = Timestamp.getDate(Timestamp.getNow());
             MessageBox.Show(dt.ToString());
         }

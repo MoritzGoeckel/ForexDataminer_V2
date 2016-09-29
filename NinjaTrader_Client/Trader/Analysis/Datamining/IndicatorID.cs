@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Datamining
 {
-    public class IndicatorInfo
+    public class IndicatorID
     {
         private string name;
         private int timeframe;
@@ -41,13 +41,13 @@ namespace NinjaTrader_Client.Trader.Datamining
             timeframe = hours * 60 * 60;
         }
 
-        public IndicatorInfo(string name, int timeframeSeconds)
+        public IndicatorID(string name, int timeframeSeconds)
         {
             this.timeframe = timeframeSeconds;
             this.name = name;
         }
 
-        public IndicatorInfo(string nameAndTimeframe)
+        public IndicatorID(string nameAndTimeframe)
         {
             if (nameAndTimeframe.Contains('_'))
             {

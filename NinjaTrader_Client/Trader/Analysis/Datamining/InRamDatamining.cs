@@ -74,8 +74,6 @@ namespace NinjaTrader_Client.Trader
             if (dataInRam.ContainsKey(pair))
                 dataInRam.Remove(pair);
 
-            PairDataInformation info = new PairDataInformation(pair);
-
             dataInRam.Add(pair, new List<AdvancedTickData>());
 
             List<AdvancedTickData> list = dataInRam[pair];
@@ -91,19 +89,11 @@ namespace NinjaTrader_Client.Trader
             {
                 list.Add(tickdata);
 
-                info.checkTickdata(tickdata);
-
                 current++;
                 doneWriteOperation();
 
                 progress.setProgress("Loading " + pair, Convert.ToInt32((current / max) * 100d));
             }
-
-            if (infoDict.ContainsKey(pair))
-                infoDict.Remove(pair);
-
-            info.AllDatasets = list.Count();
-            infoDict.Add(pair, info);
 
             progress.remove("Loading " + pair);
         }
@@ -112,8 +102,6 @@ namespace NinjaTrader_Client.Trader
         {
             if (dataInRam.ContainsKey(pair))
                 dataInRam.Remove(pair);
-
-            PairDataInformation info = new PairDataInformation(pair);
 
             dataInRam.Add(pair, new List<AdvancedTickData>());
 
@@ -130,19 +118,11 @@ namespace NinjaTrader_Client.Trader
             {
                 list.Add(tickdata);
 
-                info.checkTickdata(tickdata);
-
                 current++;
                 doneWriteOperation();
 
                 progress.setProgress("Loading " + pair, Convert.ToInt32((current / Convert.ToDouble(max)) * 100d));
             }
-
-            if (infoDict.ContainsKey(pair))
-                infoDict.Remove(pair);
-
-            info.AllDatasets = list.Count();
-            infoDict.Add(pair, info);
 
             progress.remove("Loading " + pair);
 
@@ -175,6 +155,7 @@ namespace NinjaTrader_Client.Trader
             return selectedSamples;
         }
 
+        //Todo: Something xD
         public void updateInfo(string pair, int maxDatasets = 150 * 1000)
         {
             PairDataInformation info = new PairDataInformation(pair);
@@ -792,11 +773,11 @@ namespace NinjaTrader_Client.Trader
 
                 if (currentTickdata.values.ContainsKey(indicatorID) == false)
                 {
-                    try {
+                    if (indicator.isValid(currentTickdata.timestamp))
+                    {
                         currentTickdata.values.Add(indicatorID, indicator.getIndicator().value);
                         currentTickdata.changed = true;
                     }
-                    catch { }
 
                     doneWriteOperation();
                 }

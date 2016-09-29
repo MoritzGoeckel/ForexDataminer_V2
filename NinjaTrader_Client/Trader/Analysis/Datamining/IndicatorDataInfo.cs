@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Datamining
 {
-    public class IndicatorDataInfo : IndicatorInfo
+    public class IndicatorDataInfo
     {
+        public IndicatorID id;
         public int occurences = 0;
-
         public Distribution distribution = new Distribution();
+
+        public IndicatorDataInfo(IndicatorID id)
+        {
+            this.id = id;
+        }
 
         public double getOccurencesRatio(int total)
         {
@@ -31,14 +36,14 @@ namespace NinjaTrader_Client.Trader.Datamining
             return distribution.getRange();
         }
 
-        public IndicatorDataInfo(string name, int timeframeSeconds) : base(name, timeframeSeconds)
+        public IndicatorDataInfo(string name, int timeframeSeconds)
         {
-            
+            this.id = new IndicatorID(name, timeframeSeconds);
         }
 
-        public IndicatorDataInfo(string nameAndTimeframe) : base(nameAndTimeframe)
+        public IndicatorDataInfo(string nameAndTimeframe)
         {
-            
+            this.id = new IndicatorID(nameAndTimeframe);
         }
 
         public void checkDistribution(double value)
