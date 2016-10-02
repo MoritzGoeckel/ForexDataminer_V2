@@ -93,5 +93,17 @@ namespace NinjaTrader_Client.Trader.Indicators
         {
             return "Range_" + timeframe;
         }
+
+        public override bool isValid(long timestamp)
+        {
+            if (history.Count == 0)
+                return false;
+
+            TimestampValuePair pair = history[0];
+            if (timestamp - pair.timestamp > timeframe - (timeframe * 0.2)) //Ältester Datensatz ist älter als die (timeframe - 10% Timeframe) 
+                return true;
+            else
+                return false;
+        }
     }
 }

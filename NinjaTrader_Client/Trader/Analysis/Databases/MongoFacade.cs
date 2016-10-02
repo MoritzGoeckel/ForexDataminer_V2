@@ -12,7 +12,7 @@ namespace NinjaTrader_Client.Trader
 {
     public class MongoFacade
     {
-        private MongoDB.Driver.MongoDatabase database;
+        private MongoDatabase database;
         private MongoServer server;
         private MongoClient client;
         private Process serverProcess = null;
@@ -53,7 +53,7 @@ namespace NinjaTrader_Client.Trader
         public void shutdown()
         {
             //If he started the server
-            if (serverProcess != null)
+            /*if (serverProcess != null)
             {
                 server.Shutdown();
                 while (serverProcess.HasExited == false)
@@ -61,7 +61,7 @@ namespace NinjaTrader_Client.Trader
                     serverProcess.Kill();
                     System.Threading.Thread.Sleep(300);
                 }
-            }
+            }*/
         }
 
         /*

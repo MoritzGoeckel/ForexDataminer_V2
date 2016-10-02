@@ -160,10 +160,9 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
             return values;
         }
 
-        public double validateOnData(double[][] input, double[] output)
+        public double validateOnData(double[][] input, double[][] output)
         {
-            double[][] usedInput = new double[][] { }, usedOutput = new double[][] { };
-            return teacher.ComputeError(usedInput.ToArray(), usedOutput.ToArray());
+            return teacher.ComputeError(input, output);
         }
     }
 }

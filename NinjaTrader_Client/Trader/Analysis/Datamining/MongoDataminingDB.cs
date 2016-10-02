@@ -6,21 +6,20 @@ using System.Collections.Generic;
 using System.Linq;
 using NinjaTrader_Client.Trader.Indicators;
 using System.Threading;
-using MongoDB.Driver.Builders;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using NinjaTrader_Client.Trader.Utils;
-using System.Data;
 using Accord.Math;
 using Accord.Neuro;
 using Accord.Neuro.Learning;
+using MongoDB.Driver.Builders;
 
 namespace NinjaTrader_Client.Trader
 {
     [Obsolete]
     public class MongoDataminingDB : IDataminingDatabase
     {
-        MongoDatabase database;
+        TraderMongoDB database;
         MongoFacade mongodb;
 
         int threadsCount = 20;
@@ -32,7 +31,7 @@ namespace NinjaTrader_Client.Trader
         public MongoDataminingDB(MongoFacade mongoDbFacade)
         {
             mongodb = mongoDbFacade;
-            database = new MongoDatabase(mongodb);
+            database = new TraderMongoDB(mongodb);
         }
 
         private static void waitForThreads(List<Thread> threads)
@@ -107,7 +106,7 @@ namespace NinjaTrader_Client.Trader
                     progress.setProgress(name, 0);
                     int done = 0;
                     long count = 0;
-
+                    
                     var docs = collection.FindAs<BsonDocument>(Query.And(Query.EQ("instrument", instrument), Query.NotExists("outcome_max_" + timeframeSeconds), Query.LT("timestamp", threadEnd), Query.GTE("timestamp", threadBeginning))).SetSortOrder(SortBy.Ascending("timestamp"));
                     docs.SetFlags(QueryFlags.NoCursorTimeout);
 

@@ -41,8 +41,7 @@ namespace NinjaTrader_Client
 
         private void chart_btn_Click(object sender, EventArgs e)
         {
-            ChartingForm cf = new ChartingForm(priceHistoryDatabase, null, priceHistoryDatabase.getLastTimestamp() - 1000 * 60 * 60, priceHistoryDatabase.getLastTimestamp());
-            cf.Show();
+            
         }
 
         private void exp_imp_btn_Click(object sender, EventArgs e)

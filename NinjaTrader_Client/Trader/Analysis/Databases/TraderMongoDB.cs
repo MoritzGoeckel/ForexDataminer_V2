@@ -12,13 +12,13 @@ using System.Runtime.CompilerServices;
 
 namespace NinjaTrader_Client.Trader
 {
-    public class MongoDatabase
+    public class TraderMongoDB
     {
         public int errors = 0;
         MongoFacade mongodb;
         MongoCollection<BsonDocument> pricesCollection, dataCollection;
 
-        public MongoDatabase(MongoFacade mongoDbFacade)
+        public TraderMongoDB(MongoFacade mongoDbFacade)
         {
             mongodb = mongoDbFacade;
 

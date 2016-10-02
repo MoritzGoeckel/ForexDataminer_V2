@@ -62,7 +62,7 @@ namespace NinjaTrader_Client.Trader.Analysis
             {
                 dataInfoB.Append(pairInfo.Key + " (" + pairInfo.Value.AllDatasets + ")" + Environment.NewLine);
 
-                foreach (KeyValuePair<string, IndicatorDataInfo> indicatorInfo in pairInfo.Value.Components)
+                foreach (KeyValuePair<string, IndicatorDataInfo> indicatorInfo in pairInfo.Value.IndicatorsInfos)
                 {
                     dataInfoB.Append(indicatorInfo.Key + " O:" + Math.Round(indicatorInfo.Value.getOccurencesRatio(pairInfo.Value.Datasets), 3) + " V:" + Math.Round(indicatorInfo.Value.getRange().min, 5) + "~" + Math.Round(indicatorInfo.Value.getRange().max, 5) + Environment.NewLine);
                 }

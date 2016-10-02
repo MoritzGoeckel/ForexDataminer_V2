@@ -15,15 +15,22 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining.AI
 {
     class MyLogisticRegression : IMachineLearning
     {
-        LogisticRegression logistic;
-        IterativeReweightedLeastSquares teacher;
+        LogisticRegression logisticBuy;
+        IterativeReweightedLeastSquares teacherBuy;
+
+        LogisticRegression logisticSell;
+        IterativeReweightedLeastSquares teacherSell;
+
         int inputsCount;
 
         public MyLogisticRegression(int inputsCount)
         {
             this.inputsCount = inputsCount;
-            logistic = new LogisticRegression(inputs: inputsCount);
-            teacher = new IterativeReweightedLeastSquares(logistic);
+            logisticBuy = new LogisticRegression(inputs: inputsCount);
+            teacherBuy = new IterativeReweightedLeastSquares(logisticBuy);
+
+            logisticSell = new LogisticRegression(inputs: inputsCount);
+            teacherSell = new IterativeReweightedLeastSquares(logisticSell);
         }
 
         public double getError()
@@ -43,7 +50,12 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining.AI
 
         public AISignal getPrediction(double[] input)
         {
-            return new AISignal(logistic.Compute(input));
+            return new AISignal(logisticBuy.Compute(input), logisticSell.Compute(input));
+        }
+
+        private class BuySellLogisticPair
+        {
+            public LogisticRegression buy, sell;
         }
 
         public void load(string path)
@@ -54,12 +66,16 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining.AI
 
             using (StringReader read = new StringReader(xmlString))
             {
-                Type outType = typeof(LogisticRegression);
+                Type outType = typeof(BuySellLogisticPair);
 
                 XmlSerializer serializer = new XmlSerializer(outType);
                 using (XmlReader reader = new XmlTextReader(read))
                 {
-                    logistic = (LogisticRegression)serializer.Deserialize(reader);
+                    BuySellLogisticPair pair = (BuySellLogisticPair)serializer.Deserialize(reader);
+
+                    logisticBuy = pair.buy;
+                    logisticSell = pair.sell;
+
                     reader.Close();
                 }
 
@@ -69,11 +85,15 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining.AI
 
         public void save(string path)
         {
+            BuySellLogisticPair pair = new BuySellLogisticPair();
+            pair.buy = logisticBuy;
+            pair.sell = logisticSell;
+
             XmlDocument xmlDocument = new XmlDocument();
-            XmlSerializer serializer = new XmlSerializer(logistic.GetType());
+            XmlSerializer serializer = new XmlSerializer(pair.GetType());
             using (MemoryStream stream = new MemoryStream())
             {
-                serializer.Serialize(stream, logistic);
+                serializer.Serialize(stream, pair);
                 stream.Position = 0;
                 xmlDocument.Load(stream);
                 xmlDocument.Save(path);
@@ -88,12 +108,15 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining.AI
                 throw new Exception("Input has a unexpected length: " + input[0].Length + "!=" + inputsCount);
 
             for (int i = 0; i < epochs; i++)
-                error = teacher.Run(input, output);
+            {
+                teacherBuy.Learn(input, output[0]);
+                teacherSell.Learn(input, output[1]);
+            }
         }
 
         public double validateOnData(double[][] input, double[][] output)
         {
-            return logistic.GetDeviance(input, output);
+            return (teacherBuy.ComputeError(input, output[0]) + teacherSell.ComputeError(input, output[1])) / 2;
         }
     }
 }

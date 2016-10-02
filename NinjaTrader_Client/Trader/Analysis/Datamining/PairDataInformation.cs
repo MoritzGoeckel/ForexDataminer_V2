@@ -10,7 +10,7 @@ namespace NinjaTrader_Client.Trader.Datamining
     public class PairDataInformation
     {
         public string Pair;
-        public Dictionary<string, IndicatorDataInfo> Components = new Dictionary<string, IndicatorDataInfo>();
+        public Dictionary<string, IndicatorDataInfo> IndicatorsInfos = new Dictionary<string, IndicatorDataInfo>();
 
         public int AllDatasets = 0;
         public int Datasets = 0;
@@ -26,11 +26,11 @@ namespace NinjaTrader_Client.Trader.Datamining
 
             foreach (KeyValuePair<string, double> v in tickdata.values)
             {
-                if (Components.ContainsKey(v.Key) == false)
-                    Components.Add(v.Key, new IndicatorDataInfo(v.Key));
+                if (IndicatorsInfos.ContainsKey(v.Key) == false)
+                    IndicatorsInfos.Add(v.Key, new IndicatorDataInfo(v.Key));
 
-                Components[v.Key].occurences++;
-                Components[v.Key].checkDistribution(v.Value);
+                IndicatorsInfos[v.Key].occurences++;
+                IndicatorsInfos[v.Key].checkDistribution(v.Value);
             }
         }
     }

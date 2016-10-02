@@ -41,5 +41,10 @@ namespace NinjaTrader_Client.Trader.Indicators
         {
             return "TradingTime";
         }
+
+        public override bool isValid(long timestamp)
+        {
+            return true;
+        }
     }
 }
