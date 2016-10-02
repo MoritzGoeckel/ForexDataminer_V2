@@ -1,5 +1,6 @@
 ﻿using Accord.Neuro;
 using Accord.Neuro.Learning;
+using NinjaTrader_Client.Trader.Analysis.Datamining.AI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
 {
     class AdvancedNeuralNetwork : IMachineLearning
     {
-        private int[] neuronsCount, dropedFields;
+        private int[] neuronsCount;
         private double learningRate, sigmoidAlphaValue;
         private bool useRegularization, useNguyenWidrow, useSameWeights;
         private JacobianMethod method;
@@ -35,7 +36,7 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
             return new AdvancedNeuralNetwork(inputFieldNames, outputFieldName, randomArchitecture, rand.Next(1, 50) * 0.02, rand.Next(1, 10), rand.Next(0, 1) == 1, rand.Next(0, 1) == 1, rand.Next(0, 1) == 1, (rand.Next(0, 1) == 1 ? JacobianMethod.ByBackpropagation : JacobianMethod.ByFiniteDifferences));
         }
 
-        public AdvancedNeuralNetwork(string[] inputFieldNames, string outputFieldName, int[] neuronsCount, double learningRate = 0.1, double sigmoidAlphaValue = 2, bool useRegularization = false, bool useNguyenWidrow = false, bool useSameWeights = false, JacobianMethod method = JacobianMethod.ByBackpropagation, int[] dropedFields = null)
+        public AdvancedNeuralNetwork(string[] inputFieldNames, string outputFieldName, int[] neuronsCount, double learningRate = 0.1, double sigmoidAlphaValue = 2, bool useRegularization = false, bool useNguyenWidrow = false, bool useSameWeights = false, JacobianMethod method = JacobianMethod.ByBackpropagation)
         {
             this.neuronsCount = neuronsCount;
             this.learningRate = learningRate;
@@ -43,7 +44,6 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
             this.useNguyenWidrow = useNguyenWidrow;
             this.useSameWeights = useSameWeights;
             this.method = method;
-            this.dropedFields = dropedFields;
             this.sigmoidAlphaValue = sigmoidAlphaValue;
 
             this.inputFieldNames = inputFieldNames;
@@ -70,9 +70,9 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
             teacher.LearningRate = learningRate;
         }
 
-        double IMachineLearning.getPrediction(double[] input)
+        AISignal IMachineLearning.getPrediction(double[] input)
         {
-            return theNetwork.Compute(input)[0];
+            return new AISignal(theNetwork.Compute(input));
         }
 
         void IMachineLearning.load(string path)
@@ -87,10 +87,9 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
 
         private double error = -1;
         private double lastError = -1;
-        void IMachineLearning.train(double[][] input, double[] output, int epochs)
+        void IMachineLearning.train(double[][] input, double[][] output, int epochs)
         {
             double[][] usedInput = new double[][] { }, usedOutput = new double[][] { };
-            convertData(input, output, ref usedInput, ref usedOutput);
 
             for (int i = 0; i < epochs; i++)
             {
@@ -100,47 +99,6 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
                     break;
                 else
                     lastError = error;
-            }
-        }
-
-        //Do we really need to convert it again??? todo!
-        private void convertData(double[][] input, double[] output, ref double[][] properInput, ref double[][] properOutput)
-        {
-            if (input.Length != inputFieldNames.Length)
-                throw new Exception("Wrong input count! Length: " + input.Length + " should be " + inputFieldNames.Length);
-
-            properInput = new double[input.Length][];
-            properOutput = new double[input.Length][];
-
-            for (int row = 0; row < input.Length; row++)
-            {
-                for (int column = 0; column < input[row].Length; column++)
-                {
-                    double inputValue = input[row][column];
-                    if (double.IsInfinity(inputValue) || double.IsNegativeInfinity(inputValue) || double.IsNaN(inputValue))
-                        throw new Exception("Invalid value!");
-
-                    double[] tmpInput = input[row];
-                    if (dropedFields != null)
-                    {
-                        tmpInput = new double[input.Length - dropedFields.Length];
-                        for (int i = 0, b = 0; i < input.Length; i++) //Iterates thorugh input (i)
-                            if (dropedFields.Contains<int>(i) == false) //Checks weather currentInput is dropped
-                            {
-                                tmpInput[b] = input[row][i]; //If not, add it to next inputVectorUsed
-                                b++;
-                            }
-                    }
-
-                    //Check dropped field
-                    properInput[row] = tmpInput;
-                }
-
-                double d = output[row];
-                if (double.IsInfinity(d) || double.IsNegativeInfinity(d) || double.IsNaN(d))
-                    throw new Exception("Invalid value!");
-
-                properOutput[row] = new double[] { d };
             }
         }
 
@@ -161,10 +119,6 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
             foreach (string f in inputFieldNames)
                 fieldsString += f + "|";
 
-            string droppedString = "";
-            foreach (int i in dropedFields)
-                droppedString += i + "|";
-
             string outputStr = "";
             outputStr += "InputCount: " + inputFieldNames.Length + nl;
             outputStr += "NeuronsCount: " + neuronsCountString + nl;
@@ -174,7 +128,6 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
             outputStr += "SameWeights: " + useSameWeights.ToString() + nl;
             outputStr += "sigmoidAlphaValue" + sigmoidAlphaValue + nl;
             outputStr += "Method: " + method.ToString() + nl;
-            outputStr += "Dropped: " + droppedString + nl;
             outputStr += "Inputs: " + fieldsString + nl;
             outputStr += "Output: " + outputFieldName;
             outputStr += "Error: " + this.error;
@@ -201,12 +154,8 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
             foreach (string f in inputFieldName)
                 fieldsString += f + "|";
 
-            string droppedString = "";
-            foreach (int i in dropedFields)
-                droppedString += i + "|";
-
             string[] values = new string[] { inputFieldNames.Length.ToString(), neuronsCountString, learningRate.ToString(), useRegularization.ToString(),
-                useNguyenWidrow.ToString(), useSameWeights.ToString(), sigmoidAlphaValue.ToString(), method.ToString(), droppedString, fieldsString, outputFieldName, this.error.ToString() };
+                useNguyenWidrow.ToString(), useSameWeights.ToString(), sigmoidAlphaValue.ToString(), method.ToString(), fieldsString, outputFieldName, this.error.ToString() };
 
             return values;
         }
@@ -214,7 +163,6 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
         public double validateOnData(double[][] input, double[] output)
         {
             double[][] usedInput = new double[][] { }, usedOutput = new double[][] { };
-            convertData(input, output, ref usedInput, ref usedOutput);
             return teacher.ComputeError(usedInput.ToArray(), usedOutput.ToArray());
         }
     }

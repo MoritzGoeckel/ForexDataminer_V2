@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NinjaTrader_Client.Trader.Analysis.Datamining.AI;
+using NinjaTrader_Client.Trader.Streaming.Strategies;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +10,14 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
 {
     public interface IMachineLearning
     {
-        void train(double[][] input, double[] output, int epochs = 1);
-        double getPrediction(double[] input);
-
+        void train(double[][] input, double[][] output, int epochs = 1);
+        AISignal getPrediction(double[] input);
         void save(string path);
         void load(string path);
 
         double getError();
         string getInfoString();
         string[] getInfo(string[] inputFieldName, string outputFieldName);
-        double validateOnData(double[][] input, double[] output);
+        double validateOnData(double[][] input, double[][] output);
     }
 }

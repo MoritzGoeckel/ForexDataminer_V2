@@ -1030,7 +1030,7 @@ namespace NinjaTrader_Client.Trader
                     + successes + seperator + count + seperator + successRate + seperator + (successRate * slTpRatio) + seperator + result;
         }
 
-        public void getInputOutputArrays(string[] inputFields, string outcomeField, string instrument, ref double[][] inputs, ref double[] outputs, int dataCountReduction = 0, int offsetReduction = 0)
+        public void getInputOutputArrays(string[] inputFields, string outcomeField, string instrument, ref double[][] inputs, ref double[][] outputs, int dataCountReduction = 0, int offsetReduction = 0)
         {
             progress.setProgress("Creating input/output array", 0);
 
@@ -1045,17 +1045,15 @@ namespace NinjaTrader_Client.Trader
             double doneData = 0;
 
             List<double[]> inputsList = new List<double[]>();
-            List<double> outputsList = new List<double>();
+            List<double[]> outputsList = new List<double[]>();
 
             foreach (AdvancedTickData data in dataCollection)
             {
                 bool validTick = true;
                 double[] input = new double[inputFields.Length];
 
-                if (data.values.ContainsKey(outcomeField) == false)
+                if (data.values.ContainsKey("sell-" + outcomeField) == false || data.values.ContainsKey("buy-" + outcomeField) == false)
                     continue;
-
-                double outcome = data.values[outcomeField];
 
                 int i = 0;
                 foreach(string inputField in inputFields)
@@ -1075,7 +1073,7 @@ namespace NinjaTrader_Client.Trader
                 {
                     try {
                         inputsList.Add(input);
-                        outputsList.Add(outcome);
+                        outputsList.Add(new double[] { data.values["buy-" + outcomeField], data.values["sell-" + outcomeField] });
 
                         doneWriteOperation();
                     }

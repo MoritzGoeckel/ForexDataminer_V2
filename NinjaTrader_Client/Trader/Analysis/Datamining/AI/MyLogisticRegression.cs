@@ -1,6 +1,7 @@
 ﻿using Accord.Statistics.Models.Regression;
 using Accord.Statistics.Models.Regression.Fitting;
 using NinjaTrader_Client.Trader.Datamining.AI;
+using NinjaTrader_Client.Trader.Streaming.Strategies;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,9 +41,9 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining.AI
             throw new Exception("No info for the logistic regression. They are all the same :)");
         }
 
-        public double getPrediction(double[] input)
+        public AISignal getPrediction(double[] input)
         {
-            return logistic.Compute(input);
+            return new AISignal(logistic.Compute(input));
         }
 
         public void load(string path)
@@ -81,7 +82,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining.AI
         }
 
         double error;
-        public void train(double[][] input, double[] output, int epochs = 1)
+        public void train(double[][] input, double[][] output, int epochs = 1)
         {
             if (input[0].Length != inputsCount)
                 throw new Exception("Input has a unexpected length: " + input[0].Length + "!=" + inputsCount);
@@ -90,7 +91,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining.AI
                 error = teacher.Run(input, output);
         }
 
-        public double validateOnData(double[][] input, double[] output)
+        public double validateOnData(double[][] input, double[][] output)
         {
             return logistic.GetDeviance(input, output);
         }

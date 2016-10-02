@@ -133,7 +133,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void outcome_sampling_button_Click(object sender, EventArgs e)
         {
-            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "stepsize", "indicatorid", "outcometimeframe" }, dataminingDb.getInfo());
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "steps", "indicatorid", "outcometimeframe" }, dataminingDb.getInfo());
             id.ShowDialog();
 
             if (id.isValidResult())
@@ -147,8 +147,8 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                     SampleOutcomeExcelGenerator excel = new SampleOutcomeExcelGenerator(Application.StartupPath + @"\Analysis\" + DateTime.Now.ToString("yyyy_dd_mm") + "_" + parameters["instrument"] + ".xls");
 
-                    setState("Outcomesampling");
-                    dataminingDb.getOutcomeIndicatorSampling(excel, parameters["indicatorid"], Convert.ToInt32(parameters["outcometimeframe"]), double.Parse(parameters["stepsize"], CultureInfo.InvariantCulture), parameters["instrument"]);
+                    setState("Outcomesampling");                                                                                                                                //Todo: get Range!!
+                    dataminingDb.getOutcomeIndicatorSampling(excel, parameters["indicatorid"], Convert.ToInt32(parameters["outcometimeframe"]), Convert.ToInt32(parameters["steps"]), , parameters["instrument"]);
 
                     excel.FinishDoc();
                     excel.ShowDocument();
@@ -307,7 +307,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void outcome_code_sampling_btn_Click(object sender, EventArgs e)
         {
-            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "indicatorId", "normalizedDifference", "outcomeTimeframe", "stepsize" }, dataminingDb.getInfo());
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "indicatorId", "normalizedDifference", "outcomeTimeframe", "steps" }, dataminingDb.getInfo());
             id.ShowDialog();
 
             if (id.isValidResult())
@@ -319,8 +319,8 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                     SampleOutcomeCodeExcelGenerator excel = new SampleOutcomeCodeExcelGenerator(Application.StartupPath + @"\Analysis\" + DateTime.Now.ToString("yyyy_dd_mm") + "_" + parameters["instrument"] + ".xls");
 
-                    setState("OutcomeCodeSampling");
-                    dataminingDb.getOutcomeCodeIndicatorSampling(excel, parameters["indicatorId"], double.Parse(parameters["stepsize"], CultureInfo.InvariantCulture), double.Parse(parameters["normalizedDifference"], CultureInfo.InvariantCulture), Convert.ToInt32(parameters["outcomeTimeframe"]), parameters["instrument"]);
+                    setState("OutcomeCodeSampling");                                                                                  //Todo: Find sampling range!
+                    dataminingDb.getOutcomeCodeIndicatorSampling(excel, parameters["indicatorId"], Convert.ToInt32(parameters["steps"]), , double.Parse(parameters["normalizedDifference"], CultureInfo.InvariantCulture), Convert.ToInt32(parameters["outcomeTimeframe"]), parameters["instrument"]);
 
                     excel.FinishDoc();
                     excel.ShowDocument();
@@ -356,11 +356,11 @@ namespace NinjaTrader_Client.Trader.Analysis
                 excel.CreateSheet(sheetName, header);
 
                 double[][] inputsTraining = new double[][] { };
-                double[] outputsTraining = new double[] { };
+                double[][] outputsTraining = new double[][] { };
                 dataminingDb.getInputOutputArrays(inputFields, outputField, "EURUSD", ref inputsTraining, ref outputsTraining, 100 * 1000, 0);
 
                 double[][] inputsValidation = new double[][] { };
-                double[] outputsValidation = new double[] { };
+                double[][] outputsValidation = new double[][] { };
                 dataminingDb.getInputOutputArrays(inputFields, outputField, "EURUSD", ref inputsValidation, ref outputsValidation, 10 * 1000, 1);
 
                 dataminingDb.unloadPair("EURUSD");
@@ -417,7 +417,7 @@ namespace NinjaTrader_Client.Trader.Analysis
                 IMachineLearning network = new AdvancedNeuralNetwork(inputFields, outputField, neuronsCount, 0.1, 2, false, false, false, Accord.Neuro.Learning.JacobianMethod.ByBackpropagation);
 
                 double[][] inputs = new double[][] { };
-                double[] outputs = new double[] { };
+                double[][] outputs = new double[][] { };
                 dataminingDb.getInputOutputArrays(inputFields, outputField, "EURUSD", ref inputs, ref outputs);
                 dataminingDb.unloadPair("EURUSD");
 
