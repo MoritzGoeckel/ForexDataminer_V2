@@ -9,10 +9,9 @@
 		MA-Crossover, 
 		STOCH-Crossover/Border, 
 		Volume on price -> Always tends to go to the most vol (uphill)
-	Implement Idicator idea: Regression time to price -> Prediction
+	Implement Indicator idea: Regression time to price -> Prediction
 	Implement Indicator idea: Regression price to outcome -> Prediction
 	Implement Indicator idear: NN for graphical structure of graph to outcome
-
 
 Get predictive power for given indicator (Outcome / OutcomeCode) (Code first)
 	--> Work over the Infohandling for Indicators
@@ -25,12 +24,8 @@ Get predictive power for given indicator (Outcome / OutcomeCode) (Code first)
 Trying out indicators with GetPredictivePower (Random / Genetic)
 	Write to File, Delete from db again
 
-Dividing the data in training-, test- and validation- data (80% / 20%)
-ML -> Label testdata to not take into account when training
-	Define own classification error function to compute
+Predictive power for some outcomes at the same time
 	
-Remove nonsense data from indicator sampling etc in excel
-
 //Datamining
 
 --> #1 Find indicators with statistical correlations to the outcome

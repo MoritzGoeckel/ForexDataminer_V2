@@ -402,7 +402,7 @@ namespace NinjaTrader_Client.Trader.Analysis
             }).Start();
         }
 
-        //Todo: Dialog
+        //Todo: Dialog, Training, Testing, Validation
         private void create_ann_button_click(object sender, EventArgs e)
         {
             new Thread(delegate () {
@@ -418,7 +418,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                 double[][] inputs = new double[][] { };
                 double[][] outputs = new double[][] { };
-                dataminingDb.getInputOutputArrays(inputFields, outputField, "EURUSD", ref inputs, ref outputs);
+                dataminingDb.getInputOutputArrays(inputFields, outputField, "EURUSD", ref inputs, ref outputs, DataGroup.Training);
                 dataminingDb.unloadPair("EURUSD");
 
                 int epochsDone = 0;

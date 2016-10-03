@@ -140,20 +140,20 @@
     <Compile Include="Trader\Analysis\Datamining\AI\AISignal.cs" />
     <Compile Include="Trader\Analysis\Datamining\AI\IMachineLearning.cs" />
     <Compile Include="Trader\Analysis\Datamining\AI\MyLogisticRegression.cs" />
-    <Compile Include="Trader\Analysis\Datamining\IndicatorID.cs" />
-    <Compile Include="Trader\Analysis\Datamining\IndicatorDataInfo.cs" />
+    <Compile Include="Trader\Analysis\Datamining\DatasetId.cs" />
     <Compile Include="Trader\Analysis\Datamining\Dialogs\DataminingInputDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Trader\Analysis\Datamining\Dialogs\DataminingInputDialog.Designer.cs">
       <DependentUpon>DataminingInputDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Trader\Analysis\Datamining\Distribution.cs" />
-    <Compile Include="Trader\Analysis\Datamining\DistributionRange.cs" />
+    <Compile Include="Trader\Analysis\Datamining\DistributionCalculater.cs" />
+    <Compile Include="Trader\Model\DistributionRange.cs" />
     <Compile Include="Trader\Analysis\Datamining\PredictivePowerAnalyzer.cs" />
     <Compile Include="Trader\Analysis\Datamining\SampleOutcomeCodeExcelGenerator.cs" />
     <Compile Include="Trader\Analysis\Indicators\IndicatorGenerator.cs" />
     <Compile Include="Trader\Analysis\Indicators\VolumeAtPriceIndicator.cs" />
+    <Compile Include="Trader\Model\DatasetInfo.cs" />
     <Compile Include="Trader\Streaming\Strategies\ExecutionStrategy.cs" />
     <Compile Include="Trader\Streaming\Strategies\StrategySignal.cs" />
     <Compile Include="Trader\Streaming\StreamingModul.cs" />
@@ -166,7 +166,6 @@
     <Compile Include="Trader\Utils\AvailableInstruments.cs" />
     <Compile Include="Trader\Utils\GeneralExcelGenerator.cs" />
     <Compile Include="Trader\Analysis\Datamining\SampleOutcomeExcelGenerator.cs" />
-    <Compile Include="Trader\Analysis\Datamining\PairDataInformation.cs" />
     <Compile Include="Trader\Analysis\Datamining\InRamDatamining.cs" />
     <Compile Include="Trader\Analysis\IndicatorCollections\FirstIndicatorCollection.cs" />
     <Compile Include="Trader\Analysis\IndicatorCollections\IndicatorCollection.cs" />

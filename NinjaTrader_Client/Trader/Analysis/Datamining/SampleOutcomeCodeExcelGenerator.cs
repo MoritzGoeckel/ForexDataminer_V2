@@ -133,11 +133,11 @@ namespace NinjaTrader_Client.Trader.Datamining
             if (row == 0)
                 throw new Exception("Row cant be 0");
 
-            sheet.Cells[row, 1] = valueMin;
-            sheet.Cells[row, 2] = valueMax;
-            sheet.Cells[row, 3] = count;
-            sheet.Cells[row, 4] = buy;
-            sheet.Cells[row, 5] = sell;
+            sheet.Cells[row, 1] = GeneralExcelGenerator.getAsValidNumberString(valueMin);
+            sheet.Cells[row, 2] = GeneralExcelGenerator.getAsValidNumberString(valueMax);
+            sheet.Cells[row, 3] = GeneralExcelGenerator.getAsValidNumberString(count);
+            sheet.Cells[row, 4] = GeneralExcelGenerator.getAsValidNumberString(buy);
+            sheet.Cells[row, 5] = GeneralExcelGenerator.getAsValidNumberString(sell);
 
             sheetRows[sheet.Name]++;
         }

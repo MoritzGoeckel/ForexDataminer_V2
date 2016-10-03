@@ -1,4 +1,5 @@
 ﻿using NinjaTrader_Client.Trader.Datamining;
+using NinjaTrader_Client.Trader.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,13 +16,13 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
     {
         private string[] inputFields;
         private Dictionary<string, TextBox> outputs = new Dictionary<string, TextBox>();
-        private Dictionary<string, PairDataInformation> dbInfo;
+        private List<DatasetInfo> infos;
 
         private static Dictionary<string, string> historicNameValues = new Dictionary<string, string>();
 
-        public DataminingInputDialog(string[] inputFields, Dictionary<string, PairDataInformation> dbInfo)
+        public DataminingInputDialog(string[] inputFields, List<DatasetInfo> infos)
         {
-            this.dbInfo = dbInfo;
+            this.infos = infos;
             this.inputFields = inputFields;
 
             InitializeComponent();
@@ -60,19 +61,13 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
 
             submitBtn.TabIndex = tabIndex;
 
-            if (dbInfo != null)
+            if (infos != null)
             {
                 StringBuilder dataInfoB = new StringBuilder("");
-                foreach (KeyValuePair<string, PairDataInformation> pair in dbInfo)
+
+                foreach (DatasetInfo info in infos)
                 {
-                    dataInfoB.Append(pair.Key + " (" + pair.Value.AllDatasets + ")" + Environment.NewLine);
-
-                    foreach (KeyValuePair<string, IndicatorDataInfo> compInf in pair.Value.IndicatorsInfos)
-                    {
-                        dataInfoB.Append("  " + compInf.Key + " O:" + Math.Round(compInf.Value.getOccurencesRatio(pair.Value.Datasets), 3) + " V:" + Math.Round(compInf.Value.min, 5) + "~" + Math.Round(compInf.Value.max, 5) + Environment.NewLine);
-                    }
-
-                    dataInfoB.Append(Environment.NewLine);
+                    dataInfoB.Append(info.id.getID() + " O:" + Math.Round(compInf.Value.getOccurencesRatio(pair.Value.Datasets), 3) + " V:" + Math.Round(compInf.Value.min, 5) + "~" + Math.Round(compInf.Value.max, 5) + Environment.NewLine);
                 }
 
                 infoTxbox.Text = dataInfoB.ToString();

@@ -9,7 +9,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
     public class DistributionRange
     {
         public double min, max;
-        public double droppedPercent = 0;
+        public int droppedPercent = 0;
 
         public DistributionRange(double min, double max, int droppedPercent = 0)
         {
@@ -25,6 +25,11 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
 
             if (value < min)
                 min = value;
+        }
+
+        public DistributionRange copy()
+        {
+            return new DistributionRange(this.min, this.max, this.droppedPercent);
         }
     }
 }

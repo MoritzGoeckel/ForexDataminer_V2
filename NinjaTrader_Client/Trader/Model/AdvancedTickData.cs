@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Model
 {
+    public enum DataGroup { Training = 0, Testing = 1, Validation = 2, All = 99 };
+
     public class AdvancedTickData
     {
         public long timestamp;
@@ -22,6 +24,8 @@ namespace NinjaTrader_Client.Trader.Model
         [BsonIgnore, JsonIgnore]
         public bool changed = false;
 
+        public DataGroup dataGroup;
+        
         public AdvancedTickData(long timestamp, double last, double bid, double ask, string instrument)
         {
             this.timestamp = timestamp;

@@ -722,7 +722,7 @@ namespace NinjaTrader_Client.Trader
             throw new NotImplementedException();
         }
 
-        Dictionary<string, PairDataInformation> IDataminingDatabase.getInfo()
+        List<DatasetInfo> IDataminingDatabase.getInfo()
         {
             throw new NotImplementedException();
         }

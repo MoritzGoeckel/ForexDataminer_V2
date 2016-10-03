@@ -1,6 +1,7 @@
 ﻿using NinjaTrader_Client.Trader.BacktestBase;
 using NinjaTrader_Client.Trader.Indicators;
 using NinjaTrader_Client.Trader.MainAPIs;
+using NinjaTrader_Client.Trader.Model;
 using NinjaTrader_Client.Trader.Utils;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,6 @@ namespace NinjaTrader_Client.Trader.Datamining
 
         void doMachineLearning(string[] inputFields, string outcomeField, string instrument, string savePath = null);
 
-        Dictionary<string, PairDataInformation> getInfo();
+        List<DatasetInfo> getInfo();
     }
 }

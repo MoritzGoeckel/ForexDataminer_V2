@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Analysis.Datamining
 {
-    public class Distribution
+    public class DistributionCalculater
     {
         private Dictionary<double, int> distribution = new Dictionary<double, int>();
         private bool droppedData = false;

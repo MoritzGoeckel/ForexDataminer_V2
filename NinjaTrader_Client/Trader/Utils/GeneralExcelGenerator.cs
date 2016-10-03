@@ -18,6 +18,14 @@ namespace NinjaTrader_Client.Trader.Datamining
 
         Dictionary<string, int> sheetRows = new Dictionary<string, int>();
 
+        public static string getAsValidNumberString(double d)
+        {
+            if (d == double.MaxValue || d == double.MinValue || d == double.NaN || d == double.NegativeInfinity || d == double.PositiveInfinity || d == int.MaxValue || d == int.MinValue)
+                return "";
+            else
+                return d.ToString();
+        }
+
         public bool doesSheetExist(string name)
         {
             return sheets.ContainsKey(name);

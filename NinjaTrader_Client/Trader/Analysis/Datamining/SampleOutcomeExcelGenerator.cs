@@ -136,14 +136,14 @@ namespace NinjaTrader_Client.Trader.Datamining
             if (row == 0)
                 throw new Exception("Row cant be 0");
 
-            sheet.Cells[row, 1] = valueMin;
-            sheet.Cells[row, 2] = valueMax;
-            sheet.Cells[row, 3] = count;
-            sheet.Cells[row, 4] = maxAvg;
-            sheet.Cells[row, 5] = minAvg;
-            sheet.Cells[row, 6] = minVsMax;
-            sheet.Cells[row, 7] = actualAvg;
-            sheet.Cells[row, 8] = avgDiff;
+            sheet.Cells[row, 1] = GeneralExcelGenerator.getAsValidNumberString(valueMin);
+            sheet.Cells[row, 2] = GeneralExcelGenerator.getAsValidNumberString(valueMax);
+            sheet.Cells[row, 3] = GeneralExcelGenerator.getAsValidNumberString(count);
+            sheet.Cells[row, 4] = GeneralExcelGenerator.getAsValidNumberString(maxAvg);
+            sheet.Cells[row, 5] = GeneralExcelGenerator.getAsValidNumberString(minAvg);
+            sheet.Cells[row, 6] = GeneralExcelGenerator.getAsValidNumberString(minVsMax);
+            sheet.Cells[row, 7] = GeneralExcelGenerator.getAsValidNumberString(actualAvg);
+            sheet.Cells[row, 8] = GeneralExcelGenerator.getAsValidNumberString(avgDiff);
 
             sheetRows[sheet.Name]++;
         }
