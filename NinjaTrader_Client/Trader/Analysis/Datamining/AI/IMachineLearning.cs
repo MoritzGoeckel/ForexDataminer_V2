@@ -11,10 +11,9 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
     public interface IMachineLearning
     {
         void train(double[][] input, double[][] output, int epochs = 1);
-        AISignal getPrediction(double[] input);
+        StrategySignal getPrediction(double[] input);
         void save(string path);
         void load(string path);
-
         double getError();
         string getInfoString();
         string[] getInfo(string[] inputFieldName, string outputFieldName);

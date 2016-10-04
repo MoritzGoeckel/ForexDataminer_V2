@@ -86,7 +86,7 @@ namespace NinjaTrader_Client.Trader.Streaming
             }
 
             output += Environment.NewLine;
-            output += "Signal: " + lastSignal.getSignal();
+            output += "Signal: B" + lastSignal.getBuy() + " S" + lastSignal.getSell();
             output += Timestamp.getNow() - lastAdvancedTickdata.timestamp + "S ago";
 
             return output;

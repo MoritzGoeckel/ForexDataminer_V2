@@ -1,6 +1,7 @@
 ﻿using Accord.Neuro;
 using Accord.Neuro.Learning;
 using NinjaTrader_Client.Trader.Analysis.Datamining.AI;
+using NinjaTrader_Client.Trader.Streaming.Strategies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,9 +71,9 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
             teacher.LearningRate = learningRate;
         }
 
-        AISignal IMachineLearning.getPrediction(double[] input)
+        StrategySignal IMachineLearning.getPrediction(double[] input)
         {
-            return new AISignal(theNetwork.Compute(input));
+            return new StrategySignal(theNetwork.Compute(input));
         }
 
         void IMachineLearning.load(string path)

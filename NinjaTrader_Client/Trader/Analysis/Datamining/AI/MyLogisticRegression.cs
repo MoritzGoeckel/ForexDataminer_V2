@@ -48,9 +48,9 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining.AI
             throw new Exception("No info for the logistic regression. They are all the same :)");
         }
 
-        public AISignal getPrediction(double[] input)
+        public StrategySignal getPrediction(double[] input)
         {
-            return new AISignal(logisticBuy.Compute(input), logisticSell.Compute(input));
+            return new StrategySignal(logisticBuy.Compute(input), logisticSell.Compute(input));
         }
 
         private class BuySellLogisticPair

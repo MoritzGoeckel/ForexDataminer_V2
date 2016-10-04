@@ -5,14 +5,15 @@
 
 	MachineLearning: Implement RandomForest (: MulitClasificationBase)
 
-	Indicators: MACD RSI NN-Timeseries+(Outcome)
-	Derived Indicators: 
-		MA-Crossover, 
-		STOCH-Crossover/Border, 
-		Volume on price -> Always tends to go to the most vol (uphill)
 	Implement Indicator idea: Regression time to price -> Prediction
-	Implement Indicator idea: Regression price to outcome -> Prediction
-	Implement Indicator idear: NN for graphical structure of graph to outcome
+
+Indicators: MACD RSI
+Derived Indicators: 
+	MA-Crossover, 
+	STOCH-Crossover/Border, 
+	Volume on price -> Always tends to go to the most vol (uphill)
+	NN for graphical structure of graph to outcome
+	Regression price (last couble of hours) to outcome
 
 Get predictive power for given indicator (Outcome / OutcomeCode) (Code first)
 	--> Infohandling
