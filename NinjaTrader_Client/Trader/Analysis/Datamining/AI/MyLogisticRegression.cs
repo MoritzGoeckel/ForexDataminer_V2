@@ -114,7 +114,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining.AI
             }
         }
 
-        public double validateOnData(double[][] input, double[][] output)
+        public double getPredictionErrorFromData(double[][] input, double[][] output)
         {
             return (teacherBuy.ComputeError(input, output[0]) + teacherSell.ComputeError(input, output[1])) / 2;
         }

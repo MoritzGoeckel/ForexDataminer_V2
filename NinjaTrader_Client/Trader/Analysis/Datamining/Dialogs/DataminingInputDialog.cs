@@ -62,16 +62,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
             submitBtn.TabIndex = tabIndex;
 
             if (infos != null)
-            {
-                StringBuilder dataInfoB = new StringBuilder("");
-
-                foreach (DatasetInfo info in infos)
-                {
-                    dataInfoB.Append(info.id.getID() + " O:" + Math.Round(compInf.Value.getOccurencesRatio(pair.Value.Datasets), 3) + " V:" + Math.Round(compInf.Value.min, 5) + "~" + Math.Round(compInf.Value.max, 5) + Environment.NewLine);
-                }
-
-                infoTxbox.Text = dataInfoB.ToString();
-            }
+                infoTxbox.Text = DatasetInfo.renderInfoList(infos);
 
             firstTxbox.Focus();
         }

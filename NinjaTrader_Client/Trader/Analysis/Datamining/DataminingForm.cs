@@ -57,24 +57,15 @@ namespace NinjaTrader_Client.Trader.Analysis
             state_label.Text = stateMessage;
 
             //Render dataInfo
-            StringBuilder dataInfoB = new StringBuilder("");
-            foreach(KeyValuePair<string, PairDataInformation> pairInfo in dataminingDb.getInfo())
-            {
-                dataInfoB.Append(pairInfo.Key + " (" + pairInfo.Value.AllDatasets + ")" + Environment.NewLine);
+            string infoString = DatasetInfo.renderInfoList(dataminingDb.getInfo());
 
-                foreach (KeyValuePair<string, IndicatorDataInfo> indicatorInfo in pairInfo.Value.IndicatorsInfos)
-                {
-                    dataInfoB.Append(indicatorInfo.Key + " O:" + Math.Round(indicatorInfo.Value.getOccurencesRatio(pairInfo.Value.Datasets), 3) + " V:" + Math.Round(indicatorInfo.Value.getRange().min, 5) + "~" + Math.Round(indicatorInfo.Value.getRange().max, 5) + Environment.NewLine);
-                }
+            if (dataInfoTextbox.Text != infoString)
+                dataInfoTextbox.Text = infoString;
+        }
 
-                dataInfoB.Append(Environment.NewLine);
-            }
-
-            if (dataInfoTextbox.Text != dataInfoB.ToString())
-            {
-                File.WriteAllText(Application.StartupPath + "//dataInfo.txt", dataInfoB.ToString());
-                dataInfoTextbox.Text = dataInfoB.ToString();
-            }
+        private string formatDouble(double d)
+        {
+            return Math.Round(d, 3).ToString();
         }
 
         private void button_deleteAll_Click(object sender, EventArgs e)
@@ -147,8 +138,8 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                     SampleOutcomeExcelGenerator excel = new SampleOutcomeExcelGenerator(Application.StartupPath + @"\Analysis\" + DateTime.Now.ToString("yyyy_dd_mm") + "_" + parameters["instrument"] + ".xls");
 
-                    setState("Outcomesampling");                                                                                                                                //Todo: get Range!!
-                    dataminingDb.getOutcomeIndicatorSampling(excel, parameters["indicatorid"], Convert.ToInt32(parameters["outcometimeframe"]), Convert.ToInt32(parameters["steps"]), , parameters["instrument"]);
+                    setState("Outcomesampling");                                                                                                                              
+                    dataminingDb.getOutcomeIndicatorSampling(excel, parameters["indicatorid"], Convert.ToInt32(parameters["outcometimeframe"]), Convert.ToInt32(parameters["steps"]), dataminingDb.getInfo(parameters["indicatorid"]).getDecentRange(), parameters["instrument"]);
 
                     excel.FinishDoc();
                     excel.ShowDocument();
@@ -158,13 +149,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void updateInfo_Btn_Click(object sender, EventArgs e)
         {
-            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument" }, dataminingDb.getInfo());
-            id.ShowDialog();
             
-            if (id.isValidResult())
-            {
-                dataminingDb.updateInfo(id.getResult()["instrument"]);
-            }
         }
 
         private void indicator_stoch_btn_Click(object sender, EventArgs e)
@@ -319,8 +304,8 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                     SampleOutcomeCodeExcelGenerator excel = new SampleOutcomeCodeExcelGenerator(Application.StartupPath + @"\Analysis\" + DateTime.Now.ToString("yyyy_dd_mm") + "_" + parameters["instrument"] + ".xls");
 
-                    setState("OutcomeCodeSampling");                                                                                  //Todo: Find sampling range!
-                    dataminingDb.getOutcomeCodeIndicatorSampling(excel, parameters["indicatorId"], Convert.ToInt32(parameters["steps"]), , double.Parse(parameters["normalizedDifference"], CultureInfo.InvariantCulture), Convert.ToInt32(parameters["outcomeTimeframe"]), parameters["instrument"]);
+                    setState("OutcomeCodeSampling");                                                                                 
+                    dataminingDb.getOutcomeCodeIndicatorSampling(excel, parameters["indicatorId"], Convert.ToInt32(parameters["steps"]), dataminingDb.getInfo(parameters["indicatorId"]).getDecentRange(), double.Parse(parameters["normalizedDifference"], CultureInfo.InvariantCulture), Convert.ToInt32(parameters["outcomeTimeframe"]), parameters["instrument"]);
 
                     excel.FinishDoc();
                     excel.ShowDocument();
@@ -357,11 +342,11 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                 double[][] inputsTraining = new double[][] { };
                 double[][] outputsTraining = new double[][] { };
-                dataminingDb.getInputOutputArrays(inputFields, outputField, "EURUSD", ref inputsTraining, ref outputsTraining, 100 * 1000, 0);
+                dataminingDb.getInputOutputArrays(inputFields, outputField, "EURUSD", ref inputsTraining, ref outputsTraining, DataGroup.All, 100 * 1000, 0);
 
                 double[][] inputsValidation = new double[][] { };
                 double[][] outputsValidation = new double[][] { };
-                dataminingDb.getInputOutputArrays(inputFields, outputField, "EURUSD", ref inputsValidation, ref outputsValidation, 10 * 1000, 1);
+                dataminingDb.getInputOutputArrays(inputFields, outputField, "EURUSD", ref inputsValidation, ref outputsValidation, DataGroup.All, 10 * 1000, 1);
 
                 dataminingDb.unloadPair("EURUSD");
 
@@ -371,7 +356,7 @@ namespace NinjaTrader_Client.Trader.Analysis
                     network.train(inputsTraining, outputsTraining, epochs);
 
                     double trainingError = network.getError();
-                    double validationError = network.validateOnData(inputsValidation, outputsValidation);
+                    double validationError = network.getPredictionErrorFromData(inputsValidation, outputsValidation);
 
                     string[] excelRow = new string[2 + network.getInfo(inputFields, outputField).Length];
                     network.getInfo(inputFields, outputField).CopyTo(excelRow, 2);

@@ -18,6 +18,6 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
         double getError();
         string getInfoString();
         string[] getInfo(string[] inputFieldName, string outputFieldName);
-        double validateOnData(double[][] input, double[][] output);
+        double getPredictionErrorFromData(double[][] input, double[][] output);
     }
 }

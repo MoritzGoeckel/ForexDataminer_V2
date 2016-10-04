@@ -16,7 +16,7 @@ namespace NinjaTrader_Client.Trader.Datamining
             return name;
         }
 
-        public long getTimeframe()
+        public long getTimeframeSeconds()
         {
             return timeframe;
         }
@@ -36,9 +36,19 @@ namespace NinjaTrader_Client.Trader.Datamining
             timeframe = minutes * 60;
         }
 
+        public double getTimeframeMinutes()
+        {
+            return Convert.ToDouble(timeframe) / 60d;
+        }
+
         public void setTimeframeHours(int hours)
         {
             timeframe = hours * 60 * 60;
+        }
+
+        public double getTimeframeHours()
+        {
+            return Convert.ToDouble(timeframe) / 60d / 60d;
         }
 
         public DatasetId(string name, long timeframeSeconds)

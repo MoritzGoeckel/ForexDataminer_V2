@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NinjaTrader_Client.Trader.Analysis.Datamining.AI;
+using NinjaTrader_Client.Trader.Datamining.AI;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,9 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
     {
         //--> 1. Difference between buy and sell at any point
         //--> 2. Comparing heighest with lowest point in curve
+        /// <summary>
+        /// Used with the "getOutcomeSampling" function
+        /// </summary>
         public static double getPredictivePower(ConcurrentDictionary<double, OutcomeCountPair> dict)
         {
             double minSell = double.MaxValue, maxSell = double.MinValue;
@@ -50,6 +55,9 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
         //--> 1. Point over 0.5
         //--> 2. Difference between buy and sell at any point
         //--> 3. Comparing heighest with lowest point in curve
+        /// <summary>
+        /// Used with the "getOutcomeCodeSampling" function
+        /// </summary>
         public static double getPredictivePower(ConcurrentDictionary<double, OutcomeCodeCountPair> dict)
         {
             double theorem1Score = 0, theoreme2Score = 0, theoreme3Score = 0;
@@ -101,5 +109,11 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
             return theorem1Score * 2 + theoreme2Score + theoreme3Score; //wight theo1 heigher
         }
 
+        public static double getPredictivePowerLogisticRegression(double[][] trainingInput, double[][] trainingOutput, double[][] testInput, double[][] testOutput)
+        {
+            IMachineLearning ml = new MyLogisticRegression(1);
+            ml.train(trainingInput, trainingOutput);
+            return 1d / ml.getPredictionErrorFromData(testInput, testOutput);
+        }
     }
 }

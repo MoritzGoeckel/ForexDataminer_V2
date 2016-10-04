@@ -9,7 +9,6 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
     public class DistributionCalculater
     {
         private Dictionary<double, int> distribution = new Dictionary<double, int>();
-        private bool droppedData = false;
         private DistributionRange cachedRange = new DistributionRange(double.MaxValue, double.MinValue);
         
         public void addValue(double value)
@@ -19,6 +18,8 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
                 distribution.Add(value, 0);
                 cachedRange.checkValue(value);
             }
+
+            datasetsCount++;
 
             distribution[value]++;
         }
@@ -40,13 +41,16 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
                     min = pair.Key;
             }
 
-            return cachedRange = new DistributionRange(min, max);
+            return cachedRange = new DistributionRange(min, max, droppedPercent, datasetsCount);
         }
 
         internal DistributionRange getRange()
         {
             return cachedRange;
         }
+
+        private int droppedPercent = 0;
+        private int datasetsCount = 0;
 
         public void dropPercent(int percent)
         {
@@ -84,6 +88,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
                 if (distribution[upperValue] <= valuesToDrop && (distribution[upperValue] < distribution[lowerValue] || distribution[lowerValue] > valuesToDrop))
                 {
                     valuesToDrop -= distribution[upperValue];
+                    datasetsCount -= distribution[upperValue];
                     distribution.Remove(upperValue);
                     values.RemoveAt(0);
                 }
@@ -92,10 +97,13 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
                 if (distribution[lowerValue] <= valuesToDrop && (distribution[lowerValue] < distribution[upperValue] || distribution[upperValue] > valuesToDrop))
                 {
                     valuesToDrop -= distribution[lowerValue];
+                    datasetsCount -= distribution[lowerValue];
                     distribution.Remove(lowerValue);
                     values.RemoveAt(values.Count - 1);
                 }
             }
+
+            droppedPercent += percent;
 
             calculateRange();
         }

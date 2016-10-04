@@ -26,6 +26,24 @@ namespace NinjaTrader_Client.Trader.Model
         public DatasetInfo(DatasetId id, string instrument)
         {
             this.instrument = instrument;
+            ranges.Add(0, new DistributionRange());
+        }
+
+        public DistributionRange getDecentRange()
+        {
+            if (ranges.Count == 0)
+                throw new Exception("No range in this one... should have one...");
+
+            if (ranges.ContainsKey(3))
+                return ranges[3];
+
+            if (ranges.ContainsKey(5))
+                return ranges[5];
+
+            if (ranges.ContainsKey(0))
+                return ranges[0];
+
+            return ranges.Values.First();
         }
 
         public void SetRange(DistributionRange range, int droppedPercent)
@@ -46,7 +64,7 @@ namespace NinjaTrader_Client.Trader.Model
 
         public void finishRangesCalculation()
         {
-            ranges.Add(0, distCalcer.getRange().copy());
+            ranges[0] = distCalcer.getRange().copy();
 
             distCalcer.dropPercent(3);
             ranges.Add(3, distCalcer.getRange().copy());
@@ -61,9 +79,31 @@ namespace NinjaTrader_Client.Trader.Model
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        internal void incOcurences()
+        internal void incOcurences(double value)
         {
             occurences++;
+            ranges[0].checkValue(value);
+        }
+
+        public static string renderInfoList(List<DatasetInfo> infos)
+        {
+            StringBuilder dataInfoB = new StringBuilder("");
+            string intendation = "     ";
+            foreach (DatasetInfo info in infos)
+            {
+                dataInfoB.Append(info.id.getID() + Environment.NewLine);
+                dataInfoB.Append(intendation + "Oc:" + info.occurences + Environment.NewLine);
+                dataInfoB.Append(intendation + "In:" + info.instrument + Environment.NewLine);
+                dataInfoB.Append(intendation + "Tf H:" + info.id.getTimeframeHours() + Environment.NewLine);
+                dataInfoB.Append(intendation + "Tf M:" + info.id.getTimeframeMinutes() + Environment.NewLine);
+
+                foreach (KeyValuePair<int, DistributionRange> range in info.ranges)
+                    dataInfoB.Append(intendation + intendation + "Ra-" + range.Value.getDroppedPercent() + ":" + range.Value.getMin() + "~" + range.Value.getMax() + Environment.NewLine);
+
+                dataInfoB.Append(Environment.NewLine);
+            }
+
+            return dataInfoB.ToString();
         }
     }
 }
