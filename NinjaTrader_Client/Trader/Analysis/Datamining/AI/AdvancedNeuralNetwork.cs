@@ -90,11 +90,9 @@ namespace NinjaTrader_Client.Trader.Datamining.AI
         private double lastError = -1;
         void IMachineLearning.train(double[][] input, double[][] output, int epochs)
         {
-            double[][] usedInput = new double[][] { }, usedOutput = new double[][] { };
-
             for (int i = 0; i < epochs; i++)
             {
-                error = teacher.RunEpoch(usedInput.ToArray(), usedOutput.ToArray());
+                error = teacher.RunEpoch(input, output);
 
                 if (lastError == error)
                     break;

@@ -33,6 +33,9 @@ namespace NinjaTrader_Client.Trader.Analysis.Indicators
                 case 6:
                     theIndicator = new VolumeAtPriceIndicator(z.Next(1, 2880) * 60 * 1000, z.NextDouble() * 0.01, z.Next(1, 10) * 30 * 1000);
                     break;
+
+                    //Todo: More indicators :)
+
                 default:
                     throw new Exception("Fired a unexpected random value");
             }

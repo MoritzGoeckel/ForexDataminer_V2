@@ -137,7 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Trader\Analysis\Datamining\AI\AdvancedNeuralNetwork.cs" />
-    <Compile Include="Trader\Analysis\Datamining\AI\AISignal.cs" />
     <Compile Include="Trader\Analysis\Datamining\AI\IMachineLearning.cs" />
     <Compile Include="Trader\Analysis\Datamining\AI\MyLogisticRegression.cs" />
     <Compile Include="Trader\Analysis\Datamining\DatasetId.cs" />
@@ -148,6 +147,12 @@
       <DependentUpon>DataminingInputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Trader\Analysis\Datamining\DistributionCalculater.cs" />
+    <Compile Include="Trader\Analysis\Datamining\TestIndicatorsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trader\Analysis\Datamining\TestIndicatorsForm.Designer.cs">
+      <DependentUpon>TestIndicatorsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Trader\Model\DistributionRange.cs" />
     <Compile Include="Trader\Analysis\Datamining\PredictivePowerAnalyzer.cs" />
     <Compile Include="Trader\Analysis\Datamining\SampleOutcomeCodeExcelGenerator.cs" />
@@ -264,6 +269,9 @@
     <Compile Include="Trader\Utils\Timestamp.cs" />
     <EmbeddedResource Include="Trader\Analysis\Datamining\Dialogs\DataminingInputDialog.resx">
       <DependentUpon>DataminingInputDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trader\Analysis\Datamining\TestIndicatorsForm.resx">
+      <DependentUpon>TestIndicatorsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Trader\UIs\Forms\AutopilotTradingForm.resx">
       <DependentUpon>AutopilotTradingForm.cs</DependentUpon>

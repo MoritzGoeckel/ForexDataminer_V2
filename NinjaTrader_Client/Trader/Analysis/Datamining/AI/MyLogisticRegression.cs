@@ -107,16 +107,34 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining.AI
             if (input[0].Length != inputsCount)
                 throw new Exception("Input has a unexpected length: " + input[0].Length + "!=" + inputsCount);
 
+            double[] buyOutput = new double[output.Length];
+            double[] sellOutput = new double[output.Length];
+
+            for(int i = 0; i < output.Length; i++)
+            {
+                buyOutput[i] = output[i][0];
+                sellOutput[i] = output[i][1];
+            }
+
             for (int i = 0; i < epochs; i++)
             {
-                teacherBuy.Learn(input, output[0]);
-                teacherSell.Learn(input, output[1]);
+                teacherBuy.Learn(input, buyOutput);
+                teacherSell.Learn(input, sellOutput);
             }
         }
 
         public double getPredictionErrorFromData(double[][] input, double[][] output)
         {
-            return (teacherBuy.ComputeError(input, output[0]) + teacherSell.ComputeError(input, output[1])) / 2;
+            double[] buyOutput = new double[output.Length];
+            double[] sellOutput = new double[output.Length];
+
+            for (int i = 0; i < output.Length; i++)
+            {
+                buyOutput[i] = output[i][0];
+                sellOutput[i] = output[i][1];
+            }
+
+            return (teacherBuy.ComputeError(input, buyOutput) + teacherSell.ComputeError(input, sellOutput)) / 2;
         }
     }
 }

@@ -1,11 +1,7 @@
 ﻿//Implementing
-
-	Refactor inRamDatamining, its too big
-	(Hm... architecture change?) Handle Data like SSI in Streamingdb
-
-	MachineLearning: Implement RandomForest (: MulitClasificationBase)
-
-	Implement Indicator idea: Regression time to price -> Prediction
+	
+Trying out indicators with GetPredictivePower (Random / Genetic)
+	Write to File, Delete from db again
 
 Indicators: MACD RSI
 Derived Indicators: 
@@ -14,16 +10,6 @@ Derived Indicators:
 	Volume on price -> Always tends to go to the most vol (uphill)
 	NN for graphical structure of graph to outcome
 	Regression price (last couble of hours) to outcome
-
-Get predictive power for given indicator (Outcome / OutcomeCode) (Code first)
-	--> Infohandling
-		-->Posibility to recompute
-		-->save the cheap info
-
-	-->LogisticRegression Indicator>Outcome_codes(multiple) -> Get Error, the smaller the error, the more predPower
-
-Trying out indicators with GetPredictivePower (Random / Genetic)
-	Write to File, Delete from db again
 
 //Datamining
 
@@ -39,3 +25,10 @@ Trying out indicators with GetPredictivePower (Random / Genetic)
 #7 Livetrade
 
 //Create some unittests, cover the parts that are hard to test
+
+//On hold
+Refactor inRamDatamining, its too big
+(Hm... architecture change?) Handle Data like SSI in Streamingdb
+MachineLearning: Implement RandomForest (: MulitClasificationBase)
+Implement Indicator idea: Regression time to price -> Prediction
+Posibility to recompute range etc (why?) (Infohandling)
