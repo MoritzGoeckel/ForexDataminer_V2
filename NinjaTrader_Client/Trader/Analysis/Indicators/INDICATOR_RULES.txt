@@ -4,3 +4,5 @@
 2. Every indicator has to be either between 0 and 1 or between -1 and 1. Exceptions are possible but should be avoided.
 
 3. Use the "mid" value or the getAvg() function on the tickdata. "last" and getLast() are deprecated. 
+
+4. Every parameter has to be represented in the ID of the indicator, so it should be returned on "getName()"

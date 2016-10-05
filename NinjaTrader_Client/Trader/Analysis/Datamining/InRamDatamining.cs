@@ -749,15 +749,23 @@ namespace NinjaTrader_Client.Trader
             public double Count = 0;
         };
 
+        /// <param name="excel">Possible to set to NULL</param>
+        /// <returns>The Predictive Power of the Indicator to the OutcomeCode</returns>
         public double getOutcomeCodeIndicatorSampling(SampleOutcomeCodeExcelGenerator excel, string indicatorId, int steps, DistributionRange samplingRange, double normalizedDifference, int outcomeTimeframe, string instrument)
+        {
+            string outcomeCodeFieldName = "outcomeCode-" + normalizedDifference + "_" + outcomeTimeframe;
+            return getOutcomeCodeIndicatorSampling(excel, indicatorId, steps, samplingRange, outcomeCodeFieldName, instrument);
+        }
+
+        /// <param name="excel">Possible to set to NULL</param>
+        /// <returns>The Predictive Power of the Indicator to the OutcomeCode</returns>
+        public double getOutcomeCodeIndicatorSampling(SampleOutcomeCodeExcelGenerator excel, string indicatorId, int steps, DistributionRange samplingRange, string outcomeCodeId, string instrument)
         {
             ConcurrentDictionary<double, OutcomeCodeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCodeCountPair>();
 
             List<AdvancedTickData> inRamList = dataInRam[instrument];
 
             List<Thread> threads = new List<Thread>();
-
-            string outcomeCodeFieldName = "outcomeCode-" + normalizedDifference + "_" + outcomeTimeframe;
             
             int start = 0;
             int end = dataInRam[instrument].Count();
@@ -786,16 +794,16 @@ namespace NinjaTrader_Client.Trader
                         if (currentTickdata.values.ContainsKey(indicatorId) 
                         && currentTickdata.values[indicatorId] >= samplingRange.getMin() 
                         && currentTickdata.values[indicatorId] <= samplingRange.getMax() 
-                        && currentTickdata.values.ContainsKey("sell-" + outcomeCodeFieldName) 
-                        && currentTickdata.values.ContainsKey("buy-" + outcomeCodeFieldName))
+                        && currentTickdata.values.ContainsKey("sell-" + outcomeCodeId) 
+                        && currentTickdata.values.ContainsKey("buy-" + outcomeCodeId))
                         {
                             double indicatorKey = Math.Floor(currentTickdata.values[indicatorId] / stepSize) * stepSize;
 
                             if (valueCounts.ContainsKey(indicatorKey) == false)
                             {
                                 OutcomeCodeCountPair pair = new OutcomeCodeCountPair();
-                                pair.buySum += currentTickdata.values["buy-" + outcomeCodeFieldName];
-                                pair.sellSum += currentTickdata.values["sell-" + outcomeCodeFieldName];
+                                pair.buySum += currentTickdata.values["buy-" + outcomeCodeId];
+                                pair.sellSum += currentTickdata.values["sell-" + outcomeCodeId];
                                 pair.Count = 1;
 
                                 valueCounts.TryAdd(indicatorKey, pair);
@@ -804,8 +812,8 @@ namespace NinjaTrader_Client.Trader
                             {
                                 valueCounts[indicatorKey].Count++;
 
-                                valueCounts[indicatorKey].buySum += currentTickdata.values["buy-" + outcomeCodeFieldName];
-                                valueCounts[indicatorKey].sellSum += currentTickdata.values["sell-" + outcomeCodeFieldName];
+                                valueCounts[indicatorKey].buySum += currentTickdata.values["buy-" + outcomeCodeId];
+                                valueCounts[indicatorKey].sellSum += currentTickdata.values["sell-" + outcomeCodeId];
                                 valueCounts[indicatorKey].Count++;
 
                                 doneWriteOperation();
@@ -829,7 +837,7 @@ namespace NinjaTrader_Client.Trader
 
             if (excel != null)
             {
-                string sheetName = "OutcomeCode_" + indicatorId + "_" + (outcomeTimeframe / 1000 / 60) + "_" + instrument;
+                string sheetName = "OutcomeCode_" + indicatorId + "_" + outcomeCodeId + "_" + instrument;
 
                 if (sheetName.Length >= 30)
                     sheetName = sheetName.Substring(0, 29);

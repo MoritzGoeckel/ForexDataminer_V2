@@ -1,8 +1,5 @@
 ﻿//Implementing
 	
-Trying out indicators with GetPredictivePower (Random / Genetic)
-	Write to File, Delete from db again
-
 Indicators: MACD RSI
 Derived Indicators: 
 	MA-Crossover, 

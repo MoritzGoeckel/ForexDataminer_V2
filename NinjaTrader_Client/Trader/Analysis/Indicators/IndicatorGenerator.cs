@@ -16,7 +16,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Indicators
             switch(z.Next(1, 6))
             {
                 case 1:
-                    theIndicator = new MovingAverageIndicator(z.Next(1, 2880) * 60 * 1000);
+                    theIndicator = new MovingAverageIndicator(z.Next(1, 2880) * 60 * 1000); //Todo: Does not make much sense alone
                     break;
                 case 2:
                     theIndicator = new RangeIndicator(z.Next(1, 2880) * 60 * 1000);

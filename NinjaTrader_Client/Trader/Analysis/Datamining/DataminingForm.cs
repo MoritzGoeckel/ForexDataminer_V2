@@ -1,4 +1,5 @@
 ﻿using NinjaTrader_Client.Trader.Analysis.Datamining;
+using NinjaTrader_Client.Trader.Analysis.Indicators;
 using NinjaTrader_Client.Trader.Datamining;
 using NinjaTrader_Client.Trader.Datamining.AI;
 using NinjaTrader_Client.Trader.Indicators;
@@ -429,6 +430,41 @@ namespace NinjaTrader_Client.Trader.Analysis
             }).Start();
         }
 
-        
+        private void maxPpOutcomeCodeBtn_Click(object sender, EventArgs e)
+        {
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "outcomeCodeId" }, dataminingDb.getInfo());
+            id.ShowDialog();
+
+            if (id.isValidResult())
+                new Thread(delegate () {
+                    string instrument = id.getResult()["instrument"];
+                    string outcomeId = id.getResult()["outcomeCodeId"];
+
+                    while (true)
+                    {
+                        WalkerIndicator indicator = IndicatorGenerator.getRandomIndicator();
+                        dataminingDb.addIndicator(indicator, instrument, "mid");
+
+                        DistributionRange range = dataminingDb.getInfo(indicator.getName()).getDecentRange();
+                        double ppMethod1 = dataminingDb.getOutcomeCodeIndicatorSampling(null, indicator.getName(), 20, range, outcomeId, instrument); //Todo: No excel etc
+
+                        double[][] inputsTraining = new double[0][], outputsTraining = new double[0][];
+                        dataminingDb.getInputOutputArrays(new string[] { indicator.getName() }, outcomeId, instrument, ref inputsTraining, ref outputsTraining, DataGroup.Training);
+
+                        double[][] inputsTest = new double[0][], outputsTest = new double[0][];
+                        dataminingDb.getInputOutputArrays(new string[] { indicator.getName() }, outcomeId, instrument, ref inputsTest, ref outputsTest, DataGroup.Training);
+
+                        double ppMethod2 = PredictivePowerAnalyzer.getPredictivePowerLogisticRegression(inputsTraining, outputsTraining, inputsTest, outputsTest);
+
+                        dataminingDb.removeDataset(indicator.getName(), instrument);
+
+                        string filename = Config.startupPath + "/ppForIndicators-" + outcomeId + ".csv";
+                        if (File.Exists(filename) == false)
+                            File.AppendAllText(filename, "Method Vanilla;Method Regr;Indicator" + Environment.NewLine);
+
+                        File.AppendAllText(filename, ppMethod1 + ";" + ppMethod2 + ";" + indicator.getName() + Environment.NewLine);
+                    }
+                }).Start();
+        }
     }
 }
