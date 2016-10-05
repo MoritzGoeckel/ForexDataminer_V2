@@ -2,11 +2,12 @@
 	
 Indicators: MACD RSI
 Derived Indicators: 
-	MA-Crossover, 
 	STOCH-Crossover/Border, 
 	Volume on price -> Always tends to go to the most vol (uphill)
 	NN for graphical structure of graph to outcome
 	Regression price (last couble of hours) to outcome
+
+	Updat the Indicator Generator
 
 //Datamining
 
