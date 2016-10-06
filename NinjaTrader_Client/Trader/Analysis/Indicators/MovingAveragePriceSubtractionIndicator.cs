@@ -5,17 +5,14 @@ using System.Collections.Generic;
 
 namespace NinjaTrader_Client.Trader.Indicators
 {
-    class MovingAverageCrossoverIndicator : WalkerIndicator
+    class MovingAveragePriceSubtractionIndicator : WalkerIndicator
     {
-        private long timeframeOne, timeframeTwo;
-        private MovingAverageIndicator maOne, maTwo;
-        public MovingAverageCrossoverIndicator(long timeframeOne, long timeframeTwo)
+        private long timeframe;
+        private MovingAverageIndicator ma;
+        public MovingAveragePriceSubtractionIndicator(long timeframe)
         {
-            maOne = new MovingAverageIndicator(timeframeOne);
-            this.timeframeOne = timeframeOne;
-
-            maTwo = new MovingAverageIndicator(timeframeTwo);
-            this.timeframeTwo = timeframeTwo;
+            ma = new MovingAverageIndicator(timeframe);
+            this.timeframe = timeframe;
         }
 
         double valueNow;
@@ -34,23 +31,22 @@ namespace NinjaTrader_Client.Trader.Indicators
             timestampNow = _timestamp;
             valueNow = _value;
 
-            maOne.setNextData(_timestamp, _value);
-            maTwo.setNextData(_timestamp, _value);
+            ma.setNextData(_timestamp, _value);
         }
 
         public override TimeValueData getIndicator()
         {
-            return new TimeValueData(timestampNow, maOne.getIndicator().value - maTwo.getIndicator().value);
+            return new TimeValueData(timestampNow, (ma.getIndicator().value * valueNow) - valueNow);
         }
 
         public override string getName()
         {
-            return "MACROSS_" + timeframeOne + "_" + timeframeTwo;
+            return "MAPriceSub_" + timeframe;
         }
 
         public override bool isValid(long timestamp)
         {
-            return maOne.isValid(timestamp) && maTwo.isValid(timestamp);
+            return ma.isValid(timestamp) && timestamp - timestampNow < 60 * 5; //Neuster preis nicht älter als 5min
         }
     }
 }

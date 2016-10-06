@@ -1,13 +1,11 @@
 ﻿//Implementing
 	
 Indicators: MACD RSI
-Derived Indicators: 
-	STOCH-Crossover/Border, 
-	Volume on price -> Always tends to go to the most vol (uphill)
-	NN for graphical structure of graph to outcome
-	Regression price (last couble of hours) to outcome
+Volume on price -> Always tends to go to the most vol (uphill)
+NN for graphical structure of graph to outcome
+Regression price (last couble of hours) to outcome
 
-	Updat the Indicator Generator
+Update the Indicator Generator
 
 //Datamining
 
@@ -25,8 +23,9 @@ Derived Indicators:
 //Create some unittests, cover the parts that are hard to test
 
 //On hold
+Maybe the data is garbage ;D
 Refactor inRamDatamining, its too big
-(Hm... architecture change?) Handle Data like SSI in Streamingdb
+(Hm... architecture change?) Handle Data like SSI in Streamingdb, just use an indicator?
 MachineLearning: Implement RandomForest (: MulitClasificationBase)
-Implement Indicator idea: Regression time to price -> Prediction
 Posibility to recompute range etc (why?) (Infohandling)
+Implement Indicator idea: Regression time to price -> Prediction = TradeMiner Indicator -> Periods with good profitibilty in the past (example: every monday from 10:30am - 11:45am)

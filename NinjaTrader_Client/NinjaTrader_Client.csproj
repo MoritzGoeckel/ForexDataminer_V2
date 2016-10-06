@@ -147,6 +147,11 @@
       <DependentUpon>DataminingInputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Trader\Analysis\Datamining\DistributionCalculater.cs" />
+    <Compile Include="Trader\Analysis\Indicators\MovingAverageIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\MovingAveragePriceCrossoverIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\MovingAverageCrossoverIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\StochBorderCrossoverIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\StochBorderIndicator.cs" />
     <Compile Include="Trader\Model\DistributionRange.cs" />
     <Compile Include="Trader\Analysis\Datamining\PredictivePowerAnalyzer.cs" />
     <Compile Include="Trader\Analysis\Datamining\SampleOutcomeCodeExcelGenerator.cs" />
@@ -233,7 +238,7 @@
     <Compile Include="Trader\Analysis\Indicators\StandartDeviationIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\RangeIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\WalkerIndicator.cs" />
-    <Compile Include="Trader\Analysis\Indicators\MovingAverageIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\BolingerBandsIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\TradingTimeIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\StochIndicator.cs" />
     <Compile Include="Trader\Model\AdvancedTickData.cs" />

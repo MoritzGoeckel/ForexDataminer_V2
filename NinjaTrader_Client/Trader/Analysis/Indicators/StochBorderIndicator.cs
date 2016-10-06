@@ -5,18 +5,26 @@ using System.Collections.Generic;
 
 namespace NinjaTrader_Client.Trader.Indicators
 {
-    class MovingAveragePriceCrossoverIndicator : WalkerIndicator
+    class StochBorderIndicator : WalkerIndicator
     {
+        private double border;
         private long timeframe;
-        private MovingAverageIndicator ma;
-        public MovingAveragePriceCrossoverIndicator(long timeframe)
+        private StochIndicator stoch;
+
+        /// <summary>
+        /// Will return 0 in lower bound, 1 in upper bound and 0.5 in between
+        /// </summary>
+        /// <param name="timeframe">In Seconds</param>
+        /// <param name="border">Needs to be 0 << border << 1 </param>
+        public StochBorderIndicator(long timeframe, double border)
         {
-            ma = new MovingAverageIndicator(timeframe);
             this.timeframe = timeframe;
+            this.border = border;
+            stoch = new StochIndicator(timeframe);
         }
 
-        double valueNow;
         long timestampNow;
+        double valueNow;
         public override void setNextData(long _timestamp, double _value)
         {
             if (_timestamp < timestampNow)
@@ -28,25 +36,33 @@ namespace NinjaTrader_Client.Trader.Indicators
             if (_timestamp == timestampNow && _value == valueNow)
                 return;
 
+            stoch.setNextData(_timestamp, _value);
+
             timestampNow = _timestamp;
             valueNow = _value;
-
-            ma.setNextData(_timestamp, _value);
         }
 
         public override TimeValueData getIndicator()
         {
-            return new TimeValueData(timestampNow, (ma.getIndicator().value * valueNow) - valueNow);
+            double output;
+            if (stoch.getIndicator().value < border)
+                output = 0;
+            else if (stoch.getIndicator().value > 1 - border)
+                output = 1;
+            else
+                output = 0.5;
+
+            return new TimeValueData(timestampNow, output);
         }
 
         public override string getName()
         {
-            return "MAPRICECROSS_" + timeframe;
+            return "StochBorder_" + timeframe + "_" + border;
         }
 
         public override bool isValid(long timestamp)
         {
-            return ma.isValid(timestamp) && timestamp - timestampNow < 60 * 5; //Neuster preis nicht älter als 5min
+            return stoch.isValid(timestamp);
         }
     }
 }
