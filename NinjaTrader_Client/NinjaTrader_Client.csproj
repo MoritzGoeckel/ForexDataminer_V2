@@ -148,8 +148,10 @@
     </Compile>
     <Compile Include="Trader\Analysis\Datamining\DistributionCalculater.cs" />
     <Compile Include="Trader\Analysis\Indicators\MovingAverageIndicator.cs" />
-    <Compile Include="Trader\Analysis\Indicators\MovingAveragePriceCrossoverIndicator.cs" />
-    <Compile Include="Trader\Analysis\Indicators\MovingAverageCrossoverIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\MovingAveragePriceSubtractionIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\MACDIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\MovingAverageSubtractionCrossoverIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\MovingAverageSubtractionIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\StochBorderCrossoverIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\StochBorderIndicator.cs" />
     <Compile Include="Trader\Model\DistributionRange.cs" />
