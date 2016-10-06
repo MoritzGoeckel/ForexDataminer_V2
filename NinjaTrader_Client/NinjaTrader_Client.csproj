@@ -147,6 +147,7 @@
       <DependentUpon>DataminingInputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Trader\Analysis\Datamining\DistributionCalculater.cs" />
+    <Compile Include="Trader\Analysis\Indicators\RSIIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\MovingAverageIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\MovingAveragePriceSubtractionIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\MACDIndicator.cs" />

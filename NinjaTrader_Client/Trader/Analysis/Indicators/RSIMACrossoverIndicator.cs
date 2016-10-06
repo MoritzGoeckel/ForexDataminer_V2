@@ -5,20 +5,19 @@ using System.Collections.Generic;
 
 namespace NinjaTrader_Client.Trader.Indicators
 {
-    class MACDIndicator : WalkerIndicator
+    class RSIMACrossoverIndicator : WalkerIndicator
     {
-        private long timeframeOne, timeframeTwo, signalTimeframe;
-        private MovingAverageSubtractionIndicator maSub;
+        private long rsiTimeframe, signalTimeframe;
+        private RSIIndicator rsi;
         private MovingAverageIndicator signalMa;
 
         private double lastDifference = double.NaN;
 
-        public MACDIndicator(long timeframeOne, long timeframeTwo, long signalTimeframe)
+        public RSIMACrossoverIndicator(long rsiTimeframe, long signalTimeframe)
         {
-            this.timeframeOne = timeframeOne;
-            this.timeframeTwo = timeframeTwo;
+            this.rsiTimeframe = rsiTimeframe;
             this.signalTimeframe = signalTimeframe;
-            maSub = new MovingAverageSubtractionIndicator(timeframeOne, timeframeTwo);
+            rsi = new RSIIndicator(rsiTimeframe);
             signalMa = new MovingAverageIndicator(signalTimeframe);
         }
 
@@ -38,17 +37,17 @@ namespace NinjaTrader_Client.Trader.Indicators
             timestampNow = _timestamp;
             valueNow = _value;
 
-            double tmpDiff = maSub.getIndicator().value - signalMa.getIndicator().value;
+            double tmpDiff = rsi.getIndicator().value - signalMa.getIndicator().value;
             if (tmpDiff != 0d)
                 lastDifference = tmpDiff;
 
-            maSub.setNextData(_timestamp, _value);
-            signalMa.setNextData(_timestamp, maSub.getIndicator().value);
+            rsi.setNextData(_timestamp, _value);
+            signalMa.setNextData(_timestamp, rsi.getIndicator().value);
         }
 
         public override TimeValueData getIndicator()
         {
-            double differenceNow = maSub.getIndicator().value - signalMa.getIndicator().value;
+            double differenceNow = rsi.getIndicator().value - signalMa.getIndicator().value;
 
             double output;
             if (double.IsNaN(lastDifference) == false)
@@ -68,12 +67,12 @@ namespace NinjaTrader_Client.Trader.Indicators
 
         public override string getName()
         {
-            return "MACD_" + timeframeOne + "_" + timeframeTwo + "_" + signalTimeframe;
+            return "RSIMACrossover_" + rsiTimeframe + "_" + signalTimeframe;
         }
 
         public override bool isValid(long timestamp)
         {
-            return maSub.isValid(timestamp) && signalMa.isValid(timestamp) && double.IsNaN(lastDifference) == false;
+            return rsi.isValid(timestamp) && signalMa.isValid(timestamp) && double.IsNaN(lastDifference) == false;
         }
     }
 }
