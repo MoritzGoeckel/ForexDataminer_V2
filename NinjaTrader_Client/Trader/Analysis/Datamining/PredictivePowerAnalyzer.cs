@@ -109,9 +109,19 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
             return theorem1Score * 2 + theoreme2Score + theoreme3Score; //wight theo1 heigher
         }
 
-        public static double getPredictivePowerLogisticRegression(double[][] trainingInput, double[][] trainingOutput, double[][] testInput, double[][] testOutput)
+        public enum MLMethodForPPAnalysis { LogRegression, LinearRegression };
+
+        public static double getPredictivePowerWithMl(double[][] trainingInput, double[][] trainingOutput, double[][] testInput, double[][] testOutput, MLMethodForPPAnalysis method)
         {
-            IMachineLearning ml = new MyLogisticRegression(1);
+            IMachineLearning ml;
+
+            if (method == MLMethodForPPAnalysis.LinearRegression)
+                ml = new MyRegression(1);
+            else if (method == MLMethodForPPAnalysis.LogRegression)
+                ml = new MyLogisticRegression(1);
+            else
+                throw new Exception("No method given...");
+
             ml.train(trainingInput, trainingOutput);
             return 1d / ml.getPredictionErrorFromData(testInput, testOutput);
         }

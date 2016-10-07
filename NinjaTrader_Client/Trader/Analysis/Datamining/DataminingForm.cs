@@ -13,6 +13,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using static NinjaTrader_Client.Trader.Analysis.Datamining.PredictivePowerAnalyzer;
 
 namespace NinjaTrader_Client.Trader.Analysis
 {
@@ -454,15 +455,17 @@ namespace NinjaTrader_Client.Trader.Analysis
                         double[][] inputsTest = new double[0][], outputsTest = new double[0][];
                         dataminingDb.getInputOutputArrays(new string[] { indicator.getName() }, outcomeId, instrument, ref inputsTest, ref outputsTest, DataGroup.Training);
 
-                        double ppMethod2 = PredictivePowerAnalyzer.getPredictivePowerLogisticRegression(inputsTraining, outputsTraining, inputsTest, outputsTest);
+                        double ppMethod2 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LinearRegression);
+
+                        double ppMethod3 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LogRegression);
 
                         dataminingDb.removeDataset(indicator.getName(), instrument);
 
                         string filename = Config.startupPath + "/ppForIndicators-" + outcomeId + ".csv";
                         if (File.Exists(filename) == false)
-                            File.AppendAllText(filename, "Method Vanilla;Method Regr;Indicator" + Environment.NewLine);
+                            File.AppendAllText(filename, "Method Vanilla;Method LinRegr;Method LogRegr;Indicator" + Environment.NewLine);
 
-                        File.AppendAllText(filename, ppMethod1 + ";" + ppMethod2 + ";" + indicator.getName() + Environment.NewLine);
+                        File.AppendAllText(filename, ppMethod1 + ";" + ppMethod2 + ";" + ppMethod3 + ";" + indicator.getName() + Environment.NewLine);
                     }
                 }).Start();
         }

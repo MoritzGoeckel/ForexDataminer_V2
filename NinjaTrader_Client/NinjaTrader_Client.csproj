@@ -138,6 +138,7 @@
   <ItemGroup>
     <Compile Include="Trader\Analysis\Datamining\AI\AdvancedNeuralNetwork.cs" />
     <Compile Include="Trader\Analysis\Datamining\AI\IMachineLearning.cs" />
+    <Compile Include="Trader\Analysis\Datamining\AI\MyRegression.cs" />
     <Compile Include="Trader\Analysis\Datamining\AI\MyLogisticRegression.cs" />
     <Compile Include="Trader\Analysis\Datamining\DatasetId.cs" />
     <Compile Include="Trader\Analysis\Datamining\Dialogs\DataminingInputDialog.cs">
@@ -147,13 +148,18 @@
       <DependentUpon>DataminingInputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Trader\Analysis\Datamining\DistributionCalculater.cs" />
+    <Compile Include="Trader\Analysis\Indicators\MACDContinousIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\RSIMACrossoverContinousIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\RSIMACrossoverIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\RSIIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\MovingAverageIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\MovingAveragePriceSubtractionIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\MACDIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\MovingAverageSubtractionCrossoverIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\MovingAverageSubtractionIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\RSIBorderCrossoverIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\StochBorderCrossoverIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\RSIBorderIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\StochBorderIndicator.cs" />
     <Compile Include="Trader\Model\DistributionRange.cs" />
     <Compile Include="Trader\Analysis\Datamining\PredictivePowerAnalyzer.cs" />

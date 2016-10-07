@@ -716,7 +716,7 @@ namespace NinjaTrader_Client.Trader
 
             if (excel != null)
             {
-                string sheetName = indicatorId + "_" + (outcomeTimeframe / 1000 / 60) + "_" + instrument;
+                string sheetName = indicatorId + "_" + outcomeTimeframe + "_" + instrument;
 
                 if (sheetName.Length >= 30)
                     sheetName = sheetName.Substring(0, 29);
@@ -1162,7 +1162,7 @@ namespace NinjaTrader_Client.Trader
             double successRate = (Convert.ToDouble(successes) / Convert.ToDouble(count));
             double slTpRatio = tpPercent / slPercent;
 
-            return "outcomeTimeframeSeconds:" + outcomeTimeframe + " Indicator:" + indicator + " min:" + min + " max:" + max + " instrument:" + instrument + " tp:" + tpPercent + " sl:" + slPercent + " buy:" + buy + Environment.NewLine
+            return "outcomeTimeframe:" + outcomeTimeframe + " Indicator:" + indicator + " min:" + min + " max:" + max + " instrument:" + instrument + " tp:" + tpPercent + " sl:" + slPercent + " buy:" + buy + Environment.NewLine
                     + "Sucesses" + seperator + "Count" + seperator + "SucessRate" + seperator + "Result" + seperator + "Percent gained" + Environment.NewLine
                     + successes + seperator + count + seperator + successRate + seperator + (successRate * slTpRatio) + seperator + result;
         }

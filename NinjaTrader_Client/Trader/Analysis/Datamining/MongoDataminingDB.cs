@@ -80,7 +80,7 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
-        void IDataminingDatabase.addOutcome(long timeframeSeconds, string instrument)
+        void IDataminingDatabase.addOutcome(long timeframe, string instrument)
         {
             //Do in walker? Faster? Todo...
             //{ outcome_max_1800: { $exists: true } }
@@ -90,24 +90,24 @@ namespace NinjaTrader_Client.Trader
             long start = database.getFirstTimestamp();
             long end = database.getLastTimestamp();
 
-            long timeframe = (end - start) / threadsCount;
+            long oneThreadTimeframe = (end - start) / threadsCount;
             int threadId = 0;
 
             var collection = mongodb.getDB().GetCollection("prices");
 
             while (threadId < threadsCount)
             {
-                long threadBeginning = start + (timeframe * threadId);
-                long threadEnd = threadBeginning + timeframe;
+                long threadBeginning = start + (oneThreadTimeframe * threadId);
+                long threadEnd = threadBeginning + oneThreadTimeframe;
 
                 Thread thread = new Thread(delegate ()
                 {
-                    string name = "outcome " + timeframeSeconds + " ID_" + threadBeginning + ":" + threadEnd;
+                    string name = "outcome " + timeframe + " ID_" + threadBeginning + ":" + threadEnd;
                     progress.setProgress(name, 0);
                     int done = 0;
                     long count = 0;
                     
-                    var docs = collection.FindAs<BsonDocument>(Query.And(Query.EQ("instrument", instrument), Query.NotExists("outcome_max_" + timeframeSeconds), Query.LT("timestamp", threadEnd), Query.GTE("timestamp", threadBeginning))).SetSortOrder(SortBy.Ascending("timestamp"));
+                    var docs = collection.FindAs<BsonDocument>(Query.And(Query.EQ("instrument", instrument), Query.NotExists("outcome_max_" + timeframe), Query.LT("timestamp", threadEnd), Query.GTE("timestamp", threadBeginning))).SetSortOrder(SortBy.Ascending("timestamp"));
                     docs.SetFlags(QueryFlags.NoCursorTimeout);
 
                     count = docs.Count();
@@ -118,15 +118,15 @@ namespace NinjaTrader_Client.Trader
 
                         try
                         {
-                            TickData inTimeframe = database.getPrice(doc["timestamp"].AsInt64 + (timeframeSeconds * 1000), doc["instrument"].AsString);
+                            TickData inTimeframe = database.getPrice(doc["timestamp"].AsInt64 + timeframe, doc["instrument"].AsString);
 
-                            var min_doc = collection.FindAs<BsonDocument>(Query.And(Query.EQ("instrument", doc["instrument"].AsString), Query.LT("timestamp", doc["timestamp"].AsInt64 + (timeframeSeconds * 1000)), Query.GT("timestamp", doc["timestamp"].AsInt64)))
+                            var min_doc = collection.FindAs<BsonDocument>(Query.And(Query.EQ("instrument", doc["instrument"].AsString), Query.LT("timestamp", doc["timestamp"].AsInt64 + timeframe), Query.GT("timestamp", doc["timestamp"].AsInt64)))
                              .SetSortOrder(SortBy.Ascending("bid"))
                              .SetLimit(1)
                              .SetFields("bid")
                              .Single();
 
-                            var max_doc = collection.FindAs<BsonDocument>(Query.And(Query.EQ("instrument", doc["instrument"].AsString), Query.LT("timestamp", doc["timestamp"].AsInt64 + (timeframeSeconds * 1000)), Query.GT("timestamp", doc["timestamp"].AsInt64)))
+                            var max_doc = collection.FindAs<BsonDocument>(Query.And(Query.EQ("instrument", doc["instrument"].AsString), Query.LT("timestamp", doc["timestamp"].AsInt64 + timeframe), Query.GT("timestamp", doc["timestamp"].AsInt64)))
                              .SetSortOrder(SortBy.Descending("ask"))
                              .SetLimit(1)
                              .SetFields("ask")
@@ -139,9 +139,9 @@ namespace NinjaTrader_Client.Trader
                             {
                                 Query = Query.EQ("_id", doc["_id"]),
                                 Update = Update.Combine(
-                                        Update.Set("outcome_max_" + timeframeSeconds, max_doc["ask"]),
-                                        Update.Set("outcome_min_" + timeframeSeconds, min_doc["bid"]),
-                                        Update.Set("outcome_actual_" + timeframeSeconds, inTimeframe.getAvgPrice())
+                                        Update.Set("outcome_max_" + timeframe, max_doc["ask"]),
+                                        Update.Set("outcome_min_" + timeframe, min_doc["bid"]),
+                                        Update.Set("outcome_actual_" + timeframe, inTimeframe.getAvgPrice())
                                     )
                             });
                         }
@@ -224,11 +224,11 @@ namespace NinjaTrader_Client.Trader
             waitForThreads(threads);
         }
 
-        void IDataminingDatabase.getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, double min, double max, int steps, string indicatorId, int outcomeTimeframeSeconds, string instument)
+        void IDataminingDatabase.getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, double min, double max, int steps, string indicatorId, int outcomeTimeframe, string instument)
         {
             List<Thread> threads = new List<Thread>();
 
-            string sheetName = indicatorId + "_" + (outcomeTimeframeSeconds / 1000 / 60) + "_" + instument;
+            string sheetName = indicatorId + "_" + outcomeTimeframe + "_" + instument;
 
             if (sheetName.Length >= 30)
                 sheetName = sheetName.Substring(0, 29);
@@ -250,7 +250,7 @@ namespace NinjaTrader_Client.Trader
                 {
                     instument = null;
 
-                    IMongoQuery query = Query.And(Query.Exists(indicatorId), Query.Exists("last"), Query.Exists("outcome_actual_" + outcomeTimeframeSeconds), Query.Exists("outcome_max_" + outcomeTimeframeSeconds), Query.Exists("outcome_min_" + outcomeTimeframeSeconds), Query.LT(indicatorId, valueMax), Query.GTE(indicatorId, valueMin));
+                    IMongoQuery query = Query.And(Query.Exists(indicatorId), Query.Exists("last"), Query.Exists("outcome_actual_" + outcomeTimeframe), Query.Exists("outcome_max_" + outcomeTimeframe), Query.Exists("outcome_min_" + outcomeTimeframe), Query.LT(indicatorId, valueMax), Query.GTE(indicatorId, valueMin));
                     if (instument != null)
                         query = Query.And(query, Query.EQ("instrument", instument));
 
@@ -261,9 +261,9 @@ namespace NinjaTrader_Client.Trader
                     {
                         double onePercent = doc["last"].AsDouble / 100d;
 
-                        double maxDiff = doc["outcome_max_" + outcomeTimeframeSeconds].AsDouble / onePercent - 100d; //calculate percent difference
-                        double minDiff = doc["outcome_min_" + outcomeTimeframeSeconds].AsDouble / onePercent - 100d;
-                        double actualDiff = doc["outcome_actual_" + outcomeTimeframeSeconds].AsDouble / onePercent - 100d;
+                        double maxDiff = doc["outcome_max_" + outcomeTimeframe].AsDouble / onePercent - 100d; //calculate percent difference
+                        double minDiff = doc["outcome_min_" + outcomeTimeframe].AsDouble / onePercent - 100d;
+                        double actualDiff = doc["outcome_actual_" + outcomeTimeframe].AsDouble / onePercent - 100d;
 
                         sumMax += maxDiff;
                         sumMin += minDiff;
@@ -578,24 +578,24 @@ namespace NinjaTrader_Client.Trader
             progress.setProgress(name, "Finished with successRate of " + successRate + " failRate of " + failRate);
         }
 
-        void IDataminingDatabase.addOutcomeCode(double percentDifference, int outcomeTimeframeSeconds, string instrument)
+        void IDataminingDatabase.addOutcomeCode(double percentDifference, int outcomeTimeframe, string instrument)
         {
             List<Thread> threads = new List<Thread>();
 
             long start = database.getFirstTimestamp();
             long end = database.getLastTimestamp();
 
-            long timeframe = (end - start) / threadsCount;
+            long oneThreadTimeframe = (end - start) / threadsCount;
             int threadId = 0;
 
             var collection = mongodb.getDB().GetCollection("prices");
 
-            string outcomeCodeFieldName = "outcome_code_" + outcomeTimeframeSeconds + "_" + percentDifference;
+            string outcomeCodeFieldName = "outcome_code_" + outcomeTimeframe + "_" + percentDifference;
 
             while (threadId < threadsCount)
             {
-                long threadBeginning = start + (timeframe * threadId);
-                long threadEnd = threadBeginning + timeframe;
+                long threadBeginning = start + (oneThreadTimeframe * threadId);
+                long threadEnd = threadBeginning + oneThreadTimeframe;
 
                 Thread thread = new Thread(delegate ()
                 {
@@ -605,7 +605,7 @@ namespace NinjaTrader_Client.Trader
                     int done = 0;
                     long count = 0;
 
-                    var docs = collection.FindAs<BsonDocument>(Query.And(Query.EQ("instrument", instrument), Query.Exists("outcome_max_" + outcomeTimeframeSeconds), Query.NotExists(outcomeCodeFieldName + "_buy"), Query.LT("timestamp", threadEnd), Query.GTE("timestamp", threadBeginning))).SetSortOrder(SortBy.Ascending("timestamp"));
+                    var docs = collection.FindAs<BsonDocument>(Query.And(Query.EQ("instrument", instrument), Query.Exists("outcome_max_" + outcomeTimeframe), Query.NotExists(outcomeCodeFieldName + "_buy"), Query.LT("timestamp", threadEnd), Query.GTE("timestamp", threadBeginning))).SetSortOrder(SortBy.Ascending("timestamp"));
                     docs.SetFlags(QueryFlags.NoCursorTimeout);
 
                     count = docs.Count();
@@ -618,8 +618,8 @@ namespace NinjaTrader_Client.Trader
                         {
                             double onePercent = doc["last"].AsDouble / 100d;
 
-                            double maxDiff = doc["outcome_max_" + outcomeTimeframeSeconds].AsDouble / onePercent - 100; //calculate percent difference
-                            double minDiff = doc["outcome_min_" + outcomeTimeframeSeconds].AsDouble / onePercent - 100;
+                            double maxDiff = doc["outcome_max_" + outcomeTimeframe].AsDouble / onePercent - 100; //calculate percent difference
+                            double minDiff = doc["outcome_min_" + outcomeTimeframe].AsDouble / onePercent - 100;
 
                             collection.FindAndModify(new FindAndModifyArgs()
                             {
@@ -652,13 +652,13 @@ namespace NinjaTrader_Client.Trader
             collection.RemoveAll();
         }
 
-        string IDataminingDatabase.getSuccessRate(int outcomeTimeframeSeconds, string indicator, double min, double max, string instrument, double tpPercent, double slPercent, bool buy)
+        string IDataminingDatabase.getSuccessRate(int outcomeTimeframe, string indicator, double min, double max, string instrument, double tpPercent, double slPercent, bool buy)
         {
             var collection = mongodb.getDB().GetCollection("prices");
             var docs = collection.FindAs<BsonDocument>(
                     Query.And(
                         Query.EQ("instrument", instrument),
-                        Query.Exists("outcome_max_" + outcomeTimeframeSeconds), Query.Exists("outcome_min_" + outcomeTimeframeSeconds), Query.Exists("outcome_actual_" + outcomeTimeframeSeconds),
+                        Query.Exists("outcome_max_" + outcomeTimeframe), Query.Exists("outcome_min_" + outcomeTimeframe), Query.Exists("outcome_actual_" + outcomeTimeframe),
                         Query.LTE(indicator, max), Query.GTE(indicator, min)
                     )
                 ).SetSortOrder(SortBy.Ascending("timestamp"));
@@ -672,9 +672,9 @@ namespace NinjaTrader_Client.Trader
             {
                 double onePercent = doc["last"].AsDouble / 100d;
 
-                double maxDiff = doc["outcome_max_" + outcomeTimeframeSeconds].AsDouble / onePercent - 100; //calculate percent difference
-                double minDiff = doc["outcome_min_" + outcomeTimeframeSeconds].AsDouble / onePercent - 100;
-                double actualDiff = doc["outcome_actual_" + outcomeTimeframeSeconds].AsDouble / onePercent - 100;
+                double maxDiff = doc["outcome_max_" + outcomeTimeframe].AsDouble / onePercent - 100; //calculate percent difference
+                double minDiff = doc["outcome_min_" + outcomeTimeframe].AsDouble / onePercent - 100;
+                double actualDiff = doc["outcome_actual_" + outcomeTimeframe].AsDouble / onePercent - 100;
 
                 if (buy)
                 {
@@ -712,12 +712,12 @@ namespace NinjaTrader_Client.Trader
             double successRate = (Convert.ToDouble(successes) / Convert.ToDouble(count));
             double slTpRatio = tpPercent / slPercent;
 
-            return "outcomeTimeframeSeconds:" + outcomeTimeframeSeconds + " Indicator:" + indicator + " min:" + min + " max:" + max + " instrument:" + instrument + " tp:" +tpPercent+ " sl:" +slPercent+ " buy:" + buy + Environment.NewLine
+            return "outcomeTimeframe:" + outcomeTimeframe + " Indicator:" + indicator + " min:" + min + " max:" + max + " instrument:" + instrument + " tp:" +tpPercent+ " sl:" +slPercent+ " buy:" + buy + Environment.NewLine
                     + "Sucesses" + seperator + "Count" + seperator + "SucessRate" + seperator + "Result" + seperator + "Percent gained" + Environment.NewLine
                     + successes + seperator + count + seperator + successRate + seperator + (successRate * slTpRatio) + seperator + result;
         }
 
-        void IDataminingDatabase.getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, string indicatorId, int outcomeTimeframeSeconds, string instument)
+        void IDataminingDatabase.getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, string indicatorId, int outcomeTimeframe, string instument)
         {
             throw new NotImplementedException();
         }

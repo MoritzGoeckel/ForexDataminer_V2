@@ -16,7 +16,6 @@ namespace NinjaTrader_Client.Trader.Indicators
         /// <summary>
         /// Will return 0 on crossover from upper bound to middle and 1 on crossover from lower bound to middle, its 0.5 every other time
         /// </summary>
-        /// <param name="timeframe">In Seconds</param>
         /// <param name="border">Needs to be 0 << border << 1 </param>
         public StochBorderCrossoverIndicator(long timeframe, double border)
         {

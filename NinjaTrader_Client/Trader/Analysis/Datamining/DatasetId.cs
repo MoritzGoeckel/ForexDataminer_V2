@@ -18,7 +18,7 @@ namespace NinjaTrader_Client.Trader.Datamining
 
         public long getTimeframeSeconds()
         {
-            return timeframe;
+            return Convert.ToInt64(timeframe / 1000d);
         }
 
         public string getID()
@@ -26,34 +26,39 @@ namespace NinjaTrader_Client.Trader.Datamining
             return name + "_" + timeframe;
         }
 
+        public long getTimeframe()
+        {
+            return timeframe;
+        }
+
         public void setTimeframeSeconds(int seconds)
         {
-            timeframe = seconds;
+            timeframe = seconds * 1000;
         }
 
         public void setTimeframeMinutes(int minutes)
         {
-            timeframe = minutes * 60;
+            timeframe = minutes * 60 * 1000;
         }
 
         public double getTimeframeMinutes()
         {
-            return Convert.ToDouble(timeframe) / 60d;
+            return Convert.ToDouble(timeframe) / 60d / 1000;
         }
 
         public void setTimeframeHours(int hours)
         {
-            timeframe = hours * 60 * 60;
+            timeframe = hours * 60 * 60 * 1000;
         }
 
         public double getTimeframeHours()
         {
-            return Convert.ToDouble(timeframe) / 60d / 60d;
+            return Convert.ToDouble(timeframe) / 60d / 60d / 1000d;
         }
 
-        public DatasetId(string name, long timeframeSeconds)
+        public DatasetId(string name, long timeframe)
         {
-            this.timeframe = timeframeSeconds;
+            this.timeframe = timeframe;
             this.name = name;
         }
 

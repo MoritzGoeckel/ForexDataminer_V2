@@ -14,7 +14,6 @@ namespace NinjaTrader_Client.Trader.Indicators
         /// <summary>
         /// Will return 0 in lower bound, 1 in upper bound and 0.5 in between
         /// </summary>
-        /// <param name="timeframe">In Seconds</param>
         /// <param name="border">Needs to be 0 << border << 1 </param>
         public StochBorderIndicator(long timeframe, double border)
         {
