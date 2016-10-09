@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Model
 {
+    [Serializable]
     public class DatasetInfo
     {
         public string instrument;
@@ -21,12 +22,13 @@ namespace NinjaTrader_Client.Trader.Model
         [BsonId, JsonIgnore]
         public ObjectId _id;
 
-        public Dictionary<int, DistributionRange> ranges = new Dictionary<int, DistributionRange>();
+        public Dictionary<string, DistributionRange> ranges = new Dictionary<string, DistributionRange>();
 
         public DatasetInfo(DatasetId id, string instrument)
         {
+            this.id = id;
             this.instrument = instrument;
-            ranges.Add(0, new DistributionRange());
+            ranges.Add("0", new DistributionRange());
         }
 
         public DistributionRange getDecentRange()
@@ -34,24 +36,24 @@ namespace NinjaTrader_Client.Trader.Model
             if (ranges.Count == 0)
                 throw new Exception("No range in this one... should have one...");
 
-            if (ranges.ContainsKey(3))
-                return ranges[3];
+            if (ranges.ContainsKey("3"))
+                return ranges["3"];
 
-            if (ranges.ContainsKey(5))
-                return ranges[5];
+            if (ranges.ContainsKey("5"))
+                return ranges["5"];
 
-            if (ranges.ContainsKey(0))
-                return ranges[0];
+            if (ranges.ContainsKey("0"))
+                return ranges["0"];
 
             return ranges.Values.First();
         }
 
         public void SetRange(DistributionRange range, int droppedPercent)
         {
-            if (ranges.ContainsKey(droppedPercent) == false)
-                ranges.Add(droppedPercent, range);
+            if (ranges.ContainsKey(droppedPercent.ToString()) == false)
+                ranges.Add(droppedPercent.ToString(), range);
             else
-                ranges[droppedPercent] = range;
+                ranges[droppedPercent.ToString()] = range;
         }
 
         [JsonIgnore, BsonIgnore, NonSerialized]
@@ -64,10 +66,10 @@ namespace NinjaTrader_Client.Trader.Model
 
         public void finishRangesCalculation()
         {
-            ranges[0] = distCalcer.getRange().copy();
+            ranges["0"] = distCalcer.getRange().copy();
 
             distCalcer.dropPercent(3);
-            ranges.Add(3, distCalcer.getRange().copy());
+            ranges.Add("3", distCalcer.getRange().copy());
 
             //distCalcer.dropPercent(2);
             //ranges.Add(5, distCalcer.getRange().copy());
@@ -82,11 +84,14 @@ namespace NinjaTrader_Client.Trader.Model
         internal void incOcurences(double value)
         {
             occurences++;
-            ranges[0].checkValue(value);
+            ranges["0"].checkValue(value);
         }
 
         public static string renderInfoList(List<DatasetInfo> infos)
         {
+            if (infos == null)
+                return "No data";
+
             StringBuilder dataInfoB = new StringBuilder("");
             string intendation = "     ";
             foreach (DatasetInfo info in infos)
@@ -97,7 +102,7 @@ namespace NinjaTrader_Client.Trader.Model
                 dataInfoB.Append(intendation + "Tf H:" + info.id.getTimeframeHours() + Environment.NewLine);
                 dataInfoB.Append(intendation + "Tf M:" + info.id.getTimeframeMinutes() + Environment.NewLine);
 
-                foreach (KeyValuePair<int, DistributionRange> range in info.ranges)
+                foreach (KeyValuePair<string, DistributionRange> range in info.ranges)
                     dataInfoB.Append(intendation + intendation + "Ra-" + range.Value.getDroppedPercent() + ":" + range.Value.getMin() + "~" + range.Value.getMax() + Environment.NewLine);
 
                 dataInfoB.Append(Environment.NewLine);

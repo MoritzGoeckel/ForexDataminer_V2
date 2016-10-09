@@ -261,7 +261,7 @@ namespace NinjaTrader_Client.Trader
                 if (info.instrument == instrument && info.id.getID() != "bid" && info.id.getID() != "ask" && info.id.getID() != "mid")
                 {
                     mongodb.getDB().GetCollection("dataset_info").Remove(Query.EQ("_id", info._id));
-                    mongodb.getDB().GetCollection("dataset_info").Insert(info);
+                    mongodb.getDB().GetCollection("dataset_info").Insert(info.ToBsonDocument());
                 }
             }
 
@@ -368,9 +368,9 @@ namespace NinjaTrader_Client.Trader
             datasetInfoList.Add(ask);
             datasetInfoList.Add(mid);
 
-            mongodb.getDB().GetCollection("dataset_info").Insert(bid);
-            mongodb.getDB().GetCollection("dataset_info").Insert(ask);
-            mongodb.getDB().GetCollection("dataset_info").Insert(mid);
+            mongodb.getDB().GetCollection("dataset_info").Insert(bid.ToBsonDocument());
+            mongodb.getDB().GetCollection("dataset_info").Insert(ask.ToBsonDocument());
+            mongodb.getDB().GetCollection("dataset_info").Insert(mid.ToBsonDocument());
         }
 
         public void addOutcome(long timeframe, string instrument)

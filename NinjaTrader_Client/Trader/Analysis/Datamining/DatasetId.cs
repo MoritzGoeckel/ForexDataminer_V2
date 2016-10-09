@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Datamining
 {
+    [Serializable]
     public class DatasetId
     {
         private string name;
         private long timeframe;
+        private string id;
 
         public string getName()
         {
@@ -60,6 +62,8 @@ namespace NinjaTrader_Client.Trader.Datamining
         {
             this.timeframe = timeframe;
             this.name = name;
+
+            this.id = getID();
         }
 
         public DatasetId(string nameAndTimeframe)
@@ -73,6 +77,8 @@ namespace NinjaTrader_Client.Trader.Datamining
             }
             else
                 this.name = nameAndTimeframe;
+
+            id = getID();
         }
     }
 }

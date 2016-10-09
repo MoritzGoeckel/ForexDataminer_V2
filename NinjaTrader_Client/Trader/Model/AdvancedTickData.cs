@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Model
 {
+    [Serializable]
     public enum DataGroup { Training = 0, Testing = 1, Validation = 2, All = 99 };
 
+    [Serializable]
     public class AdvancedTickData
     {
         public long timestamp;

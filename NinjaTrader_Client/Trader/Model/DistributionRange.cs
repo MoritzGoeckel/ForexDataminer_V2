@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Analysis.Datamining
 {
+    [Serializable]
     public class DistributionRange
     {
-        private double min, max;
-        private int droppedPercent = 0;
-        private int datasets = 0;
+        public double min, max;
+        public int droppedPercent = 0;
+        public int datasets = 0;
 
         public DistributionRange(double min, double max, int droppedPercent = 0, int datasetsCount = 0)
         {
