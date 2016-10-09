@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -437,37 +438,48 @@ namespace NinjaTrader_Client.Trader.Analysis
             id.ShowDialog();
 
             if (id.isValidResult())
-                new Thread(delegate () {
-                    string instrument = id.getResult()["instrument"];
-                    string outcomeId = id.getResult()["outcomeCodeId"];
+            {
+                string instrument = id.getResult()["instrument"];
+                string outcomeId = id.getResult()["outcomeCodeId"];
 
-                    while (true)
+                //Start some threads for 
+                for (int threadId = 0; threadId < 4; threadId++)
+                    new Thread(delegate ()
                     {
-                        WalkerIndicator indicator = IndicatorGenerator.getRandomIndicator();
-                        dataminingDb.addIndicator(indicator, instrument, "mid");
+                        while (true)
+                        {
+                            WalkerIndicator indicator = IndicatorGenerator.getRandomIndicator();
+                            dataminingDb.addIndicator(indicator, instrument, "mid");
 
-                        DistributionRange range = dataminingDb.getInfo(indicator.getName()).getDecentRange();
-                        double ppMethod1 = dataminingDb.getOutcomeCodeIndicatorSampling(null, indicator.getName(), 20, range, outcomeId, instrument); //Todo: No excel etc
+                            DistributionRange range = dataminingDb.getInfo(indicator.getName()).getDecentRange();
+                            double ppMethod1 = dataminingDb.getOutcomeCodeIndicatorSampling(null, indicator.getName(), 20, range, outcomeId, instrument); //Todo: No excel etc
 
-                        double[][] inputsTraining = new double[0][], outputsTraining = new double[0][];
-                        dataminingDb.getInputOutputArrays(new string[] { indicator.getName() }, outcomeId, instrument, ref inputsTraining, ref outputsTraining, DataGroup.Training);
+                            double[][] inputsTraining = new double[0][], outputsTraining = new double[0][];
+                            dataminingDb.getInputOutputArrays(new string[] { indicator.getName() }, outcomeId, instrument, ref inputsTraining, ref outputsTraining, DataGroup.Training);
 
-                        double[][] inputsTest = new double[0][], outputsTest = new double[0][];
-                        dataminingDb.getInputOutputArrays(new string[] { indicator.getName() }, outcomeId, instrument, ref inputsTest, ref outputsTest, DataGroup.Training);
+                            double[][] inputsTest = new double[0][], outputsTest = new double[0][];
+                            dataminingDb.getInputOutputArrays(new string[] { indicator.getName() }, outcomeId, instrument, ref inputsTest, ref outputsTest, DataGroup.Training);
 
-                        double ppMethod2 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LinearRegression);
+                            double ppMethod2 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LinearRegression);
 
-                        double ppMethod3 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LogRegression);
+                            double ppMethod3 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LogRegression);
 
-                        dataminingDb.removeDataset(indicator.getName(), instrument);
+                            string filename = Config.startupPath + "/ppForIndicators-" + outcomeId + ".csv";
+                            if (File.Exists(filename) == false)
+                                writeTextToFile(filename, "Method Vanilla;Method LinRegr;Method LogRegr;Indicator" + Environment.NewLine);
 
-                        string filename = Config.startupPath + "/ppForIndicators-" + outcomeId + ".csv";
-                        if (File.Exists(filename) == false)
-                            File.AppendAllText(filename, "Method Vanilla;Method LinRegr;Method LogRegr;Indicator" + Environment.NewLine);
+                            writeTextToFile(filename, ppMethod1 + ";" + ppMethod2 + ";" + ppMethod3 + ";" + indicator.getName() + Environment.NewLine);
 
-                        File.AppendAllText(filename, ppMethod1 + ";" + ppMethod2 + ";" + ppMethod3 + ";" + indicator.getName() + Environment.NewLine);
-                    }
-                }).Start();
+                            dataminingDb.removeDataset(indicator.getName(), instrument);
+                        }
+                    }).Start();
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        private void writeTextToFile(string path, string content)
+        {
+            File.AppendAllText(path, content);
         }
     }
 }
