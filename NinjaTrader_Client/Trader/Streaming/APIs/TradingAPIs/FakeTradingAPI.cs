@@ -19,7 +19,7 @@ namespace NinjaTrader_Client.Trader.TradingAPIs
 
         public FakeTradingAPI()
         {
-            tradingTime = new TradingTimeIndicator();
+            tradingTime = new TimeOpeningHoursIndicator();
         }
 
         public void setPair(TickData data)

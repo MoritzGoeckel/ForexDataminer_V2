@@ -6,9 +6,9 @@ using System.Collections.Generic;
 
 namespace NinjaTrader_Client.Trader.Indicators
 {
-    class TradingTimeIndicator : WalkerIndicator
+    class TimeDayOfWeekIndicator : WalkerIndicator
     {
-        public TradingTimeIndicator()
+        public TimeDayOfWeekIndicator()
         {
             
         }
@@ -18,18 +18,7 @@ namespace NinjaTrader_Client.Trader.Indicators
         public override TimeValueData getIndicator()
         {
             DateTime dt = Timestamp.getDate(currentTime);
-
-            if (dt.DayOfWeek == DayOfWeek.Saturday || dt.DayOfWeek == DayOfWeek.Sunday)
-                return new TimeValueData(currentTime, 0); //Kein trading
-
-            if (dt.DayOfWeek == DayOfWeek.Friday && dt.Hour >= 21)
-                return new TimeValueData(currentTime, 0); //Kein trading
-
-            if (dt.DayOfWeek == DayOfWeek.Friday && dt.Hour >= 19)
-                return new TimeValueData(currentTime, 0.5); //Do not open positions
-
-            return new TimeValueData(currentTime, 1); //Happy trading :)
-            // Trading: 0 = No, 0.5 = Dont open, 1 = Yes
+            return new TimeValueData(currentTime, (dt.DayOfWeek != 0 ? Convert.ToDouble(dt.DayOfWeek) / 7d : 0));
         }
 
         public override void setNextData(long timestamp, double value)
@@ -39,7 +28,7 @@ namespace NinjaTrader_Client.Trader.Indicators
 
         public override string getName()
         {
-            return "TradingTime";
+            return "TimeDayOfWeek";
         }
 
         public override bool isValid(long timestamp)

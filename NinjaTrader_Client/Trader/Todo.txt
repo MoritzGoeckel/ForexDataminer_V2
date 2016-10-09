@@ -1,9 +1,13 @@
 ﻿//Implementing
 	
-Volume on price -> Always tends to go to the most vol (uphill)
+	Indicators: Volume on price -> Always tends to go to the most vol (uphill)
+				NN for graphical structure of graph to outcome
+				Regression price (last couble of hours) to outcome
+				Regression time to price -> Prediction = TradeMiner Indicator -> Periods with good profitibilty in the past (example: every monday from 10:30am - 11:45am)				
 
-NN for graphical structure of graph to outcome
-Regression price (last couble of hours) to outcome
+	Maybe the data is garbage ;D
+
+Run and debug!
 
 //Datamining
 
@@ -21,9 +25,7 @@ Regression price (last couble of hours) to outcome
 //Create some unittests, cover the parts that are hard to test
 
 //On hold
-Maybe the data is garbage ;D
+ML: RandomForest (: MulitClasificationBase), Naive Bayes, SVM classification (too unprobabilistic), SVM regression (unprobabilistic), 
 Refactor inRamDatamining, its too big
 (Hm... architecture change?) Handle Data like SSI in Streamingdb, just use an indicator?
-MachineLearning: Implement RandomForest (: MulitClasificationBase)
 Posibility to recompute range etc (why?) (Infohandling)
-Implement Indicator idea: Regression time to price -> Prediction = TradeMiner Indicator -> Periods with good profitibilty in the past (example: every monday from 10:30am - 11:45am)

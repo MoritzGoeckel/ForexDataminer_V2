@@ -161,6 +161,8 @@
     <Compile Include="Trader\Analysis\Indicators\StochBorderCrossoverIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\RSIBorderIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\StochBorderIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\TimeDayOfWeekIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\TimeOfDayIndicator.cs" />
     <Compile Include="Trader\Model\DistributionRange.cs" />
     <Compile Include="Trader\Analysis\Datamining\PredictivePowerAnalyzer.cs" />
     <Compile Include="Trader\Analysis\Datamining\SampleOutcomeCodeExcelGenerator.cs" />
@@ -248,7 +250,7 @@
     <Compile Include="Trader\Analysis\Indicators\RangeIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\WalkerIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\BolingerBandsIndicator.cs" />
-    <Compile Include="Trader\Analysis\Indicators\TradingTimeIndicator.cs" />
+    <Compile Include="Trader\Analysis\Indicators\TimeOpeningHoursIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\StochIndicator.cs" />
     <Compile Include="Trader\Model\AdvancedTickData.cs" />
     <Compile Include="Trader\UIs\Forms\ShowImageForm.cs">

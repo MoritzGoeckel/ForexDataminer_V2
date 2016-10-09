@@ -198,7 +198,7 @@ namespace NinjaTrader_Client.Trader.Analysis
             if (id.isValidResult())
                 new Thread(delegate () {
                     Dictionary<string, string> parameters = id.getResult();
-                    dataminingDb.addIndicator(new TradingTimeIndicator(), parameters["instrument"], "mid");
+                    dataminingDb.addIndicator(new TimeOpeningHoursIndicator(), parameters["instrument"], "mid");
                 }).Start();
         }
 
