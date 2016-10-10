@@ -74,6 +74,9 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
 
         public DistributionRange copy()
         {
+            if (this.min == double.MaxValue || this.max == double.MinValue)
+                throw new MinMaxNotSetException();
+
             return new DistributionRange(this.min, this.max, this.droppedPercent, datasets);
         }
     }

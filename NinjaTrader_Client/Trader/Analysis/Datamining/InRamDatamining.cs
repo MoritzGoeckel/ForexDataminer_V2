@@ -888,6 +888,9 @@ namespace NinjaTrader_Client.Trader
                             currentTickdata.values.Add(indicatorID, value);
                             currentTickdata.changed = true;
 
+                            if (value == double.MinValue || value == double.MinValue || value == double.NaN || value == double.NegativeInfinity || value == double.PositiveInfinity)
+                                throw new Exception("Value not valid! Probably the Indicator is bad " + indicator.getName());
+
                             info.incOcurences(value, true);
                         }
 

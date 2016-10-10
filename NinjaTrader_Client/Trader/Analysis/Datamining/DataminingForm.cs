@@ -477,7 +477,7 @@ namespace NinjaTrader_Client.Trader.Analysis
                             DistributionRange range = dataminingDb.getInfo(indicatorId).getDecentRange();
                             double ppMethod1 = dataminingDb.getOutcomeCodeIndicatorSampling(null, indicatorId, 20, range, outcomeId, instrument);
 
-                            double[][] inputsTraining = new double[0][], outputsTraining = new double[0][];
+                            /*double[][] inputsTraining = new double[0][], outputsTraining = new double[0][];
                             dataminingDb.getInputOutputArrays(new string[] { indicatorId }, outcomeId, instrument, ref inputsTraining, ref outputsTraining, DataGroup.All, 1000 * 20, 0);
 
                             double[][] inputsTest = new double[0][], outputsTest = new double[0][];
@@ -485,9 +485,9 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                             double ppMethod2 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LinearRegression);
 
-                            double ppMethod3 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LogRegression);
+                            double ppMethod3 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LogRegression);*/
 
-                            writeTextToFile(filename, ppMethod1 + ";" + ppMethod2 + ";" + ppMethod3 + ";" + indicatorId + Environment.NewLine);
+                            writeTextToFile(filename, ppMethod1 + ";" + "ni" + ";" + "ni" + ";" + indicatorId + Environment.NewLine);
 
                             dataminingDb.removeDataset(indicatorId, instrument);
 

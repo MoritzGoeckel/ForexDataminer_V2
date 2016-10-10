@@ -44,7 +44,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
             return cachedRange = new DistributionRange(min, max, droppedPercent, datasetsCount);
         }
 
-        internal DistributionRange getRange()
+        public DistributionRange getRange()
         {
             return cachedRange;
         }
