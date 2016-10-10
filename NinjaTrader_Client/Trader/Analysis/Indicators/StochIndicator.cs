@@ -71,7 +71,7 @@ namespace NinjaTrader_Client.Trader.Indicators
                 history.RemoveAt(0);
             }
 
-            if(cachedMax == double.MinValue || cachedMin == double.MaxValue && history.Count != 0)
+            if((cachedMax == double.MinValue || cachedMin == double.MaxValue) && history.Count != 0)
             {
                 getMinMaxInPrices(ref cachedMin, ref cachedMax, history);
             }

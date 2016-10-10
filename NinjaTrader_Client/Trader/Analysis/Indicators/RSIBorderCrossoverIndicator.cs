@@ -62,7 +62,7 @@ namespace NinjaTrader_Client.Trader.Indicators
 
         public override string getName()
         {
-            return "RSIBorderCrossover" + timeframe + "_" + border;
+            return "RSIBorderCrossover_" + timeframe + "_" + border;
         }
 
         public override bool isValid(long timestamp)

@@ -23,6 +23,7 @@ using NinjaTrader_Client.Trader.Backtest;
 using NinjaTrader_Client.Trader.Streaming;
 using NinjaTrader_Client.Trader.Analysis.IndicatorCollections;
 using NinjaTrader_Client.Trader.Analysis.Datamining;
+using NinjaTrader_Client.Trader.Exceptions;
 
 namespace NinjaTrader_Client.Trader
 {
@@ -170,7 +171,7 @@ namespace NinjaTrader_Client.Trader
             return selectedSamples;
         }
 
-        private void setDataGroups(string pair)
+        public void setDataGroups(string pair)
         {
             //60% training, 20% Testing, 20% Validation
 
@@ -275,7 +276,7 @@ namespace NinjaTrader_Client.Trader
         {
             foreach(string collectionName in mongodb.getDB().GetCollectionNames())
             {
-                mongodb.getDB().GetCollection(collectionName).RemoveAll();
+                mongodb.getDB().GetCollection(collectionName).Drop();
             }
 
             foreach(KeyValuePair<string, List<AdvancedTickData>> pair in dataInRam)
@@ -296,7 +297,7 @@ namespace NinjaTrader_Client.Trader
         public DatasetInfo getInfo(string id)
         {
             foreach (DatasetInfo info in datasetInfoList)
-                if (info.id.getID() == id)
+                if (info.id.id == id)
                     return info;
 
             return null;
@@ -363,11 +364,6 @@ namespace NinjaTrader_Client.Trader
 
             waitForThreads(threads);
             
-            //Insert into info
-            datasetInfoList.Add(bid);
-            datasetInfoList.Add(ask);
-            datasetInfoList.Add(mid);
-
             mongodb.getDB().GetCollection("dataset_info").Insert(bid.ToBsonDocument());
             mongodb.getDB().GetCollection("dataset_info").Insert(ask.ToBsonDocument());
             mongodb.getDB().GetCollection("dataset_info").Insert(mid.ToBsonDocument());
@@ -375,9 +371,9 @@ namespace NinjaTrader_Client.Trader
 
         public void addOutcome(long timeframe, string instrument)
         {
-            DatasetInfo infoMin = new DatasetInfo(new DatasetId("outcomeMin_", timeframe), instrument);
-            DatasetInfo infoMax = new DatasetInfo(new DatasetId("outcomeMax_", timeframe), instrument);
-            DatasetInfo infoActual = new DatasetInfo(new DatasetId("outcomeActual_", timeframe), instrument);
+            DatasetInfo infoMin = new DatasetInfo(new DatasetId("outcomeMin", timeframe), instrument);
+            DatasetInfo infoMax = new DatasetInfo(new DatasetId("outcomeMax", timeframe), instrument);
+            DatasetInfo infoActual = new DatasetInfo(new DatasetId("outcomeActual", timeframe), instrument);
 
             List<Thread> threads = new List<Thread>();
 
@@ -445,9 +441,10 @@ namespace NinjaTrader_Client.Trader
                             }
                         
                             //Neue hinzufügen
-                            while (outcomeIndex < dataInRam[instrument].Count() && (dataInRam[instrument][outcomeIndex].timestamp - currentTickdata.timestamp) < timeframe)
+                            while (outcomeIndex < dataInRam[instrument].Count() - 1 && (dataInRam[instrument][outcomeIndex].timestamp - currentTickdata.timestamp) < timeframe)
                             {
                                 outcomeIndex++;
+
                                 double mid = dataInRam[instrument][outcomeIndex].values["mid"];
                                 if (mid > max)
                                     max = mid;
@@ -525,9 +522,8 @@ namespace NinjaTrader_Client.Trader
                     progress.setProgress(name, 0);
                     int currentId = indexBeginning;
 
-                    while (currentId <= indexEnd)
+                    while (currentId <= indexEnd && currentId < inRamList.Count)
                     {
-                        currentId++;
                         progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(currentId - indexBeginning) / Convert.ToDouble(indexFrame) * 100d));
 
                         AdvancedTickData currentTickdata = inRamList[currentId];
@@ -539,10 +535,11 @@ namespace NinjaTrader_Client.Trader
 
                             doneWriteOperation();
                         }
+
+                        currentId++;
                     }
 
                     progress.remove(name);
-
                 });
 
                 thread.Start(threadId);
@@ -604,8 +601,7 @@ namespace NinjaTrader_Client.Trader
                                 currentTickdata.values.Add(dataname, data.value);
                                 currentTickdata.changed = true;
 
-                                info.checkValueForRangesCalculation(data.value);
-                                info.incOcurences(data.value);
+                                info.incOcurences(data.value, true);
 
                                 doneWriteOperation();
                             }
@@ -880,28 +876,36 @@ namespace NinjaTrader_Client.Trader
                 progress.setProgress(name, Convert.ToInt32(Convert.ToDouble(done) / Convert.ToDouble(dataInRam[instrument].Count()) * 100d));
                 done++;
 
-                indicator.setNextData(currentTickdata.timestamp, currentTickdata.values[fieldId]);
-
-                if (currentTickdata.values.ContainsKey(indicatorID) == false)
+                if (currentTickdata.values.ContainsKey(fieldId))
                 {
-                    if (indicator.isValid(currentTickdata.timestamp))
+                    indicator.setNextData(currentTickdata.timestamp, currentTickdata.values[fieldId]);
+
+                    if (currentTickdata.values.ContainsKey(indicatorID) == false)
                     {
-                        double value = indicator.getIndicator().value;
-                        currentTickdata.values.Add(indicatorID, value);
-                        currentTickdata.changed = true;
+                        if (indicator.isValid(currentTickdata.timestamp))
+                        {
+                            double value = indicator.getIndicator().value;
+                            currentTickdata.values.Add(indicatorID, value);
+                            currentTickdata.changed = true;
 
-                        info.incOcurences(value);
-                        info.checkValueForRangesCalculation(value);
+                            info.incOcurences(value, true);
+                        }
+
+                        doneWriteOperation();
                     }
-
-                    doneWriteOperation();
                 }
             }
 
-            info.finishRangesCalculation();
-            datasetInfoList.Add(info);
+            if (info.occurences > 10) //All good
+            {
+                info.finishRangesCalculation();
+                datasetInfoList.Add(info);
+            }
 
             progress.remove(name);
+
+            if (info.occurences <= 10) //That is too few occurences!
+                throw new IndicatorNeverValidException();
         }
 
         public void addMetaIndicatorSum(string[] ids, double[] weights, string fieldName, string instrument)
@@ -943,8 +947,7 @@ namespace NinjaTrader_Client.Trader
                             currentTickdata.values.Add(fieldName, value);
                             currentTickdata.changed = true;
 
-                            info.checkValueForRangesCalculation(value);
-                            info.incOcurences(value);
+                            info.incOcurences(value, true);
 
                             doneWriteOperation();
                         }
@@ -1006,11 +1009,11 @@ namespace NinjaTrader_Client.Trader
                         && currentTickdata.values.ContainsKey("outcomeMax_" + outcomeTimeframe) 
                         && currentTickdata.values.ContainsKey("outcomeMin_" + outcomeTimeframe))
                         {
-                            double maxDiff = currentTickdata.values["outcomeMax_" + outcomeTimeframe] / currentTickdata.values["mid"] - 1;
-                            double minDiff = currentTickdata.values["outcomeMin_" + outcomeTimeframe] / currentTickdata.values["mid"] - 1;
+                            double maxDiffNormalized = currentTickdata.values["outcomeMax_" + outcomeTimeframe] / currentTickdata.values["mid"] - 1;
+                            double minDiffNormalized = currentTickdata.values["outcomeMin_" + outcomeTimeframe] / currentTickdata.values["mid"] - 1;
 
-                            double buyVal = (maxDiff >= normalizedDifference ? 1 : 0);
-                            double sellVal = (minDiff <= -normalizedDifference ? 1 : 0);
+                            double buyVal = (maxDiffNormalized >= normalizedDifference ? 1 : 0);
+                            double sellVal = (minDiffNormalized <= -normalizedDifference ? 1 : 0);
 
                             currentTickdata.values.Add("buy-" + outcomeCodeFieldName, buyVal);
                             currentTickdata.values.Add("sell-" + outcomeCodeFieldName, sellVal);
@@ -1179,7 +1182,7 @@ namespace NinjaTrader_Client.Trader
                 dataCollection = getSomeSamplesFromData(instrument, dataCountReduction, offsetReduction);
 
             double dataCount = dataCollection.Count();
-            double doneData = 0;
+            double doneData = 1;
 
             List<double[]> inputsList = new List<double[]>();
             List<double[]> outputsList = new List<double[]>();

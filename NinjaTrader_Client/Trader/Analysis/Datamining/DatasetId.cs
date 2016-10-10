@@ -9,9 +9,9 @@ namespace NinjaTrader_Client.Trader.Datamining
     [Serializable]
     public class DatasetId
     {
-        private string name;
-        private long timeframe;
-        private string id;
+        public string name;
+        public long timeframe;
+        public string id;
 
         public string getName()
         {
@@ -25,7 +25,7 @@ namespace NinjaTrader_Client.Trader.Datamining
 
         public string getID()
         {
-            return name + "_" + timeframe;
+            return id;
         }
 
         public long getTimeframe()
@@ -63,22 +63,25 @@ namespace NinjaTrader_Client.Trader.Datamining
             this.timeframe = timeframe;
             this.name = name;
 
-            this.id = getID();
+            this.id = name + "_" + timeframe;
         }
 
-        public DatasetId(string nameAndTimeframe)
+        public DatasetId(string fullName)
         {
-            if (nameAndTimeframe.Contains('_'))
+            if (fullName.Contains('_'))
             {
-                string[] nameAndTimeframeArray = nameAndTimeframe.Split('_');
+                string[] nameAndTimeframeArray = fullName.Split('_');
 
                 this.timeframe = Convert.ToInt32(nameAndTimeframeArray[1]);
                 this.name = nameAndTimeframeArray[0];
             }
             else
-                this.name = nameAndTimeframe;
+            {
+                this.name = fullName;
+                this.timeframe = -1;
+            }
 
-            id = getID();
+            id = fullName;
         }
     }
 }

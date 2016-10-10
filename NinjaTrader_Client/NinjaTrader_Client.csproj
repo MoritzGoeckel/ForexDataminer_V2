@@ -163,6 +163,7 @@
     <Compile Include="Trader\Analysis\Indicators\StochBorderIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\TimeDayOfWeekIndicator.cs" />
     <Compile Include="Trader\Analysis\Indicators\TimeOfDayIndicator.cs" />
+    <Compile Include="Trader\Exceptions\IndicatorNeverValidException.cs" />
     <Compile Include="Trader\Model\DistributionRange.cs" />
     <Compile Include="Trader\Analysis\Datamining\PredictivePowerAnalyzer.cs" />
     <Compile Include="Trader\Analysis\Datamining\SampleOutcomeCodeExcelGenerator.cs" />

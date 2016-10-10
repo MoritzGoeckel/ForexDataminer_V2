@@ -2,12 +2,14 @@
 using NinjaTrader_Client.Trader.Analysis.Indicators;
 using NinjaTrader_Client.Trader.Datamining;
 using NinjaTrader_Client.Trader.Datamining.AI;
+using NinjaTrader_Client.Trader.Exceptions;
 using NinjaTrader_Client.Trader.Indicators;
 using NinjaTrader_Client.Trader.MainAPIs;
 using NinjaTrader_Client.Trader.Model;
 using NinjaTrader_Client.Trader.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -437,40 +439,63 @@ namespace NinjaTrader_Client.Trader.Analysis
             DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument", "outcomeCodeId" }, dataminingDb.getInfo());
             id.ShowDialog();
 
+            long operationSum = 0;
+            int operationsCount = 0;
+
             if (id.isValidResult())
             {
                 string instrument = id.getResult()["instrument"];
                 string outcomeId = id.getResult()["outcomeCodeId"];
 
+                string filename = Config.startupPath + "/ppForIndicators-" + outcomeId + ".csv";
+                if (File.Exists(filename) == false)
+                    writeTextToFile(filename, "Method Vanilla;Method LinRegr;Method LogRegr;Indicator" + Environment.NewLine);
+
                 //Start some threads for 
-                for (int threadId = 0; threadId < 4; threadId++)
+                for (int threadId = 0; threadId < 1; threadId++) //Todo: Do 4 threads
                     new Thread(delegate ()
                     {
                         while (true)
                         {
+                            Stopwatch watch = new Stopwatch();
+                            watch.Start();
+
                             WalkerIndicator indicator = IndicatorGenerator.getRandomIndicator();
-                            dataminingDb.addIndicator(indicator, instrument, "mid");
+                            string indicatorId = "mid-" + indicator.getName();
 
-                            DistributionRange range = dataminingDb.getInfo(indicator.getName()).getDecentRange();
-                            double ppMethod1 = dataminingDb.getOutcomeCodeIndicatorSampling(null, indicator.getName(), 20, range, outcomeId, instrument); //Todo: No excel etc
+                            setState("Max pp: avg" + Math.Round(operationSum / 1000d / (operationsCount != 0 ? operationsCount : 1)) + "s" + " n" + operationsCount);
 
-                            double[][] inputsTraining = new double[0][], outputsTraining = new double[0][];
-                            dataminingDb.getInputOutputArrays(new string[] { indicator.getName() }, outcomeId, instrument, ref inputsTraining, ref outputsTraining, DataGroup.Training);
+                            try {
+                                dataminingDb.addIndicator(indicator, instrument, "mid");
+                            }catch (IndicatorNeverValidException)
+                            {
+                                writeTextToFile(filename, "x;x;x;" + indicatorId + Environment.NewLine);
+                                Debug.WriteLine("##### INVALID INDICATOR: " + indicatorId);
+                                continue;
+                            }
+
+                            DistributionRange range = dataminingDb.getInfo(indicatorId).getDecentRange();
+                            double ppMethod1 = dataminingDb.getOutcomeCodeIndicatorSampling(null, indicatorId, 20, range, outcomeId, instrument);
+
+                            /*double[][] inputsTraining = new double[0][], outputsTraining = new double[0][];
+                            dataminingDb.getInputOutputArrays(new string[] { indicatorId }, outcomeId, instrument, ref inputsTraining, ref outputsTraining, DataGroup.Training);
 
                             double[][] inputsTest = new double[0][], outputsTest = new double[0][];
-                            dataminingDb.getInputOutputArrays(new string[] { indicator.getName() }, outcomeId, instrument, ref inputsTest, ref outputsTest, DataGroup.Training);
+                            dataminingDb.getInputOutputArrays(new string[] { indicatorId }, outcomeId, instrument, ref inputsTest, ref outputsTest, DataGroup.Testing);
 
                             double ppMethod2 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LinearRegression);
 
-                            double ppMethod3 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LogRegression);
+                            double ppMethod3 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LogRegression);*/
+                            
+                            //Todo: Regression takes really long
 
-                            string filename = Config.startupPath + "/ppForIndicators-" + outcomeId + ".csv";
-                            if (File.Exists(filename) == false)
-                                writeTextToFile(filename, "Method Vanilla;Method LinRegr;Method LogRegr;Indicator" + Environment.NewLine);
+                            writeTextToFile(filename, ppMethod1 + ";" + "NotImpl" + ";" + "NotImpl" + ";" + indicatorId + Environment.NewLine);
 
-                            writeTextToFile(filename, ppMethod1 + ";" + ppMethod2 + ";" + ppMethod3 + ";" + indicator.getName() + Environment.NewLine);
+                            dataminingDb.removeDataset(indicatorId, instrument);
 
-                            dataminingDb.removeDataset(indicator.getName(), instrument);
+                            watch.Stop();
+                            operationSum += watch.ElapsedMilliseconds;
+                            operationsCount++;
                         }
                     }).Start();
             }
@@ -479,7 +504,17 @@ namespace NinjaTrader_Client.Trader.Analysis
         [MethodImpl(MethodImplOptions.Synchronized)]
         private void writeTextToFile(string path, string content)
         {
+            Debug.WriteLine(content);
             File.AppendAllText(path, content);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DataminingInputDialog id = new DataminingInputDialog(new string[] { "instrument" }, dataminingDb.getInfo());
+            id.ShowDialog();
+            
+            if(id.isValidResult())
+                dataminingDb.setDataGroups(id.getResult()["instrument"]);
         }
     }
 }

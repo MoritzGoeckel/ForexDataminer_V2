@@ -9,7 +9,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
     public class DistributionCalculater
     {
         private Dictionary<double, int> distribution = new Dictionary<double, int>();
-        private DistributionRange cachedRange = new DistributionRange(double.MaxValue, double.MinValue);
+        private DistributionRange cachedRange = new DistributionRange(double.MaxValue, double.MinValue, 0, 0);
         
         public void addValue(double value)
         {
@@ -80,10 +80,6 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
                 double upperValue = values[0];
                 double lowerValue = values[values.Count - 1];
 
-                //Check whether some dropping is possible
-                if (distribution[upperValue] > valuesToDrop && distribution[lowerValue] > valuesToDrop)
-                    break;
-
                 //Check whether to remove the upper
                 if (distribution[upperValue] <= valuesToDrop && (distribution[upperValue] < distribution[lowerValue] || distribution[lowerValue] > valuesToDrop))
                 {
@@ -92,15 +88,15 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
                     distribution.Remove(upperValue);
                     values.RemoveAt(0);
                 }
-
                 //Check whether to remove the lower
-                if (distribution[lowerValue] <= valuesToDrop && (distribution[lowerValue] < distribution[upperValue] || distribution[upperValue] > valuesToDrop))
+                else if (distribution[lowerValue] <= valuesToDrop && (distribution[lowerValue] < distribution[upperValue] || distribution[upperValue] > valuesToDrop))
                 {
                     valuesToDrop -= distribution[lowerValue];
                     datasetsCount -= distribution[lowerValue];
                     distribution.Remove(lowerValue);
                     values.RemoveAt(values.Count - 1);
                 }
+                else break;
             }
 
             droppedPercent += percent;

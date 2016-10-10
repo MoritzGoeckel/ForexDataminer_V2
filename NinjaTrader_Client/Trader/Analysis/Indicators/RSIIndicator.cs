@@ -92,7 +92,7 @@ namespace NinjaTrader_Client.Trader.Indicators
             else
                 oldestPair = negativeChanges[0];
 
-            if (negativeChanges[0].timestamp < oldestPair.timestamp)
+            if (negativeChanges.Count != 0 && negativeChanges[0].timestamp < oldestPair.timestamp)
                 oldestPair = negativeChanges[0];
 
             if (timestamp - oldestPair.timestamp > timeframe - (timeframe * 0.2)) //Ältester Datensatz ist älter als die (timeframe - 10% Timeframe) 

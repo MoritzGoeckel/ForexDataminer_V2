@@ -59,11 +59,6 @@ namespace NinjaTrader_Client.Trader.Model
         [JsonIgnore, BsonIgnore, NonSerialized]
         private DistributionCalculater distCalcer = new DistributionCalculater();
 
-        public void checkValueForRangesCalculation(double value)
-        {
-            distCalcer.addValue(value);
-        }
-
         public void finishRangesCalculation()
         {
             ranges["0"] = distCalcer.getRange().copy();
@@ -81,10 +76,13 @@ namespace NinjaTrader_Client.Trader.Model
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        internal void incOcurences(double value)
+        internal void incOcurences(double value, bool enlistForRangeCalculations = false)
         {
             occurences++;
             ranges["0"].checkValue(value);
+
+            if (enlistForRangeCalculations)
+                distCalcer.addValue(value);
         }
 
         public static string renderInfoList(List<DatasetInfo> infos)
@@ -96,7 +94,7 @@ namespace NinjaTrader_Client.Trader.Model
             string intendation = "     ";
             foreach (DatasetInfo info in infos)
             {
-                dataInfoB.Append(info.id.getID() + Environment.NewLine);
+                dataInfoB.Append(info.id.id + Environment.NewLine);
                 dataInfoB.Append(intendation + "Oc:" + info.occurences + Environment.NewLine);
                 dataInfoB.Append(intendation + "In:" + info.instrument + Environment.NewLine);
                 dataInfoB.Append(intendation + "Tf H:" + info.id.getTimeframeHours() + Environment.NewLine);
