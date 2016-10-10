@@ -477,19 +477,17 @@ namespace NinjaTrader_Client.Trader.Analysis
                             DistributionRange range = dataminingDb.getInfo(indicatorId).getDecentRange();
                             double ppMethod1 = dataminingDb.getOutcomeCodeIndicatorSampling(null, indicatorId, 20, range, outcomeId, instrument);
 
-                            /*double[][] inputsTraining = new double[0][], outputsTraining = new double[0][];
-                            dataminingDb.getInputOutputArrays(new string[] { indicatorId }, outcomeId, instrument, ref inputsTraining, ref outputsTraining, DataGroup.Training);
+                            double[][] inputsTraining = new double[0][], outputsTraining = new double[0][];
+                            dataminingDb.getInputOutputArrays(new string[] { indicatorId }, outcomeId, instrument, ref inputsTraining, ref outputsTraining, DataGroup.All, 1000 * 20, 0);
 
                             double[][] inputsTest = new double[0][], outputsTest = new double[0][];
-                            dataminingDb.getInputOutputArrays(new string[] { indicatorId }, outcomeId, instrument, ref inputsTest, ref outputsTest, DataGroup.Testing);
+                            dataminingDb.getInputOutputArrays(new string[] { indicatorId }, outcomeId, instrument, ref inputsTest, ref outputsTest, DataGroup.All, 5000, 1);
 
                             double ppMethod2 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LinearRegression);
 
-                            double ppMethod3 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LogRegression);*/
-                            
-                            //Todo: Regression takes really long
+                            double ppMethod3 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LogRegression);
 
-                            writeTextToFile(filename, ppMethod1 + ";" + "NotImpl" + ";" + "NotImpl" + ";" + indicatorId + Environment.NewLine);
+                            writeTextToFile(filename, ppMethod1 + ";" + ppMethod2 + ";" + ppMethod3 + ";" + indicatorId + Environment.NewLine);
 
                             dataminingDb.removeDataset(indicatorId, instrument);
 
