@@ -10,8 +10,8 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
     public class DistributionRange
     {
         public double min, max;
-        public int droppedPercent = 0;
-        public int datasets = 0;
+        public int droppedPercent;
+        public int datasets;
 
         public DistributionRange(double min, double max, int droppedPercent = 0, int datasetsCount = 0)
         {
@@ -26,6 +26,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
             min = double.MaxValue;
             max = double.MinValue;
             droppedPercent = 0;
+            datasets = 0;
         }
 
         public int getDatasetsCount()
@@ -59,7 +60,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
             return droppedPercent;
         }
 
-        internal void checkValue(double value)
+        public void checkValue(double value)
         {
             if (value > max)
                 max = value;
@@ -72,7 +73,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
 
         public DistributionRange copy()
         {
-            return new DistributionRange(this.min, this.max, this.droppedPercent);
+            return new DistributionRange(this.min, this.max, this.droppedPercent, datasets);
         }
     }
 }

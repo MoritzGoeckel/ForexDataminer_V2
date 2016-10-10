@@ -61,7 +61,7 @@ namespace NinjaTrader_Client.Trader.Model
 
         public void finishRangesCalculation()
         {
-            ranges["0"] = distCalcer.getRange().copy();
+            //ranges["0"] = distCalcer.getRange().copy();
 
             distCalcer.dropPercent(3);
             ranges.Add("3", distCalcer.getRange().copy());
