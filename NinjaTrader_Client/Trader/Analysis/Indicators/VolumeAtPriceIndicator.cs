@@ -81,6 +81,9 @@ namespace NinjaTrader_Client.Trader.Indicators
             if (entriesInOcurrencesDict != history.Count)
                 throw new Exception("entriesInOcurrencesDict != history.count " + entriesInOcurrencesDict + " != " + history.Count + " should be same!");
 
+            if (entriesInOcurrencesDict == 0)
+                value = 0;
+
             return new TimeValueData(timestampNow, value);
         }
 

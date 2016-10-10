@@ -73,7 +73,12 @@ namespace NinjaTrader_Client.Trader.Indicators
             double nChangesAvg = negativeChangesSum / n;
             double pChangesAvg = positiveChangesSum / n;
 
-            return new TimeValueData(timestampNow, pChangesAvg / (pChangesAvg + nChangesAvg)); 
+            double output = pChangesAvg / (pChangesAvg + nChangesAvg);
+
+            if (pChangesAvg + nChangesAvg == 0)
+                output = 1;
+
+            return new TimeValueData(timestampNow, output); 
         }
 
         public override string getName()

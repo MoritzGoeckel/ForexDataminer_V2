@@ -46,7 +46,14 @@ namespace NinjaTrader_Client.Trader.Indicators
             double upperBond = (ma.getIndicator().value * valueNow) + (std.getIndicator().value * stdMultiplicator);
             double lowerBond = (ma.getIndicator().value * valueNow) - (std.getIndicator().value * stdMultiplicator);
 
-            return new TimeValueData(timestampNow, (valueNow - lowerBond) / (upperBond - lowerBond) * 100d);
+            double value = (valueNow - lowerBond) / (upperBond - lowerBond);
+            if (value > 1)
+                value = 1;
+
+            if (value < 0)
+                value = 0;
+
+            return new TimeValueData(timestampNow, value);
         }
 
         public override string getName()

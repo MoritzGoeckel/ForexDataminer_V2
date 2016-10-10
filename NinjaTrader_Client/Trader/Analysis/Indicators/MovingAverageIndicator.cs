@@ -46,8 +46,11 @@ namespace NinjaTrader_Client.Trader.Indicators
 
             double count = history.Count;
 
-            return new TimeValueData(timestampNow, (valueNow - (sum / count)) / valueNow); //difference... -0.1 = Preis 1% unter MA && 0.1 = Preis 1% über MA 
-            //-1 >> MA >> 1
+            double output = Convert.ToDouble(sum) / Convert.ToDouble(count);
+            if (count == 0)
+                output = valueNow;
+
+            return new TimeValueData(timestampNow, output); 
         }
 
         public override string getName()

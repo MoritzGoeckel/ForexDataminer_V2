@@ -90,6 +90,12 @@ namespace NinjaTrader_Client.Trader.Indicators
                 throw new Exception("Stoch is calculating unexpected numbers:" + Environment.NewLine +
                     "o" + output + " min" + min + " max"+max + " valueNow" + valueNow  + " max-min" + (max - min) + " now-min" + (valueNow - min) + " ratio" + (valueNow - min) / (max - min));
 
+            if (output > 1)
+                output = 1;
+
+            if (output < 0)
+                output = 0;
+
             return new TimeValueData(timestampNow, output); // 0 >> stoch >> 1
         }
 

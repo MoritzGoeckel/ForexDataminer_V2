@@ -52,8 +52,11 @@ namespace NinjaTrader_Client.Trader.Indicators
             double count = history.Count;
 
             double standartDeviation = Math.Sqrt((1 / (count - 1)) * (sumSquared - (1 / count * Math.Pow(sum, 2))));
+            double output = standartDeviation / valueNow;
+            if (valueNow == 0)
+                output = 0;
 
-            return new TimeValueData(timestampNow, standartDeviation / valueNow);
+            return new TimeValueData(timestampNow, output);
         }
 
         public override string getName()

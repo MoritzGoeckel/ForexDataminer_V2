@@ -36,7 +36,7 @@ namespace NinjaTrader_Client.Trader.Indicators
 
         public override TimeValueData getIndicator()
         {
-            return new TimeValueData(timestampNow, (ma.getIndicator().value * valueNow) - valueNow);
+            return new TimeValueData(timestampNow, ma.getIndicator().value - valueNow);
         }
 
         public override string getName()
