@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NinjaTrader_Client.Trader.Exceptions
 {
-    class IndicatorNeverValidException : MyBaseException
+    class MinMaxNotSetException : MyBaseException
     {
     }
 }

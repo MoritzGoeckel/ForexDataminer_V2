@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NinjaTrader_Client.Trader.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,7 +38,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
         public double getMax()
         {
             if (max == double.MinValue)
-                throw new Exception("Not set! " + datasets);
+                throw new MinMaxNotSetException();
 
             return max;
         }
@@ -45,7 +46,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
         public double getMin()
         {
             if (min == double.MaxValue)
-                throw new Exception("Not set! " + datasets);
+                throw new MinMaxNotSetException();
 
             return min;
         }
