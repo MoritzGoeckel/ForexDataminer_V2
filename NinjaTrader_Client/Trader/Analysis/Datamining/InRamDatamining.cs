@@ -24,6 +24,7 @@ using NinjaTrader_Client.Trader.Streaming;
 using NinjaTrader_Client.Trader.Analysis.IndicatorCollections;
 using NinjaTrader_Client.Trader.Analysis.Datamining;
 using NinjaTrader_Client.Trader.Exceptions;
+using System.IO;
 
 namespace NinjaTrader_Client.Trader
 {
@@ -863,6 +864,7 @@ namespace NinjaTrader_Client.Trader
 
         public void addIndicator(WalkerIndicator indicator, string instrument, string fieldId)
         {
+            bool wroteErrorAlready = false;
             string name = "Indicator " + indicator.getName() + " " + instrument + " " + fieldId;
             progress.setProgress(name, 0);
             int done = 0;
@@ -885,13 +887,22 @@ namespace NinjaTrader_Client.Trader
                         if (indicator.isValid(currentTickdata.timestamp))
                         {
                             double value = indicator.getIndicator().value;
-                            currentTickdata.values.Add(indicatorID, value);
-                            currentTickdata.changed = true;
 
                             if (value == double.MinValue || value == double.MinValue || value == double.NaN || value == double.NegativeInfinity || value == double.PositiveInfinity)
-                                throw new Exception("Value not valid! Probably the Indicator is bad " + indicator.getName());
+                            {
+                                if (wroteErrorAlready == false)
+                                {
+                                    File.AppendAllText("/flawedIndicators.txt", indicator.getName() + Environment.NewLine);
+                                    wroteErrorAlready = true;
+                                }
+                            }
+                            else
+                            {
+                                currentTickdata.values.Add(indicatorID, value);
+                                currentTickdata.changed = true;
 
-                            info.incOcurences(value, true);
+                                info.incOcurences(value, true);
+                            }
                         }
 
                         doneWriteOperation();

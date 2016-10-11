@@ -457,43 +457,47 @@ namespace NinjaTrader_Client.Trader.Analysis
                     {
                         while (true)
                         {
-                            Stopwatch watch = new Stopwatch();
-                            watch.Start();
-
-                            WalkerIndicator indicator = IndicatorGenerator.getRandomIndicator();
-                            string indicatorId = "mid-" + indicator.getName();
-
-                            setState("Max pp: avg" + Math.Round(operationSum / 1000d / (operationsCount != 0 ? operationsCount : 1)) + "s" + " n" + operationsCount);
-
-                            try {
-                                dataminingDb.addIndicator(indicator, instrument, "mid");
-                            }catch (IndicatorNeverValidException)
+                            try
                             {
-                                writeTextToFile(filename, "x;x;x;" + indicatorId + Environment.NewLine);
-                                Debug.WriteLine("##### INVALID INDICATOR: " + indicatorId);
-                                continue;
+                                Stopwatch watch = new Stopwatch();
+                                watch.Start();
+
+                                WalkerIndicator indicator = IndicatorGenerator.getRandomIndicator();
+                                string indicatorId = "mid-" + indicator.getName();
+
+                                setState("Max pp: avg" + Math.Round(operationSum / 1000d / (operationsCount != 0 ? operationsCount : 1)) + "s" + " n" + operationsCount);
+
+                                try {
+                                    dataminingDb.addIndicator(indicator, instrument, "mid");
+                                } catch (IndicatorNeverValidException)
+                                {
+                                    writeTextToFile(filename, "x;x;x;" + indicatorId + Environment.NewLine);
+                                    Debug.WriteLine("##### INVALID INDICATOR: " + indicatorId);
+                                    continue;
+                                }
+
+                                DistributionRange range = dataminingDb.getInfo(indicatorId).getDecentRange();
+                                double ppMethod1 = dataminingDb.getOutcomeCodeIndicatorSampling(null, indicatorId, 20, range, outcomeId, instrument);
+
+                                /*double[][] inputsTraining = new double[0][], outputsTraining = new double[0][];
+                                dataminingDb.getInputOutputArrays(new string[] { indicatorId }, outcomeId, instrument, ref inputsTraining, ref outputsTraining, DataGroup.All, 1000 * 20, 0);
+
+                                double[][] inputsTest = new double[0][], outputsTest = new double[0][];
+                                dataminingDb.getInputOutputArrays(new string[] { indicatorId }, outcomeId, instrument, ref inputsTest, ref outputsTest, DataGroup.All, 5000, 1);
+
+                                double ppMethod2 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LinearRegression);
+
+                                double ppMethod3 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LogRegression);*/
+
+                                writeTextToFile(filename, ppMethod1 + ";" + "ni" + ";" + "ni" + ";" + indicatorId + Environment.NewLine);
+
+                                dataminingDb.removeDataset(indicatorId, instrument);
+
+                                watch.Stop();
+                                operationSum += watch.ElapsedMilliseconds;
+                                operationsCount++;
                             }
-
-                            DistributionRange range = dataminingDb.getInfo(indicatorId).getDecentRange();
-                            double ppMethod1 = dataminingDb.getOutcomeCodeIndicatorSampling(null, indicatorId, 20, range, outcomeId, instrument);
-
-                            /*double[][] inputsTraining = new double[0][], outputsTraining = new double[0][];
-                            dataminingDb.getInputOutputArrays(new string[] { indicatorId }, outcomeId, instrument, ref inputsTraining, ref outputsTraining, DataGroup.All, 1000 * 20, 0);
-
-                            double[][] inputsTest = new double[0][], outputsTest = new double[0][];
-                            dataminingDb.getInputOutputArrays(new string[] { indicatorId }, outcomeId, instrument, ref inputsTest, ref outputsTest, DataGroup.All, 5000, 1);
-
-                            double ppMethod2 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LinearRegression);
-
-                            double ppMethod3 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LogRegression);*/
-
-                            writeTextToFile(filename, ppMethod1 + ";" + "ni" + ";" + "ni" + ";" + indicatorId + Environment.NewLine);
-
-                            dataminingDb.removeDataset(indicatorId, instrument);
-
-                            watch.Stop();
-                            operationSum += watch.ElapsedMilliseconds;
-                            operationsCount++;
+                            catch { }
                         }
                     }).Start();
             }
