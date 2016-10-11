@@ -507,7 +507,9 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                                 Logger.log("write to file", "maxPp");
                                 //over 0.5, maxDiff, direction
-                                writeTextToFile(indicatorListFilename, ppMethod1[0] + ";" + ppMethod1[1] + ";" + ppMethod1[2] + ";" + "ni" + ";" + "ni" + ";" + indicatorId + Environment.NewLine);
+                                string resultLine = ppMethod1[0] + ";" + ppMethod1[1] + ";" + ppMethod1[2] + ";" + "ni" + ";" + "ni" + ";" + indicatorId;
+                                writeTextToFile(indicatorListFilename, resultLine + Environment.NewLine);
+                                Logger.sendImportantMessage(DateTime.Now.ToShortTimeString() + " - " + resultLine);
 
                                 Logger.log("remove datasets", "maxPp");
                                 dataminingDb.removeDataset(indicatorId, instrument);

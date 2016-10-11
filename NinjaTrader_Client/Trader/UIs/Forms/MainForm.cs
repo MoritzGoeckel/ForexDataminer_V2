@@ -101,9 +101,10 @@ namespace NinjaTrader_Client
 
         private void test_btn_Click(object sender, EventArgs e)
         {
-            double tradingTimeCode = new TimeOpeningHoursIndicator().setNextDataAndGetIndicator(Timestamp.getNow(), 0).value;
+            /*double tradingTimeCode = new TimeOpeningHoursIndicator().setNextDataAndGetIndicator(Timestamp.getNow(), 0).value;
             DateTime dt = Timestamp.getDate(Timestamp.getNow());
-            MessageBox.Show(dt.ToString());
+            MessageBox.Show(dt.ToString());*/
+            Logger.sendImportantMessage("test :)");
         }
 
         private void generate_strategy_btn_Click(object sender, EventArgs e)

@@ -11,7 +11,7 @@ Run and debug!
 
 //Datamining
 
---> #1 Find indicators with statistical correlations to the outcome
+--> #1 Find indicators with statistical correlations to the outcome -> High predictive power
 #2 Combine them with machinelearning
 #3 Create a strategy
 #4 Create a executen strategy
