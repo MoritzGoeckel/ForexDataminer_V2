@@ -319,7 +319,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
         private void button_start_q_Click(object sender, EventArgs e)
         {
-
+                
         }
 
         //Todo: Create dialog
@@ -447,9 +447,16 @@ namespace NinjaTrader_Client.Trader.Analysis
                 string instrument = id.getResult()["instrument"];
                 string outcomeId = id.getResult()["outcomeCodeId"];
 
-                string filename = Config.startupPath + "/ppForIndicators-" + outcomeId + ".csv";
-                if (File.Exists(filename) == false)
-                    writeTextToFile(filename, "OverHalf;MaxDiff;Direction;LinRegr;LogRegr;Indicator" + Environment.NewLine);
+                string folderPath = Config.startupPath + "/analysis/";
+                if (Directory.Exists(folderPath) == false)
+                    Directory.CreateDirectory(folderPath);
+
+                string graphFolderPath = folderPath + "graphs/";
+                    Directory.CreateDirectory(graphFolderPath);
+
+                string indicatorListFilename = folderPath + "ppForIndicators-" + outcomeId + ".csv";
+                if (File.Exists(indicatorListFilename) == false)
+                    writeTextToFile(indicatorListFilename, "OverHalf;MaxDiff;Direction;LinRegr;LogRegr;Indicator" + Environment.NewLine);
 
                 //Start some threads for 
                 for (int threadId = 0; threadId < 2; threadId++) //Todo: Do 4 threads
@@ -473,7 +480,7 @@ namespace NinjaTrader_Client.Trader.Analysis
                                     dataminingDb.addIndicator(indicator, instrument, "mid");
                                 } catch (IndicatorNeverValidException)
                                 {
-                                    writeTextToFile(filename, "x;x;x;" + indicatorId + Environment.NewLine);
+                                    writeTextToFile(indicatorListFilename, "x;x;x;" + indicatorId + Environment.NewLine);
                                     Logger.log("Invalid Indicator " + indicatorId, "maxPp");
                                     continue;
                                 }
@@ -481,9 +488,13 @@ namespace NinjaTrader_Client.Trader.Analysis
                                 Logger.log("Get info", "maxPp");
                                 DistributionRange range = dataminingDb.getInfo(indicatorId).getDecentRange();
 
-                                Logger.log("Start sampling", "maxPp");
-                                double[] ppMethod1 = dataminingDb.getOutcomeCodeIndicatorSampling(null, indicatorId, 20, range, outcomeId, instrument);
+                                SampleOutcomeCodeExcelGenerator excel = new SampleOutcomeCodeExcelGenerator(graphFolderPath + indicatorId + ".xls");
 
+                                Logger.log("Start sampling", "maxPp");
+                                double[] ppMethod1 = dataminingDb.getOutcomeCodeIndicatorSampling(excel, indicatorId, 20, range, outcomeId, instrument);
+
+                                excel.FinishDoc();
+                                
                                 /*double[][] inputsTraining = new double[0][], outputsTraining = new double[0][];
                                 dataminingDb.getInputOutputArrays(new string[] { indicatorId }, outcomeId, instrument, ref inputsTraining, ref outputsTraining, DataGroup.All, 1000 * 20, 0);
 
@@ -496,7 +507,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                                 Logger.log("write to file", "maxPp");
                                 //over 0.5, maxDiff, direction
-                                writeTextToFile(filename, ppMethod1[0] + ";" + ppMethod1[1] + ";" + ppMethod1[2] + ";" + "ni" + ";" + "ni" + ";" + indicatorId + Environment.NewLine);
+                                writeTextToFile(indicatorListFilename, ppMethod1[0] + ";" + ppMethod1[1] + ";" + ppMethod1[2] + ";" + "ni" + ";" + "ni" + ";" + indicatorId + Environment.NewLine);
 
                                 Logger.log("remove datasets", "maxPp");
                                 dataminingDb.removeDataset(indicatorId, instrument);
