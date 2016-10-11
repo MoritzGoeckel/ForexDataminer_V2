@@ -1,5 +1,6 @@
 ﻿using NinjaTrader_Client.Trader.Analysis.Datamining.AI;
 using NinjaTrader_Client.Trader.Datamining.AI;
+using NinjaTrader_Client.Trader.Utils;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -19,11 +20,14 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
         /// </summary>
         public static double getPredictivePower(ConcurrentDictionary<double, OutcomeCountPair> dict)
         {
+            Logger.log("Start", "getPredictivePower");
+
             double minSell = double.MaxValue, maxSell = double.MinValue;
             double minBuy = double.MaxValue, maxBuy = double.MinValue;
 
             double maxBuySellDistance = double.MinValue;
 
+            Logger.log("Start foreach", "getPredictivePower");
             foreach (KeyValuePair<double, OutcomeCountPair> pair in dict)
             {
                 double buyAvg = pair.Value.MaxSum / pair.Value.Count;
@@ -48,6 +52,8 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
                     maxBuySellDistance = difference;
             }
 
+            Logger.log("Done", "getPredictivePower");
+
             double curveScore = (maxBuy - minBuy) + (maxSell - minSell);
             return curveScore + maxBuySellDistance * 2; //wight distance heigher
         }
@@ -60,6 +66,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
         /// </summary>
         public static double getPredictivePower(ConcurrentDictionary<double, OutcomeCodeCountPair> dict)
         {
+            Logger.log("Start", "getPredictivePower");
             double theorem1Score = 0, theoreme2Score = 0, theoreme3Score = 0;
 
             double minSell = double.MaxValue, maxSell = double.MinValue;
@@ -67,6 +74,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
 
             double maxBuySellDistance = double.MinValue;
 
+            Logger.log("First foreach", "getPredictivePower");
             foreach (KeyValuePair<double, OutcomeCodeCountPair> pair in dict)
             {
                 double buyAvg = pair.Value.buySum / pair.Value.Count;
@@ -106,6 +114,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
             theoreme2Score += maxBuySellDistance;
 
             //caculate result 
+            Logger.log("Success", "getPredictivePower");
             return theorem1Score * 2 + theoreme2Score + theoreme3Score; //wight theo1 heigher
         }
 
@@ -113,6 +122,8 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
 
         public static double getPredictivePowerWithMl(double[][] trainingInput, double[][] trainingOutput, double[][] testInput, double[][] testOutput, MLMethodForPPAnalysis method)
         {
+            Logger.log("Start", "getPredictivePowerWithMl " + method);
+
             IMachineLearning ml;
 
             if (method == MLMethodForPPAnalysis.LinearRegression)
@@ -122,7 +133,10 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
             else
                 throw new Exception("No method given...");
 
+            Logger.log("Train", "getPredictivePowerWithMl " + method);
             ml.train(trainingInput, trainingOutput);
+
+            Logger.log("Get error", "getPredictivePowerWithMl " + method);
             return 1d / ml.getPredictionErrorFromData(testInput, testOutput);
         }
     }

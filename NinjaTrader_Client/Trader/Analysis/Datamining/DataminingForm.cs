@@ -452,7 +452,7 @@ namespace NinjaTrader_Client.Trader.Analysis
                     writeTextToFile(filename, "Method Vanilla;Method LinRegr;Method LogRegr;Indicator" + Environment.NewLine);
 
                 //Start some threads for 
-                for (int threadId = 0; threadId < 1; threadId++) //Todo: Do 4 threads
+                for (int threadId = 0; threadId < 2; threadId++) //Todo: Do 4 threads
                     new Thread(delegate ()
                     {
                         while (true)
@@ -465,6 +465,8 @@ namespace NinjaTrader_Client.Trader.Analysis
                                 WalkerIndicator indicator = IndicatorGenerator.getRandomIndicator();
                                 string indicatorId = "mid-" + indicator.getName();
 
+                                Logger.log("Start indicator: " + indicatorId, "maxPp");
+
                                 setState("Max pp: avg" + Math.Round(operationSum / 1000d / (operationsCount != 0 ? operationsCount : 1)) + "s" + " n" + operationsCount);
 
                                 try {
@@ -472,11 +474,14 @@ namespace NinjaTrader_Client.Trader.Analysis
                                 } catch (IndicatorNeverValidException)
                                 {
                                     writeTextToFile(filename, "x;x;x;" + indicatorId + Environment.NewLine);
-                                    Debug.WriteLine("##### INVALID INDICATOR: " + indicatorId);
+                                    Logger.log("Invalid Indicator " + indicatorId, "maxPp");
                                     continue;
                                 }
 
+                                Logger.log("Get info", "maxPp");
                                 DistributionRange range = dataminingDb.getInfo(indicatorId).getDecentRange();
+
+                                Logger.log("Start sampling", "maxPp");
                                 double ppMethod1 = dataminingDb.getOutcomeCodeIndicatorSampling(null, indicatorId, 20, range, outcomeId, instrument);
 
                                 /*double[][] inputsTraining = new double[0][], outputsTraining = new double[0][];
@@ -489,15 +494,19 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                                 double ppMethod3 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LogRegression);*/
 
+                                Logger.log("write to file", "maxPp");
                                 writeTextToFile(filename, ppMethod1 + ";" + "ni" + ";" + "ni" + ";" + indicatorId + Environment.NewLine);
 
+                                Logger.log("remove datasets", "maxPp");
                                 dataminingDb.removeDataset(indicatorId, instrument);
 
                                 watch.Stop();
                                 operationSum += watch.ElapsedMilliseconds;
                                 operationsCount++;
                             }
-                            catch { }
+                            catch {
+                                Logger.log("Error in thread method", "maxPp");
+                            }
                         }
                     }).Start();
             }

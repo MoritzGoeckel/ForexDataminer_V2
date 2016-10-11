@@ -758,6 +758,7 @@ namespace NinjaTrader_Client.Trader
         /// <returns>The Predictive Power of the Indicator to the OutcomeCode</returns>
         public double getOutcomeCodeIndicatorSampling(SampleOutcomeCodeExcelGenerator excel, string indicatorId, int steps, DistributionRange samplingRange, string outcomeCodeId, string instrument)
         {
+            Logger.log("Start", "getOutcomeCodeIndicatorSampling");
             ConcurrentDictionary<double, OutcomeCodeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCodeCountPair>();
 
             List<AdvancedTickData> inRamList = dataInRam[instrument];
@@ -776,6 +777,8 @@ namespace NinjaTrader_Client.Trader
             {
                 Thread thread = new Thread(delegate (object actualThreadId)
                 {
+                    Logger.log("Start thread", "getOutcomeCodeIndicatorSampling");
+
                     int indexBeginning = start + (indexFrame * Convert.ToInt32(actualThreadId));
                     int indexEnd = indexBeginning + indexFrame;
 
@@ -830,10 +833,14 @@ namespace NinjaTrader_Client.Trader
                 threadId++;
             }
 
+            Logger.log("Wait for threads", "getOutcomeCodeIndicatorSampling");
             waitForThreads(threads);
+            Logger.log("End waiting for threads", "getOutcomeCodeIndicatorSampling");
 
             if (excel != null)
             {
+                Logger.log("Do excel", "getOutcomeCodeIndicatorSampling");
+
                 string sheetName = "OutcomeCode_" + indicatorId + "_" + outcomeCodeId + "_" + instrument;
 
                 if (sheetName.Length >= 30)
@@ -854,6 +861,7 @@ namespace NinjaTrader_Client.Trader
                 excel.FinishSheet(sheetName);
             }
 
+            Logger.log("Get pp", "getOutcomeCodeIndicatorSampling");
             return PredictivePowerAnalyzer.getPredictivePower(valueCounts);
         }
 
@@ -864,6 +872,7 @@ namespace NinjaTrader_Client.Trader
 
         public void addIndicator(WalkerIndicator indicator, string instrument, string fieldId)
         {
+            Logger.log("Start", "addIndicator");
             bool wroteErrorAlready = false;
             string name = "Indicator " + indicator.getName() + " " + instrument + " " + fieldId;
             progress.setProgress(name, 0);
@@ -919,7 +928,12 @@ namespace NinjaTrader_Client.Trader
             progress.remove(name);
 
             if (info.occurences <= 10) //That is too few occurences!
+            {
+                Logger.log("IndicatorNeverValidException", "addIndicator");
                 throw new IndicatorNeverValidException();
+            }
+
+            Logger.log("End sucess", "addIndicator");
         }
 
         public void addMetaIndicatorSum(string[] ids, double[] weights, string fieldName, string instrument)
@@ -987,6 +1001,8 @@ namespace NinjaTrader_Client.Trader
 
         public void addOutcomeCode(double normalizedDifference, int outcomeTimeframe, string instrument)
         {
+            Logger.log("Start", "addOutcomeCode");
+
             string outcomeCodeFieldName = "outcomeCode-" + normalizedDifference + "_" + outcomeTimeframe;
 
             DatasetInfo infoBuy = new DatasetInfo(new DatasetId("buy-" + outcomeCodeFieldName), instrument);
@@ -1051,10 +1067,13 @@ namespace NinjaTrader_Client.Trader
                 threadId++;
             }
 
+            Logger.log("Wait for threads", "addOutcomeCode");
             waitForThreads(threads);
 
             datasetInfoList.Add(infoBuy);
             datasetInfoList.Add(infoSell);
+
+            Logger.log("End success", "addOutcomeCode");
         }
 
         public string getOutcomeCodeDistribution(double normalizedDifference, int outcomeTimeframe, string instrument)
