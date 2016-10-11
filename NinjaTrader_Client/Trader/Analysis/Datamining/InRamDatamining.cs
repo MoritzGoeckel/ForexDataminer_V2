@@ -771,7 +771,7 @@ namespace NinjaTrader_Client.Trader
             int indexFrame = (end - start) / threadsCount;
             int threadId = 0;
 
-            double stepSize = samplingRange.getMax() - samplingRange.getMin() / Convert.ToDouble(steps);
+            double stepSize = (samplingRange.getMax() - samplingRange.getMin()) / Convert.ToDouble(steps);
             
             while (threadId < threadsCount)
             {
@@ -810,14 +810,12 @@ namespace NinjaTrader_Client.Trader
                             }
                             else
                             {
-                                valueCounts[indicatorKey].Count++;
-
                                 valueCounts[indicatorKey].buySum += currentTickdata.values["buy-" + outcomeCodeId];
                                 valueCounts[indicatorKey].sellSum += currentTickdata.values["sell-" + outcomeCodeId];
                                 valueCounts[indicatorKey].Count++;
-
-                                doneWriteOperation();
                             }
+
+                            doneWriteOperation();
                         }
 
                         currentId++;

@@ -486,7 +486,7 @@ namespace NinjaTrader_Client.Trader.Analysis
                                 }
 
                                 Logger.log("Get info", "maxPp");
-                                DistributionRange range = dataminingDb.getInfo(indicatorId).getDecentRange();
+                                DistributionRange range = dataminingDb.getInfo(indicatorId).ranges["5"];
 
                                 SampleOutcomeCodeExcelGenerator excel = new SampleOutcomeCodeExcelGenerator(graphFolderPath + indicatorId + ".xls");
 

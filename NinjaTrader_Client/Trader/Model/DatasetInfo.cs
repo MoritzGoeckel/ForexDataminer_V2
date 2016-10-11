@@ -67,8 +67,8 @@ namespace NinjaTrader_Client.Trader.Model
             distCalcer.dropPercent(3);
             ranges.Add("3", distCalcer.getRange().copy());
 
-            //distCalcer.dropPercent(2);
-            //ranges.Add(5, distCalcer.getRange().copy());
+            distCalcer.dropPercent(2);
+            ranges.Add("5", distCalcer.getRange().copy());
 
             //distCalcer.dropPercent(5);
             //ranges.Add(10, distCalcer.getRange().copy());
