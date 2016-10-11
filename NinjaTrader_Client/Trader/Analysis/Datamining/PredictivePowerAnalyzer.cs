@@ -18,7 +18,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
         /// <summary>
         /// Used with the "getOutcomeSampling" function
         /// </summary>
-        public static double getPredictivePower(ConcurrentDictionary<double, OutcomeCountPair> dict)
+        public static double[] getPredictivePower(ConcurrentDictionary<double, OutcomeCountPair> dict)
         {
             Logger.log("Start", "getPredictivePower");
 
@@ -55,16 +55,16 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
             Logger.log("Done", "getPredictivePower");
 
             double curveScore = (maxBuy - minBuy) + (maxSell - minSell);
-            return curveScore + maxBuySellDistance * 2; //wight distance heigher
+            return new double[] { curveScore, maxBuySellDistance };
         }
 
-        //--> 1. Point over 0.5
-        //--> 2. Difference between buy and sell at any point
-        //--> 3. Comparing heighest with lowest point in curve
         /// <summary>
         /// Used with the "getOutcomeCodeSampling" function
+        ///--> 1. Point over 0.5
+        ///--> 2. Difference between buy and sell at any point
+        ///--> 3. Comparing heighest with lowest point in curve
         /// </summary>
-        public static double getPredictivePower(ConcurrentDictionary<double, OutcomeCodeCountPair> dict)
+        public static double[] getPredictivePower(ConcurrentDictionary<double, OutcomeCodeCountPair> dict)
         {
             Logger.log("Start", "getPredictivePower");
             double theorem1Score = 0, theoreme2Score = 0, theoreme3Score = 0;
@@ -115,7 +115,7 @@ namespace NinjaTrader_Client.Trader.Analysis.Datamining
 
             //caculate result 
             Logger.log("Success", "getPredictivePower");
-            return theorem1Score * 2 + theoreme2Score + theoreme3Score; //wight theo1 heigher
+            return new double[] { theorem1Score, theoreme2Score, theoreme3Score };
         }
 
         public enum MLMethodForPPAnalysis { LogRegression, LinearRegression };

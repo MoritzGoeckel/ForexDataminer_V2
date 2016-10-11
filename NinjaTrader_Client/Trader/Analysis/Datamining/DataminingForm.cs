@@ -449,7 +449,7 @@ namespace NinjaTrader_Client.Trader.Analysis
 
                 string filename = Config.startupPath + "/ppForIndicators-" + outcomeId + ".csv";
                 if (File.Exists(filename) == false)
-                    writeTextToFile(filename, "Method Vanilla;Method LinRegr;Method LogRegr;Indicator" + Environment.NewLine);
+                    writeTextToFile(filename, "OverHalf;MaxDiff;Direction;LinRegr;LogRegr;Indicator" + Environment.NewLine);
 
                 //Start some threads for 
                 for (int threadId = 0; threadId < 2; threadId++) //Todo: Do 4 threads
@@ -482,7 +482,7 @@ namespace NinjaTrader_Client.Trader.Analysis
                                 DistributionRange range = dataminingDb.getInfo(indicatorId).getDecentRange();
 
                                 Logger.log("Start sampling", "maxPp");
-                                double ppMethod1 = dataminingDb.getOutcomeCodeIndicatorSampling(null, indicatorId, 20, range, outcomeId, instrument);
+                                double[] ppMethod1 = dataminingDb.getOutcomeCodeIndicatorSampling(null, indicatorId, 20, range, outcomeId, instrument);
 
                                 /*double[][] inputsTraining = new double[0][], outputsTraining = new double[0][];
                                 dataminingDb.getInputOutputArrays(new string[] { indicatorId }, outcomeId, instrument, ref inputsTraining, ref outputsTraining, DataGroup.All, 1000 * 20, 0);
@@ -495,7 +495,8 @@ namespace NinjaTrader_Client.Trader.Analysis
                                 double ppMethod3 = PredictivePowerAnalyzer.getPredictivePowerWithMl(inputsTraining, outputsTraining, inputsTest, outputsTest, MLMethodForPPAnalysis.LogRegression);*/
 
                                 Logger.log("write to file", "maxPp");
-                                writeTextToFile(filename, ppMethod1 + ";" + "ni" + ";" + "ni" + ";" + indicatorId + Environment.NewLine);
+                                //over 0.5, maxDiff, direction
+                                writeTextToFile(filename, ppMethod1[0] + ";" + ppMethod1[1] + ";" + ppMethod1[2] + ";" + "ni" + ";" + "ni" + ";" + indicatorId + Environment.NewLine);
 
                                 Logger.log("remove datasets", "maxPp");
                                 dataminingDb.removeDataset(indicatorId, instrument);

@@ -633,7 +633,7 @@ namespace NinjaTrader_Client.Trader
             public double Count;
         };
         
-        public double getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, string indicatorId, int outcomeTimeframe, int steps, DistributionRange samplingRange, string instrument)
+        public double[] getOutcomeIndicatorSampling(SampleOutcomeExcelGenerator excel, string indicatorId, int outcomeTimeframe, int steps, DistributionRange samplingRange, string instrument)
         {
             ConcurrentDictionary<double, OutcomeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCountPair>();
 
@@ -748,7 +748,7 @@ namespace NinjaTrader_Client.Trader
 
         /// <param name="excel">Possible to set to NULL</param>
         /// <returns>The Predictive Power of the Indicator to the OutcomeCode</returns>
-        public double getOutcomeCodeIndicatorSampling(SampleOutcomeCodeExcelGenerator excel, string indicatorId, int steps, DistributionRange samplingRange, double normalizedDifference, int outcomeTimeframe, string instrument)
+        public double[] getOutcomeCodeIndicatorSampling(SampleOutcomeCodeExcelGenerator excel, string indicatorId, int steps, DistributionRange samplingRange, double normalizedDifference, int outcomeTimeframe, string instrument)
         {
             string outcomeCodeFieldName = "outcomeCode-" + normalizedDifference + "_" + outcomeTimeframe;
             return getOutcomeCodeIndicatorSampling(excel, indicatorId, steps, samplingRange, outcomeCodeFieldName, instrument);
@@ -756,7 +756,7 @@ namespace NinjaTrader_Client.Trader
 
         /// <param name="excel">Possible to set to NULL</param>
         /// <returns>The Predictive Power of the Indicator to the OutcomeCode</returns>
-        public double getOutcomeCodeIndicatorSampling(SampleOutcomeCodeExcelGenerator excel, string indicatorId, int steps, DistributionRange samplingRange, string outcomeCodeId, string instrument)
+        public double[] getOutcomeCodeIndicatorSampling(SampleOutcomeCodeExcelGenerator excel, string indicatorId, int steps, DistributionRange samplingRange, string outcomeCodeId, string instrument)
         {
             Logger.log("Start", "getOutcomeCodeIndicatorSampling");
             ConcurrentDictionary<double, OutcomeCodeCountPair> valueCounts = new ConcurrentDictionary<double, OutcomeCodeCountPair>();

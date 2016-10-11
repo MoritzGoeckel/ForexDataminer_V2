@@ -247,6 +247,7 @@
     <Compile Include="Trader\UIs\Visualization\BacktestVisualizationData.cs" />
     <Compile Include="Trader\Analysis\Databases\SQLiteDatabase.cs" />
     <Compile Include="Trader\Analysis\Databases\IDataminingDatabase.cs" />
+    <Compile Include="Trader\Utils\Logger.cs" />
     <Compile Include="Trader\Utils\ResourceMonitor.cs" />
     <Compile Include="Trader\Analysis\Datamining\MongoDataminingDB.cs" />
     <Compile Include="Trader\Analysis\Indicators\StandartDeviationIndicator.cs" />
