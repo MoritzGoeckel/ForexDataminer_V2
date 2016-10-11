@@ -451,7 +451,7 @@ namespace NinjaTrader_Client.Trader.Analysis
                 if (Directory.Exists(folderPath) == false)
                     Directory.CreateDirectory(folderPath);
 
-                string graphFolderPath = folderPath + "graphs/";
+                string graphFolderPath = folderPath + "ppForIndicators-" + outcomeId + "/";
                     Directory.CreateDirectory(graphFolderPath);
 
                 string indicatorListFilename = folderPath + "ppForIndicators-" + outcomeId + ".csv";

@@ -22,7 +22,11 @@ namespace NinjaTrader_Client.Trader.Datamining
             this.path = path;
 
             xlApp = new Excel.Application();
+            xlApp.DisplayAlerts = false;
+
             xlWorkBook = xlApp.Workbooks.Add(System.Reflection.Missing.Value);
+            xlWorkBook.DoNotPromptForConvert = true;
+            xlWorkBook.CheckCompatibility = false;
         }
 
         public Excel.Worksheet CreateSheet(string name)
